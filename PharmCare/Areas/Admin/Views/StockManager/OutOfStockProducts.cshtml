@@ -1,0 +1,440 @@
+﻿@model IEnumerable<PharmCare.DTO.MedicineModule.MedicineDTO>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/css/style.css" rel="stylesheet" />
+
+<div class="x_panel shadow p-3  rounded" style="height: 5rem; background-color: #2a3f54;">
+    <div class="col-md-10 my-auto">
+        <h4 class="header">
+            Out of Stock
+        </h4>
+        <p class="text-primary">
+            <span>Home</span> <span> <i class="fa fa-angle-double-right"></i> </span>  <span>Out of Stock Products</span>
+        </p>
+
+    </div>
+
+
+    <div class="col-md-2 my-auto">
+
+        <div class="col-md-12 text-center text-bold">
+           @* <a class="pull-right" href="#" data-toggle="modal" data-target="#ModalCreateMedicine" data-backdrop="static" data-keyboard="false">
+                <span class="m-0 p-0 top-banner-add"><i class="fa fa-2x fa-plus" aria-hidden="true"></i></span>
+                <h6 class="top-banner-add">Add Medicine</h6>
+            </a>*@
+        </div>
+    </div>
+</div>
+
+
+
+<div class="x_panel shadow p-3 mb-5 bg-white rounded">
+    <div class="x_title">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <h6 class=""><i class="fa fa-building"></i> Medicine List</h6>
+            </div>
+            <div class="col-md-9">
+                @*                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#ModalCreateMedicine" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  Add Medicine</button>
+                *@
+            </div>
+
+        </div>
+
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="tblMedicine" class="table table-striped table-bordered dt-responsive nowrap table-sm" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Shelf  </th>
+                                    <th scope="col">Treatment</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Cost Price</th>
+                                    <th scope="col">Selling Price</th>
+@*                                    <th scope="col">Options</th>
+*@                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    int count = 1;
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+
+                                            <td>@item.Name</td>
+
+                                            <td>@item.UnitName</td>
+
+                                            <td>@item.CategoryName</td>
+
+                                            <td>@item.Quantity</td>
+
+                                            <td>@item.ShelfName</td>
+
+                                            <td>@item.MedicalConditionName</td>
+
+                                            <td>
+
+                                                @{
+                                                    var status = item.Status;
+
+                                                    if (status == 1)
+                                                    {
+                                                        <span class="act">Active</span>
+                                                    }
+                                                    if (status == 0)
+                                                    {
+                                                        <span class="ina">inactive</span>
+                                                    }
+                                                }
+
+                                            </td>
+
+                                            <td>@item.ManufacturerPrice</td>
+
+                                            <td>@item.SellingPrice</td>
+@*
+                                            <td>
+                                                <a class="btn-success  btn-sm" href="#" onclick="GetRecord('@item.Id')" value="">Edit</a>
+
+                                                <a class="btn-danger  btn-sm" href="#" onclick="DeleteRecord('@item.Id')" value="">Delete</a>
+
+                                                <a class="btn-info  btn-sm" href="#" onclick="Details('@item.Id')" value="">View Details</a>
+                                            </td>*@
+                                        </tr>
+                                        count++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="ModalCreateMedicine" tabindex="-1" role="dialog" aria-labelledby="ModalCreateMedicine" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title Header" id="ModalCreateMedicine"> Add Medicine</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="frmCreateMedicine">
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Brand Name</label>
+                            <input type="text" class="form-control myinputs" id="txtName" name="Name" aria-describedby="emailHelp">
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Treatmen For</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtMedicalConditionId" name="MedicalConditionId">
+                                    @if (ViewBag.MedicalConditions != null)
+                                    {
+                                        foreach (var item in ViewBag.MedicalConditions)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Unit</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtUnitId" name="UnitId">
+                                    @if (ViewBag.Units != null)
+                                    {
+                                        foreach (var item in ViewBag.Units)
+                                        {
+                                            <option value="@item.Id">@item.FullName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Shelf</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtShelfId" name="ShelfId">
+                                    @if (ViewBag.Shelves != null)
+                                    {
+                                        foreach (var item in ViewBag.Shelves)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Category</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtCategoryId" name="CategoryId">
+                                    @if (ViewBag.Categories != null)
+                                    {
+                                        foreach (var item in ViewBag.Categories)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Cost Price</label>
+                            <input type="text" class="form-control myinputs numericOnly" id="txtManufacturerPrice" name="ManufacturerPrice" aria-describedby="emailHelp">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Selling Price</label>
+                            <input type="text" class="form-control myinputs numericOnly" id="txtSellingPrice" name="SellingPrice" aria-describedby="emailHelp">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select class="form-control myinputs" name="Status" id="txtStatus">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Description</label>
+                            <textarea class="form-control myinputs" rows="3" id="txtDescription" name="Description"></textarea>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSubmit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalUdateMedicine" tabindex="-1" role="dialog" aria-labelledby="ModalUdateMedicineLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title Header" id="ModalUdateMedicineLabel"> Update Medicine</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="frmUpdateMedicine">
+
+                    <input type="hidden" name="Id" id="txtId1" />
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Brand Name</label>
+                            <input type="text" class="form-control myinputs" id="txtName1" name="Name" aria-describedby="emailHelp">
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Treatmen For</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtMedicalConditionId1" name="MedicalConditionId">
+                                    @if (ViewBag.MedicalConditions != null)
+                                    {
+                                        foreach (var item in ViewBag.MedicalConditions)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Unit</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtUnitId1" name="UnitId">
+                                    @if (ViewBag.Units != null)
+                                    {
+                                        foreach (var item in ViewBag.Units)
+                                        {
+                                            <option value="@item.Id">@item.FullName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Shelf</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtShelfId1" name="ShelfId">
+                                    @if (ViewBag.Shelves != null)
+                                    {
+                                        foreach (var item in ViewBag.Shelves)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="middle-name" class="">Select Category</label>
+                            <div class="">
+                                <select class="form-control myinputs" id="txtCategoryId1" name="CategoryId">
+                                    @if (ViewBag.Categories != null)
+                                    {
+                                        foreach (var item in ViewBag.Categories)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Cost Price</label>
+                            <input type="text" class="form-control myinputs numericOnly" id="txtManufacturerPrice1" name="ManufacturerPrice" aria-describedby="emailHelp">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Selling Price</label>
+                            <input type="text" class="form-control myinputs numericOnly" id="txtSellingPrice1" name="SellingPrice" aria-describedby="emailHelp">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Status</label>
+                            <select class="form-control myinputs" name="Status" id="txtStatus1">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Description</label>
+                            <textarea class="form-control myinputs" rows="3" id="txtDescription1" name="Description"></textarea>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" id="btnUpdate" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divLoader" style="display:none;" class="loader">
+    <img src="~/loaders/loading-23.gif" alt="Loader" style="width:20em;" />
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/PharmCareJs/medicines.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#tblMedicine').DataTable();
+
+    });
+
+</script>
+
+
+
+

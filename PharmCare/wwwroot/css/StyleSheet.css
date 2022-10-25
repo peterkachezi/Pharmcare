@@ -1,0 +1,121 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i');
+
+
+.content {
+    min-height: 900px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0 30px 10px;
+}
+
+dl {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+
+.panel {
+    box-shadow: none;
+    overflow: hidden;
+}
+
+    .panel .panel-heading h1,
+    .panel .panel-heading h2,
+    .panel .panel-heading h3,
+    .panel .panel-heading h4,
+    .panel .panel-heading h5,
+    .panel .panel-heading h6 {
+        margin: 0;
+        line-height: 26px;
+        letter-spacing: .5px;
+    }
+
+.panel-bd,
+.panel-primary,
+.panel-success,
+.panel-info,
+.panel-warning,
+.panel-danger,
+.panel-inverse {
+    border: 1px solid #e1e6ef;
+}
+
+.lobipanel {
+    margin-bottom: 20px;
+}
+
+.panel-bd > .panel-heading {
+    color: #374767;
+    background-color: #fff;
+    border-color: #e4e5e7;
+    position: relative;
+}
+
+.panel-bd .panel-heading::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 12px solid #37a000;
+    border-right: 12px solid transparent;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #428bca;
+    border-color: #428bca;
+}
+
+.panel-success > .panel-heading {
+    color: #fff;
+    background-color: #37a000;
+    border-color: #37a000;
+}
+
+.panel-info > .panel-heading {
+    color: #fff;
+    background-color: #62d0f1;
+    border-color: #62d0f1;
+}
+
+.panel-warning > .panel-heading {
+    color: #fff;
+    background-color: #ffc751;
+    border-color: #ffc751;
+}
+
+.panel-danger > .panel-heading {
+    color: #fff;
+    background-color: #E5343D;
+    border-color: #E5343D;
+}
+
+.panel-inverse > .panel-heading {
+    color: #fff;
+    background-color: #3b3e47;
+    border-color: #3b3e47;
+}
+
+.panel-footer {
+    background-color: #f7f9fa;
+    border-top: 1px solid #e1e6ef;
+}
+
+@media (min-width: 768px) {
+    .panel-primary.lobipanel .panel-heading .dropdown .dropdown-menu > li > a,
+    .panel-success.lobipanel .panel-heading .dropdown .dropdown-menu > li > a,
+    .panel-info.lobipanel .panel-heading .dropdown .dropdown-menu > li > a,
+    .panel-warning.lobipanel .panel-heading .dropdown .dropdown-menu > li > a,
+    .panel-danger.lobipanel .panel-heading .dropdown .dropdown-menu > li > a,
+    .panel-inverse.lobipanel .panel-heading .dropdown .dropdown-menu > li > a {
+        color: #fff;
+    }
+}
+
+
+@media (min-width: 768px) .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9 {
+    float: left;
+}

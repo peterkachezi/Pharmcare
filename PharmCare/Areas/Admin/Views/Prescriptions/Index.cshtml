@@ -1,0 +1,150 @@
+﻿@model IEnumerable<PharmCare.DTO.PrescriptionModule.PrescriptionDTO>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/style.css" rel="stylesheet" />
+
+<div class="x_panel shadow p-3  rounded" style="height: 5rem; background-color: #2a3f54;">
+    <div class="col-md-10 my-auto">
+        <h4 class="header">
+            Prescriptions
+        </h4>
+        <p class="text-primary">
+            <span>Home</span> <span> <i class="fa fa-angle-double-right"></i> </span>  <span>Prescriptions</span>
+        </p>
+    </div>
+
+    <div class="col-md-2 my-auto">
+
+        <div class="col-md-12 text-center text-bold">
+            @*<a class="pull-right" href="#" data-toggle="modal" data-target="#ModalCreateMedicine" data-backdrop="static" data-keyboard="false">
+            <span class="m-0 p-0 top-banner-add"><i class="fa fa-2x fa-plus" aria-hidden="true"></i></span>
+            <h6 class="top-banner-add">Add Medicine</h6>
+            </a>*@
+        </div>
+    </div>
+</div>
+
+
+<div class="x_panel shadow p-3 mb-5 bg-white rounded">
+    <div class="x_title">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <h6 class=""><i class="fa fa-building"></i> List of Prescriptions</h6>
+            </div>
+            <div class="col-md-9">
+                @*                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#ModalCreateMedicine" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  Add Medicine</button>
+                *@
+            </div>
+
+        </div>
+
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="tblMedicine" class="table table-striped table-bordered dt-responsive nowrap table-sm" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Patient No</th>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Prescription Date</th>
+                                    <th scope="col">Requested By</th>
+                                    <th scope="col">Payment </th>
+                                    <th scope="col">Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    int count = 1;
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.PatientRegCode</td>
+                                            <td>@item.PatientName</td>
+                                            <td>@item.PatientPhoneNumber</td>
+                                            <td>@item.CreateDate.ToShortDateString()</td>
+                                            <td>@item.CreatedByName</td>
+
+                                            <td>
+
+                                                @{
+                                                    var status = item.PaymentStatus;
+
+                                                    if (status == 1)
+                                                    {
+                                                        <span class="act">Active</span>
+                                                    }
+                                                    if (status == 0)
+                                                    {
+                                                        <span class="pending">Pending Payment</span>
+                                                    }
+                                                }
+
+                                            </td>
+
+                                            <td>
+                                                @{
+                                                    var PaymentStatus = item.PaymentStatus;
+
+                                                    if (PaymentStatus == 0)
+                                                    {
+                                                        <a class="btn-info  btn-sm" href="#" onclick="GenerateInvoice('@item.Id','@item.PatientId')" value=""><i class="fa fa-list"></i> Generate Invoice</a>
+
+                                                    }
+                                                    if (PaymentStatus == 1)
+                                                    {
+                                                        <a class="btn-info  btn-sm" href="#" onclick="Details('@item.Id','@item.PatientId')" value=""><i class="fa fa-eye"></i> View Details</a>
+
+                                                        <a class="btn-success  btn-sm" href="#" onclick="DowloadPrescripton('@item.Id','@item.PatientId')" value=""><i class="fa fa-download"></i> Dowload</a>
+                                                    }
+                                                }
+                                               
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="divLoader" style="display:none;" class="loader">
+    <img src="~/loaders/loading-23.gif" alt="Loader" style="width:20em;" />
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/PharmCareJs/prescription.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#tblMedicine').DataTable();
+
+    });
+
+</script>
+
+
+
+

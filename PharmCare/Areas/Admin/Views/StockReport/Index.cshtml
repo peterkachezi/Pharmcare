@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/styles.css" rel="stylesheet" />
+
+
+<div class="x_panel shadow p-3  rounded" style="height: 5rem; background-color: #2a3f54;">
+    <div class="col-md-10 my-auto">
+        <h4 class="top-banner-header">
+            Stock Report
+        </h4>
+        <p class="text-primary">
+            <span>Home</span> <span> <i class="fa fa-angle-double-right"></i> </span>  <span> Stock Report</span>
+        </p>
+
+    </div>
+
+    <div class="col-md-2 my-auto">
+        <div class="col-md-12 text-center text-bold">
+            @* <a class="pull-right" href="#" data-toggle="modal" data-target="#ModalCreateCategory" data-backdrop="static" data-keyboard="false">
+            <span class="m-0 p-0 top-banner-add"><i class="fa fa-2x fa-plus-circle" aria-hidden="true"></i></span>
+
+            </a>*@
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div class="row">
+
+    <div class="col-md-4 col-sm-4 ">
+        <div class="x_panel">
+            <div class="">
+                <h5 class="modal-title Header" id="">General Report</h5>
+            </div>
+            <div class="x_content">
+
+
+                <div id="divErrorGen">
+                    @if (TempData["ErrorGeneralReport"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert" id="error">
+                            @TempData["ErrorGeneralReport"].ToString()
+                        </div>
+                    }
+                </div>
+
+                <form action="~/Admin/StockReport/DownloadReport/" method="post">
+
+
+                    <div class=" form-group">
+                        <label class="  label-align" for="first-name">
+                            Select Type <span class="required">*</span>
+                        </label>
+                        <div class="">
+                            <select class="form-control myinputs" name="Status">
+                                <option value="3" selected disabled hidden>Select Type</option>
+                                <option value="1">All</option>
+                                <option value="0">Out of Stock</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class=" form-group">
+                        <div class="">
+                            <input type="submit" class=" btn btn-primary col-md-12 myinputs" value="Download ">
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 ">
+        <div class="x_panel">
+            <div class="">
+                <h5 class="modal-title Header" id="">Generate by Category</h5>
+            </div>
+            <div class="x_content">
+
+                <div id="divErrorCategory">
+                    @if (TempData["ErrorCategoryReport"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert" id="error">
+                            @TempData["ErrorCategoryReport"].ToString()
+                        </div>
+                    }
+                </div>
+
+                <form action="~/Admin/StockReport/DownloadReportByCategory/" method="post">
+
+                    <div class=" form-group">
+                        <label class="  label-align" for="first-name">
+                            Select Category <span class="required">*</span>
+                        </label>
+                        <div class="">
+                            <select class="form-control myinputs" name="CategoryId">
+
+                                <option value="" selected disabled hidden>Select Category</option>
+                                @if (ViewBag.Categories != null)
+                                {
+                                    foreach (var item in ViewBag.Categories)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                }
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class=" form-group">
+                        <div class="">
+                            <input type="submit" class=" btn btn-primary col-md-12 myinputs" value="Download ">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-4 ">
+        <div class="x_panel">
+            <div class="">
+                <h5 class="modal-title Header" id="">Filter by stock in date</h5>
+            </div>
+            <div class="x_content">
+
+                <div id="divDError">
+                    @if (TempData["ErrorDateReport"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert" id="error">
+                            @TempData["ErrorDateReport"].ToString()
+                        </div>
+                    }
+                </div>
+                <form action="~/Admin/StockReport/DownloadReportByDateRange/" method="post">
+
+
+                    <div class=" form-group">
+                        <label class="  label-align" for="first-name">
+                            Select Date From <span class="required">*</span>
+                        </label>
+                        <div class="">
+                            <input type="date" class="form-control myinputs" name="DateFrom" />
+
+                        </div>
+                    </div>
+
+                    <div class=" form-group">
+                        <label class="  label-align" for="first-name">
+                            Select Date To <span class="required">*</span>
+                        </label>
+                        <div class="">
+                            <input type="date" class="form-control myinputs" name="DateTo" />
+
+                        </div>
+                    </div>
+
+
+                    <div class=" form-group">
+                        <div class="">
+                            <input type="submit" class=" btn btn-primary col-md-12 myinputs" value="Download ">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+<script>
+
+    $('#divDError').delay(1000).hide(3000);
+
+    $('#divErrorGen').delay(1000).hide(3000);
+
+    $('#divErrorCategory').delay(1000).hide(3000);
+
+    function getit() {
+        var data = new FormData("getClientData", { Department: "Finance" });
+        ajax("ClientSection", data, function (RTN) {
+            var jsFinance = jparse(RTN);
+        });
+
+        console.log(jsFinance);
+
+    }
+
+
+
+    $('#btnCreateLead').click(function (evt) {
+
+        // Stop the button from submitting the form:
+        evt.preventDefault();
+        // Serialize the entire form:
+        var data = new FormData(this.form);
+
+        //var data = new FormData("getClientData", { Department: "Finance" });
+
+        var data = new FormData($(frmUpdateLeads).get(0));
+
+
+        ajax("ClientSection", data, function (RTN) {
+            var jsFinance = jparse(RTN);
+        });
+
+        console.log(jsFinance);
+
+    })
+
+
+
+</script>

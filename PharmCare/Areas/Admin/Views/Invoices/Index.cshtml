@@ -1,0 +1,111 @@
+﻿@model PharmCare.DTO.InvoiceModule.InvoiceDTO
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Invoice @Model.InvoiceNo</title>
+    <style>
+        body {
+            margin: 0px;
+            font-family: 'Segoe UI', Arial;
+        }
+
+        .invoice-head {
+            clear: both;
+            display: block;
+            padding: 10px;
+            margin-bottom: 40px;
+        }
+
+        .invoice-title {
+            background-color: navy;
+            color: white;
+            font-size: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .invoice-to {
+            float: left;
+        }
+
+        .invoice-details {
+            float: right;
+        }
+
+        table {
+            clear: both;
+            border: 1px solid darkgray;
+            border-collapse: collapse;
+            margin: auto;
+        }
+
+        th {
+            background-color: navy;
+            color: white;
+        }
+
+        td, th {
+            border: 1px solid darkgray;
+            padding: 5px;
+        }
+
+        .numeric-cell {
+            text-align: right;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-title">
+        Invoice @Model.InvoiceNo
+    </div>
+    <div class="invoice-head clearfix">
+        <div class="invoice-to">
+            <strong>@Model.CustomerName</strong><br />
+            @Model.CustomerBillingAddress
+        </div>
+        <div class="invoice-details">
+            Invoice no: @Model.InvoiceNo<br />
+            Date: @Model.InvoiceDate.ToShortDateString()<br />
+            Due date: @Model.DueDate.ToShortDateString()
+        </div>
+    </div>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Unit price</th>
+            <th>Amount</th>
+            <th>Net</th>
+            <th>VAT (%)</th>
+            <th>Total</th>
+        </tr>
+        @foreach (var line in Model.Lines)
+        {
+            <tr>
+                <td>@line.LineTitle</td>
+                <td class="numeric-cell">@line.UnitPrice.ToString("0.00") EUR</td>
+                <td class="numeric-cell">@line.Amount</td>
+                <td class="numeric-cell">@line.Net.ToString("0.00") EUR</td>
+                <td class="numeric-cell">@line.VatPercent%</td>
+                <td class="numeric-cell">@line.Total.ToString("0.00") EUR</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4"></td>
+            <td><strong>Total:</strong></td>
+            <td><strong>@Model.Total.ToString("0.00") EUR</strong></td>
+        </tr>
+    </table>
+</body>
+</html>

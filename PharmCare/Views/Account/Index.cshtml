@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Index";
+
+    Layout = null;
+}
+
+<div class="login-page">
+    <div class="pul-layout pul-layout--simplified pul-layout--sm pul-layout--header login-page__inner">
+        <div class="pul-layout__inner">
+            <header class="pul-layout__header" style="height: 64px;"><div class="pul-layout__header-inner"><div class="pul-layout__header-content"><div class="pul-layout__header-content-inner"><div class="login-page-header"><div class="login-page-header__brand"><a class="brand"><img class="brand__logo" src="/cp/theme/images/logos/plesk/logo.svg?1664245535" alt="Plesk Obsidian 18.0.46"><span class="brand__edition">web host edition</span></a></div></div></div></div></div></header><div class="pul-layout__container">
+                <div class="pul-layout__content">
+                    <div class="pul-layout__content-addon"><div class="pul-layout__content-addon-inner"></div></div><main class="pul-layout__main">
+                        <div class="pul-layout__main-inner">
+                            <div id="main" class="login-page__content">
+                                <form class="pul-form login-page__form" id="form-login" method="post"><div id="loginSection"><div class="pul-section-item pul-section-item--vertical pul-form-field pul-form-field-text"><div class="pul-section-item__title"><div class="pul-form-field__label"><label for="login_name"><span>Username</span></label></div></div><div class="pul-section-item__value"><div><span class="pul-input pul-input--size-fill pul-form-field-text__input"><input type="text" class="pul-input__input" id="login_name" name="login_name" value="ipautomo"></span></div></div></div><div class="pul-section-item pul-section-item--vertical pul-form-field pul-form-field-password"><div class="pul-section-item__title"><div class="pul-form-field__label"><label for="passwd"><span>Password</span></label></div></div><div class="pul-section-item__value"><div><div class="pul-form-field-password__control pul-form-field-password__control--fill"><div class="pul-form-field-password__field pul-form-field-password__field--fill"><span class="pul-input pul-input--size-fill pul-input--affix pul-form-field-password__input"><input type="password" class="pul-input__input" id="passwd" name="passwd" value="VGXbli^M^m0348"><span class="pul-input__suffix"><button class="pul-button pul-button--ghost pul-button--empty pul-form-field-password__button--show" type="button"><span class="pul-button__inner"><span class="pul-icon pul-icon--size-16 pul-button__icon"><svg focusable="false"><use href="/ui-library/images/symbols.svg?6bd5879cb9a032639fb375ff6f1dcd26#eye-closed:16"></use></svg></span><span></span></span></button></span></span></div></div></div></div></div><div class="pul-section-item pul-section-item--vertical pul-form-field pul-form-field-select"><div class="pul-section-item__title"><div class="pul-form-field__label"><label for="locale_id"><span>Interface language</span></label></div></div><div class="pul-section-item__value"><div><div class="pul-select pul-select--size-fill"><div class="pul-select-control"><span class="pul-select-control__value-container"><input id="locale_id" class="pul-select-control__input" type="text" readonly="" value="" style="width: 2px;"><span class="pul-select-control__value"><span>Default</span></span></span><span class="pul-select-control__indicators"><button type="button" class="pul-select-control__indicator pul-select-control__indicator--dropdown" tabindex="-1"><span class="pul-icon pul-select-control__indicator-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -5 16 16" aria-hidden="true" focusable="false"><path d="M4 4.048L.847.895a.496.496 0 1 0-.702.702l3.452 3.451a.5.5 0 0 0 .806 0l3.452-3.451a.496.496 0 0 0-.702-.702L4 4.048z"></path></svg></span></button></span><input type="hidden" name="locale_id" value="default"></div></div></div></div></div></div><input type="hidden" name="forgery_protection_token" value="9b70094b50d75b75179ec2168c827d6e"><input name="success_redirect_url" type="hidden" value="/smb/file-manager/list/domainId/1104"><div class="pul-section pul-section--vertical pul-form__footer"><div class="pul-section-item pul-section-item--vertical pul-form-field"><div class="pul-section-item__title"><div class="pul-form-field__label"><label></label></div></div><div class="pul-section-item__value"><div><button class="pul-button pul-button--lg pul-button--primary pul-button--fill login-page__login-button" type="submit" name="send" data-action="log-in"><span class="pul-button__inner"><span><span>Log in</span></span></span></button></div></div></div></div><input type="image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" style="border: 0px; height: 0px; width: 0px; position: absolute;"></form><div class="login-page__links"><span class="pul-action pul-action--size-16"><a href="https://support.plesk.com/hc/en-us/articles/213413369-How-to-log-in-to-Plesk-" target="_blank" data-action="open-how-to" class="pul-action__content"><span class="pul-icon pul-icon--size-16 pul-action__icon"><svg focusable="false"><use href="/ui-library/images/symbols.svg?6bd5879cb9a032639fb375ff6f1dcd26#question-mark-circle:16"></use></svg></span><span>What username and password to use?</span></a></span><span class="pul-action pul-action--size-16"><a href="/get_password.php?locale=default" data-action="reset-password" class="pul-action__content"><span class="pul-icon pul-icon--size-16 pul-action__icon"><svg focusable="false"><use href="/ui-library/images/symbols.svg?6bd5879cb9a032639fb375ff6f1dcd26#lock-closed:16"></use></svg></span><span>Forgot your password?</span></a></span><span class="pul-action pul-action--size-16"><a data-action="open-cookies-policy" class="pul-action__content" href="/login_up.php?modals[cookie-policy-preferences]=true"><span class="pul-icon pul-icon--size-16 pul-action__icon"><svg focusable="false"><use href="/ui-library/images/symbols.svg?6bd5879cb9a032639fb375ff6f1dcd26#globe:16"></use></svg></span><span>Cookies policy in Plesk</span></a></span></div><div>
+                                    <div id="ext-social-login" class="ext-social-login">
+                                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                            <symbol id="btn-google" viewBox="3 3 40 40" fill="none" fill-rule="evenodd"><path fill="#4285F4" d="M31.64 23.205c0-.64-.057-1.252-.164-1.84H23v3.48h4.844a4.14 4.14 0 0 1-1.796 2.716v2.26h2.908c1.702-1.566 2.684-3.874 2.684-6.614z"></path><path fill="#34A853" d="M23 32c2.43 0 4.467-.806 5.956-2.18l-2.908-2.26c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.583-5.036-3.71h-3.007v2.332A8.997 8.997 0 0 0 23 32z"></path><path fill="#FBBC05" d="M17.964 24.71a5.41 5.41 0 0 1-.282-1.71c0-.593.102-1.17.282-1.71v-2.332h-3.007A8.996 8.996 0 0 0 14 23c0 1.452.348 2.827.957 4.042l3.007-2.332z"></path><path fill="#EA4335" d="M23 17.58c1.32 0 2.508.454 3.44 1.345l2.582-2.58C27.462 14.89 25.426 14 23 14a8.997 8.997 0 0 0-8.043 4.958l3.007 2.332c.708-2.127 2.692-3.71 5.036-3.71z"></path><path d="M14 14h18v18H14z"></path></symbol>
+                                            <symbol id="btn-github" viewBox="3 3 40 40"><path d="M23 14a9 9 0 0 0-2.845 17.54c.45.083.614-.195.614-.434 0-.214-.01-.78-.018-1.53-2.503.543-3.03-1.207-3.03-1.207-.41-1.04-1-1.32-1-1.32-.818-.56.06-.55.06-.55.904.064 1.38.93 1.38.93.802 1.374 2.106.98 2.62.75.08-.58.313-.98.57-1.205-1.998-.227-4.1-1-4.1-4.448 0-.985.35-1.79.927-2.417-.093-.227-.4-1.143.09-2.38 0 0 .754-.24 2.473.922a8.62 8.62 0 0 1 2.256-.3 8.63 8.63 0 0 1 2.252.302c1.72-1.164 2.473-.922 2.473-.922.49 1.238.182 2.154.09 2.382.577.628.925 1.432.925 2.415 0 3.455-2.1 4.216-4.11 4.44.328.276.616.826.616 1.665 0 1.203-.01 2.174-.01 2.47 0 .24.162.52.618.432A9 9 0 0 0 23 14"></path></symbol>
+                                            <symbol id="btn-facebook" viewBox="3 3 40 40"><path d="M17 23.48v4.958h3.037V43h5.84V28.376h4.074l.434-4.895h-4.508v-2.789c0-1.154.232-1.61 1.347-1.61h3.16V14h-4.043c-4.345 0-6.304 1.913-6.304 5.577v3.904H17z"></path></symbol>
+                                        </svg>
+
+                                        <p class="ext-social-login__text">Or log in with:</p>
+                                        <a class="ext-social-login__button ext-social-login__button--google" tabindex="0" href="https://accounts.google.com/o/oauth2/auth?response_type=code&amp;access_type=online&amp;client_id=940791060416-7csa8f6lbar39rhkmbqt5big47k9m469.apps.googleusercontent.com&amp;redirect_uri=https%3A%2F%2Fid.plesk.com%2Fredirect%2Fgoogle-sign-in.html&amp;state=%2B%2FGtVH5UUrOAv0Z%2BozlboLD6SX3XfogAZwgd6nFz%7Credirect-plesk%3Dhttps%253A%252F%252Flim202.truehost.cloud%253A8443%252Fmodules%252Fsocial-login%252Fpublic%252Flogin.php%253Fprovider%253Dgoogle%2526success_redirect_url%253D%25252Fsmb%25252Ffile-manager%25252Flist%25252FdomainId%25252F1104&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&amp;approval_prompt=auto" title="Google">
+                                            <svg class="ext-social-login__button-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#btn-google"></use></svg>
+                                        </a>
+                                        <a class="ext-social-login__button ext-social-login__button--github" tabindex="0" href="https://github.com/login/oauth/authorize?client_id=1c4da8e2ca643e96ea17&amp;redirect_uri=https%3A%2F%2Fid.plesk.com%2Fredirect%2Fgithub-sign-in.html&amp;scope=user%3Aemail&amp;state=Kn4725qKxGyTX3CpGpHB9MRf7IZWCqd32bG2nyS4%7Credirect-plesk%3Dhttps%253A%252F%252Flim202.truehost.cloud%253A8443%252Fmodules%252Fsocial-login%252Fpublic%252Flogin.php%253Fprovider%253Dgithub%2526success_redirect_url%253D%25252Fsmb%25252Ffile-manager%25252Flist%25252FdomainId%25252F1104" title="GitHub">
+                                            <svg class="ext-social-login__button-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#btn-github"></use></svg>
+                                        </a>
+                                        <a class="ext-social-login__button ext-social-login__button--facebook" tabindex="0" href="https://www.facebook.com/v2.10/dialog/oauth?auth_type=rerequest&amp;client_id=2078260759091384&amp;state=N2TF7nAlcgPvKOzGQvKclJ1bJBOSlltTi53uiDqb%7Credirect-plesk%3Dhttps%253A%252F%252Flim202.truehost.cloud%253A8443%252Fmodules%252Fsocial-login%252Fpublic%252Flogin.php%253Fprovider%253Dfacebook%2526success_redirect_url%253D%25252Fsmb%25252Ffile-manager%25252Flist%25252FdomainId%25252F1104&amp;response_type=code&amp;sdk=php-sdk-5.7.0&amp;redirect_uri=https%3A%2F%2Fid.plesk.com%2Fredirect%2Ffb-sign-in.html&amp;scope=email" title="Facebook">
+                                            <svg class="ext-social-login__button-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#btn-facebook"></use></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+   <style>
+    .login-page .pul-layout--simplified .pul-layout__container {
+        display: block;
+    }
+    .pul-layout--simplified .pul-layout__header-inner {
+        background-color: #536a7d;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        box-shadow: none;
+        color: #fff;
+        min-height: 48px;
+    }
+    .pul-layout--simplified .pul-layout__inner {
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        box-shadow: 0 4px 16px rgb(40 40 52 / 15%), 0 0 1px rgb(40 40 52 / 35%);
+        margin: 0 auto;
+        max-width: 640px;
+        min-height: auto;
+        width: 100%;
+    }
+
+    .pul-layout__inner {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        width: 100%;
+    }
+    .login-page .pul-layout--simplified .pul-layout__inner {
+        margin: auto;
+        max-width: 392px;
+    }
+    login-page .pul-layout--simplified {
+        min-height: auto;
+    }
+
+    .login-page__inner {
+        flex: auto;
+        padding: 24px 16px;
+    }
+
+    .pul-layout--simplified {
+        background-color: #4b4b4b;
+        min-height: 100vh;
+        padding: 20px 0;
+    }
+
+    .pul-layout {
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    user agent stylesheet
+    div {
+        display: block;
+    }
+
+    body {
+        background-color: #fbfbfb;
+        color: #222;
+        margin: 0;
+    }
+    .login-page {
+        background-color: #4b4b4b;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+   </style>

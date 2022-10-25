@@ -1,0 +1,774 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/style.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label for="manufacturer" class="col-md-2 text-right col-form-label">Manufacturer <i class="text-danger"> * </i>:</label>
+                        <div class="col-md-4">
+                            <div class="">
+                                <select name="manufacturer_id" class="form-control myinputs" id="manufacturer_id">
+                                    <option value="" selected="selected">Select Manufacturer</option>
+                                    @if (ViewBag.Manufacturers != null)
+                                    {
+                                        foreach (var item in ViewBag.Manufacturers)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="date" class="col-md-2 text-right col-form-label">Date <i class="text-danger"> * </i>:</label>
+                        <div class="col-md-4">
+                            <div class="">
+                                <input type="date" name="date" class="form-control datepicker hasDatepicker myinputs" id="purdate" placeholder="Date" ">
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-2 text-right col-form-label ">Invoice No<i class="text-danger"> * </i>:</label>
+                        <div class="col-md-4">
+                            <div class="">
+                                <input type="text" class="form-control valid_number myinputs numericOnly" name="invoice_no" id="invoice_no" placeholder="Invoice No">
+                            </div>
+                        </div>
+                        <label for="details" class="col-md-2 text-right col-form-label">Details:</label>
+                        <div class="col-md-4">
+                            <div class="">
+
+                                <input type="text" class="form-control myinputs" name="details" id="details" placeholder="Details" value="" tabindex="4">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-2 text-right col-form-label numericOnly">Payment Type<i class="text-danger"> * </i>:</label>
+                        <div class="col-md-4">
+                            <div class="">
+                                <select name="payment_type" id="txtBankType" onchange="GetPaymentType(this.value)" class="form-control select2 select2-hidden-accessible myinputs" tabindex="-1" aria-hidden="true" data-select2-id="select2-data-payment_type">
+                                    <option value="1" selected="selected" data-select2-id="select2-data-57-6qs5">Cash Payment</option>
+                                    <option value="2">Bank Payment</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="details" class="col-md-2 text-right col-form-label" style="display: none;" id="lblBank">Bank:</label>
+                        <div class="col-md-4">
+                            <div id="bank_div" style="display: none;">
+
+                                <select name="bank_id" class="form-control select2 select2-hidden-accessible myinputs" id="bank_id" tabindex="-1" aria-hidden="true" data-select2-id="select2-data-bank_id">
+                                    <option value="" selected="selected" data-select2-id="select2-data-64-5qfh">Select Bank</option>
+                                    <option value="1">City Bank </option>
+                                    <option value="2">UCB </option>
+                                    <option value="3">DBBL</option>
+                                    <option value="4">Prime Asia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-----Add items to table------>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class=" form-group">
+
+                        <div class="col-md-4" style="display:none;">
+                            <div class="form-group">
+                                Item Name:
+                                <input type="text" id="txtServiceName" name="ItemName" class="form-control" />
+                                <input type="text" id="txtService_Id" name="ServiceId" class="form-control" />
+
+                            </div>
+
+                        </div>
+
+
+
+                        
+                        <div class="col-md-2">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-10 col-form-label"><strong>Amount:</strong></label>
+                                <div class="col-sm-10">
+                                    <select class="form-control myinputs" name="Id" id="txtMedicineId">
+                                @if (ViewBag.Medicines != null)
+                                {
+                                    foreach (var data in ViewBag.Medicines)
+                                    {
+                                        <option value="@data.Id"> @data.Name</option>
+                                    }
+                                }
+                            </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-md-2">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-10 col-form-label"><strong>Amount:</strong></label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="txtServiceAmount" name="" value="0" class="form-control numericOnly myinputs" readonly="readonly" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-10 col-form-label"><strong> Quantity:</strong></label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="0" id="txtQuantity" name="Quantity" class="form-control numericOnly myinputs" onchange="CalculateSubTotal()" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-10 col-form-label"><strong>Discount:</strong></label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="0.00" id="txtDiscount" name="Discount" class="form-control numericOnly myinputs" onchange="CalculateSubTotal()" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-10 col-form-label"><strong>Total:</strong></label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="0.00" id="txtTotal" name="Total" class="form-control myinputs" readonly="readonly" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="col-sm-10">
+
+                                <input type="button" id="btnAddToList" style="margin-top:2.4em" name="btnAddToList" class="btn btn-success pull-right btn-sm" value="Add To List" />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-----end------>
+
+    <div class="col-md-8 ScrollStyle">
+        <div class="card border border-info">
+            <div class="card-body">
+                <h5 class="card-title Header">Orders</h5>
+                <div class="card-box table-responsive">
+                    <table id="tblProducts" class="table table-striped table-bordered dt-responsive nowrap table-sm " cellspacing="0" width="100%">
+
+                        <thead>
+                            <tr>
+                                <th hidden>Item Id</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Unit Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Discount</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="card border border-info">
+            <div class="card-body">
+                <h5 class="card-title Header">Amount Due  @DateTime.Now.ToShortDateString()</h5>
+
+                <div class="item form-group">
+                    <label class="col-form-label col-md-4 col-sm-3 label-align" for="first-name">
+                        Total Amount
+                    </label>
+                    <div class="col-md-8 col-sm-8 ">
+                        <input type="text" readonly="readonly" id="txtTotalAmount" class="form-control" value="0.00" style="background-color: #1a1a2c; color:#ffffff;">
+                    </div>
+                </div>
+
+
+                <div class="item form-group">
+                    <label class="col-form-label col-md-4 col-sm-3 label-align" for="first-name">
+                        Balance
+                    </label>
+                    <div class="col-md-8 col-sm-8 ">
+                        <input type="text" id="txtBalance" class="form-control" value="0.00" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="item form-group">
+                    <label class="col-form-label col-md-4 col-sm-3 label-align" for="first-name">
+                        Payment Amount
+                    </label>
+                    <div class="col-md-8 col-sm-8 ">
+                        <input type="text" id="txtPaymentAmount" value="0.00" class="form-control ">
+                    </div>
+                </div>
+
+
+
+                <div class="modal-footer" id="btnCheckout">
+                    <button class="btn btn-primary" onclick="SaveTransaction()" value="Payment">Checkout</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+<div class="modal fade" id="ReceiptModal" tabindex="-1" role="dialog" aria-labelledby="ReceiptModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ReceiptModalLabel">Success !</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="sa-placeholder"></div>
+                <div>
+                    <img src="/images/Accept-icon.png" class="img-center" />
+                </div>
+                <br />
+                <div class="" role="alert">
+                    <strong> Transaction was successfull ,click Yes to print the receipt or No to Cancel</strong>
+                </div>
+
+                <input type="hidden" id="txtOrderNumber" />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnCancel" data-dismiss="modal"> No</button>
+                <button type="button" id="btnPrint" class="btn btn-primary">  Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="divLoader" style="display:none;" class="loader">
+
+    <img src="~/loaders/loading-23.gif" alt="Loader" style="width:20em;" />
+
+</div>
+
+
+
+
+<style>
+    /*        body {
+            overflow-x: hidden;
+            overflow-y: auto;
+            background: #f4f4f5;
+            font-size: 14px;
+            height: 100%;
+            font-family: 'Nunito Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+        }*/
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #999;
+            line-height: 34px;
+        }
+
+            .select2-container .select2-selection--single .select2-selection__rendered {
+            display: block;
+            padding-left: 8px;
+            padding-right: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+            .select2-container .select2-selection--single {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            height: 28px;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .img-center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ScrollStyle {
+            max-height: 28em;
+            overflow-y: scroll;
+        }
+
+        .card {
+            margin-bottom: 10px;
+        }
+
+        .loader {
+            position: fixed;
+            width: 256px;
+            height: 256px;
+            top: 50%;
+            left: 50%;
+            margin: -128px 0 0 -128px;
+            z-index: 1000;
+        }
+
+        .Header {
+            font-weight: 600;
+            color: #45ca9f;
+            font-size: 1.2rem;
+            max-width: calc(100% - 40px);
+        }
+
+        .daterangepicker td.start-date.end-date {
+    border-radius: 4px;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #37a000;
+}
+.daterangepicker .calendar-table td, .daterangepicker .calendar-table th {
+    width: 34px;
+    height: 30px;
+    font-size: 12.8px;
+    font-size: .8rem;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #357ebd;
+    border-color: transparent;
+    color: #fff;
+}
+</style>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/sweetalart/sweetalert.min.css" rel="stylesheet" />
+<script src="~/sweetalart/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#tblProducts').DataTable();
+
+        $("input[type=text]").keyup(function () {
+            CalculateBalance();
+        });
+
+        $("#btnAddToList").click(function () {
+
+            txtServiceAmount
+
+            AddToTheList();
+        });
+
+
+        $("#btnPayment").click(function () {
+
+            SaveTransaction();
+        });
+
+
+        hidshowbtncheckout();
+
+
+    });
+
+
+    function GetPaymentType() {
+
+        if ($('#txtBankType').val() == '2') {
+
+            $('#lblBank').show();
+            $('#bank_div').show();
+
+        } else {
+
+            $('#lblBank').hide();
+            $('#bank_div').hide();
+        }
+    }
+
+
+
+
+
+    $("#btnPrint").click(function () {
+
+        var orderNumber = $('#txtOrderNumber').val();
+
+        console.log(orderNumber);
+
+        var url = "/CyberSection/POS/GetReceipt?OrderNumber=" + orderNumber;
+
+        window.open(window.location.href = url, '_blank');
+
+    })
+
+    $("#btnCancel").click(function () {
+
+        setTimeout(function () { location.reload() });
+
+    })
+
+    function hidshowbtncheckout() {
+
+        if (($.trim($("tbody").html()) == ""))
+
+            $("#btnCheckout").hide();
+
+        else
+            $("#btnCheckout").show();
+
+    }
+
+    function SaveTransaction() {
+
+        $("#divLoader").show();
+
+        if ($('#txtTotalAmount').val() < 1) {
+            $('#tblProducts').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "There are no items on the list",
+                showConfirmButton: true,
+            });
+            $("#divLoader").hide();
+            return false;
+
+
+        }
+
+
+
+        var OrderDTO = {};
+
+        ListOfCyberSaleDetails = new Array();
+
+        OrderDTO.customerId = $("#txtCustomerId").val();
+        OrderDTO.id = $("#txtPaymentModeId").val();
+        OrderDTO.totalAmount = $("#txtTotalAmount").val();
+        OrderDTO.change = $("#txtBalance").val();
+        OrderDTO.cashPaid = $("#txtPaymentAmount").val();
+
+
+        $("#tblProducts").find("tr:gt(0)").each(function () {
+
+            var SalesOrderDetailsDTO = {};
+
+            SalesOrderDetailsDTO.Total = parseFloat($(this).find("td:eq(5)").text());
+            SalesOrderDetailsDTO.ServiceId = $(this).find("td:eq(0)").text();
+            SalesOrderDetailsDTO.SellingPrice = parseFloat($(this).find("td:eq(2)").text());
+            SalesOrderDetailsDTO.Quantity = parseFloat($(this).find("td:eq(3)").text());
+            SalesOrderDetailsDTO.Discount = parseFloat($(this).find("td:eq(4)").text());
+
+            ListOfCyberSaleDetails.push(SalesOrderDetailsDTO);
+
+        });
+
+        OrderDTO.ListOfCyberSaleDetails = ListOfCyberSaleDetails;
+
+        console.log(OrderDTO);
+
+        $.ajax({
+
+            type: "POST",
+            url: "/CyberSection/POS/SaveTransaction/",
+            data: OrderDTO,
+
+            success: function (response) {
+
+                if (response.success) {
+
+                    var orderNumber = response.responseText;
+
+                    $("#txtOrderNumber").val(orderNumber);
+
+                    $('#ReceiptModal').modal({ backdrop: 'static', keyboard: false })
+
+                    $("#ReceiptModal").modal('show');
+
+
+                } else {
+
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: response.responseText,
+                        showConfirmButton: true,
+                        timer: 5000,
+                    });
+
+                }
+
+                $("#divLoader").hide();
+
+            },
+
+
+
+            error: function (response) {
+                alert("error!");
+
+            }
+        })
+
+    }
+
+
+    function AddToTheList() {
+
+        if ($('#txtQuantity').val() == '' || $('#txtQuantity').val() == '0.00' || $('#txtQuantity').val() == '0') {
+            $('#txtQuantity').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Please enter quantity",
+                showConfirmButton: true,
+            });
+
+            return false;
+        }
+
+        if ($('#txtServiceAmount').val() == '' || $('#txtServiceAmount').val() == '0.00' || $('#txtServiceAmount').val() == '0') {
+            $('#txtServiceAmount').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "This product is out of stock",
+                showConfirmButton: true,
+            });
+
+            return false;
+        }
+
+
+        if ($('#txtServiceAmount').val() < 1) {
+            $('#txtServiceAmount').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "This product is out of stock",
+                showConfirmButton: true,
+            });
+
+            return false;
+        }
+
+
+
+        var tblItemList = $("#tblProducts");
+
+        var SellingPrice = parseFloat($("[id*=txtServiceAmount]").val());
+        var Quantity = parseFloat($("[id*=txtQuantity]").val());
+        var Discount = parseFloat($("[id*=txtDiscount]").val());
+        var ServiceId = $("[id*=txtService_Id]").val();
+        var ItemName = $("#txtServiceName").val();
+        var Total = parseFloat(SellingPrice * Quantity) - Discount;
+
+        console.log(ServiceId)
+
+
+        var ItemList =
+
+            "<tr><td hidden>" +
+            ServiceId +
+            "</td><td>" +
+            ItemName +
+            "</td><td>" +
+            parseFloat(SellingPrice).toFixed(2) +
+            "</td><td>" +
+            parseFloat(Quantity).toFixed(2) +
+            "</td><td>" +
+            parseFloat(Discount).toFixed(2) +
+            "</td><td>" +
+            parseFloat(Total).toFixed(2) +
+
+            "</td><td> <input type='button' value='Remove' name='Remove' class='btn btn-danger btn-sm' onclick='RemoveItem(this)' /> </td></tr>";
+
+        tblItemList.append(ItemList);
+        FinaItemTotal();
+        ResetItem();
+        hidshowbtncheckout();
+
+    }
+
+
+    function RemoveItem(Id) {
+        $(Id).closest('tr').remove();
+        CalculateSubTotal();
+        FinaItemTotal();
+        hidshowbtncheckout();
+    }
+
+
+    function ResetItem() {
+
+        $("#txtQuantity").val('0');
+        $("#txtDiscount").val('0.00');
+        $("#txtTotal").val('0.00');
+        $("#txtServiceAmount").val('0');
+    }
+
+    function FinaItemTotal() {
+
+        $("#txtTotalAmount").val("0.00");
+        var TotalAmount = 0.00;
+        $("#tblProducts").find("tr:gt(0)").each(function () {
+            var Total = parseFloat($(this).find("td:eq(5)").text());
+            TotalAmount += Total;
+        });
+        $("#txtTotalAmount").val(parseFloat(TotalAmount).toFixed(2));
+        $("#txtPaymentTotal").val(parseFloat(TotalAmount).toFixed(2));
+
+    }
+
+    function CalculateBalance() {
+
+        var FinalAmount = $("#txtTotalAmount").val();
+
+        var PaymentAmount = $("#txtPaymentAmount").val();
+
+        var BalanceAmount = parseFloat(PaymentAmount) - parseFloat(FinalAmount);
+
+        $("#txtBalance").val(parseFloat(BalanceAmount).toFixed(2));
+
+        if (parseFloat(BalanceAmount) == 0) {
+            $("#btnPayment").removeAttr("disabled");
+        } else {
+            $("#btnPayment").attr("disabled", "disabled");
+        }
+    }
+
+
+    function CalculateSubTotal() {
+
+        var SellingPrice = parseFloat($("[id*=txtServiceAmount]").val());
+        var Quantity = parseFloat($("[id*=txtQuantity]").val());
+        var Discount = parseFloat($("[id*=txtDiscount]").val());
+        var total = parseFloat(SellingPrice * Quantity) - Discount;
+        $("#txtTotal").val(parseFloat(total).toFixed(2));
+
+    }
+
+    function GetBrands(evt) {
+
+
+    };
+
+
+    $('#btnGetProductData').click(function () {
+
+
+        if ($('#txtServiceId').val() == '') {
+            $('#txtServiceId').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Please select a product",
+                showConfirmButton: true,
+            });
+
+            return false;
+        }
+
+        var id = $('#txtServiceId').val();
+
+        console.log(id);
+
+        $.get("/CyberSection/Services/GetById/?Id=" + id,
+
+            function (data, status) {
+
+                console.log(data);
+
+                if (data.data == false) {
+
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: "This product is out stock",
+                        showConfirmButton: true,
+                    });
+
+                } else {
+
+                    $("#txtService_Id").val(data.data.id);
+
+                    $("#txtServiceName").val(data.data.name);
+
+                    $("#txtServiceAmount").val(data.data.amount);
+
+                }
+
+            });
+
+    })
+
+    //Allow users to enter numbers only
+    $(".numericOnly").bind('keypress', function (e) {
+        if (e.keyCode == '9' || e.keyCode == '16') {
+            return;
+        }
+        var code;
+        if (e.keyCode) code = e.keyCode;
+        else if (e.which) code = e.which;
+        if (e.which == 46)
+            return false;
+        if (code == 8 || code == 46)
+            return true;
+        if (code < 48 || code > 57)
+            return false;
+    });
+
+</script>
+
+
+
+
+

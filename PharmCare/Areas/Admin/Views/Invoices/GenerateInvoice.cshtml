@@ -1,0 +1,125 @@
+﻿@model PharmCare.DTO.PrescriptionModule.PrescriptionProfileDTO
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Invoice/style.css" rel="stylesheet" />
+
+
+<meta charset="utf-8">
+<title>Invoice</title>
+<link rel="license" href="https://www.opensource.org/licenses/mit-license/">
+
+
+<div class="x_panel">
+    <div class="x_content">
+
+        <header>
+            <h1>Invoice</h1>
+            <address contenteditable="">
+                <div class="">
+                    <div class="">
+                        <p>Mumas West Health Care,</p>
+                        <p>P.O BOX 322-50102, <br>Mumias - Kenya,</p>
+                        <p>0727587284 / 0729421514</p>
+                        <p>muwesthealthcare@gmail.com</p>
+                    </div>
+
+               
+                </div>
+            </address>
+        </header>
+
+
+
+
+        <article style="margin-top: -2rem;">
+            <h1>Recipient</h1>
+            <address contenteditable="">
+                <p>@Model.patientDTO.FullName<br>@Model.patientDTO.PhoneNumber</p>
+            </address>
+            <table class="meta">
+                <tbody>
+                    <tr>
+                        <th><span contenteditable="">Invoice #</span></th>
+                        <td><span contenteditable="">@Model.prescription.BillNo</span></td>
+                    </tr>
+                    <tr>
+                        <th><span contenteditable="">Date</span></th>
+                        <td><span contenteditable="">@Model.prescription.CreateDate.ToShortDateString()</span></td>
+                    </tr>
+                    <tr>
+                        <th><span contenteditable="">Amount Due</span></th>
+                        <td><span id="prefix" contenteditable="">Ksh</span><span> @Model.prescription.TotalAmount</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="inventory">
+                <thead>
+                    <tr>
+                        <th><span contenteditable="">No</span></th>
+                        <th><span contenteditable="">Drug Description</span></th>
+                        <th><span contenteditable="">Quantity</span></th>
+                        <th><span contenteditable="">Rate</span></th>
+                        <th><span contenteditable="">Total</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model.prescriptionDetails != null && Model.prescriptionDetails.Count() > 0)
+                    {
+                        int count = 1;
+                        @foreach (var item in Model.prescriptionDetails)
+                        {
+                            <tr>
+                                <td>@count</td>
+
+                                <td><span contenteditable="">@item.MedicineName</span></td>
+
+                                <td><span contenteditable="">@item.Quantity</span></td>
+
+                                <td><span contenteditable="">@item.SellingPrice</span></td>
+
+                                <td><span contenteditable="">@item.Total</span></td>
+
+                            </tr>
+                            count++;
+                        }
+                    }
+
+
+
+                </tbody>
+
+            </table>
+
+            <table class="balance">
+                <tbody>
+                    <tr>
+                        <th><span contenteditable="">Total</span></th>
+                        <td><span data-prefix="">Ksh</span><span> @Model.prescription.TotalAmount</span></td>
+                    </tr>
+                    <tr>
+                        <th><span contenteditable="">Amount Paid</span></th>
+                        <td><span data-prefix="">Ksh</span><span contenteditable=""> 0.00</span></td>
+                    </tr>
+                    <tr>
+                        <th><span contenteditable="">Balance Due</span></th>
+                        <td><span data-prefix="">Ksh</span><span> @Model.prescription.TotalAmount</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
+
+        <div class="col-md-4 pull-right">
+            <button type="button" onclick="DowloadInvoice('@Model.prescription.Id','@Model.patientDTO.Id')" class="btn btn-success"><i class="fa fa-print"></i> Generate Invoice</button>
+        </div>
+
+        <!-- partial -->
+
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/PharmCareJs/prescription.js"></script>

@@ -1,0 +1,240 @@
+﻿@model PharmCare.DTO.PrescriptionModule.PrescriptionProfileDTO
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Pharmacist/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/css/style.css" rel="stylesheet" />
+
+<div class="x_panel shadow p-3  rounded" style="height: 5rem; background-color: #2a3f54;">
+    <div class="col-md-10 my-auto">
+        <h4 class="header">
+            @Model.patientDTO.FullName
+        </h4>
+        <p class="text-primary">
+            <span>Home</span> <span> <i class="fa fa-angle-double-right"></i> </span>  <span>Prescriptions</span>
+        </p>
+
+    </div>
+
+    <div class="col-md-2 my-auto">
+
+        <div class="col-md-12 text-center text-bold">
+            @*<a class="pull-right" href="#" data-toggle="modal" data-target="#ModalCreateMedicine" data-backdrop="static" data-keyboard="false">
+            <span class="m-0 p-0 top-banner-add"><i class="fa fa-2x fa-plus" aria-hidden="true"></i></span>
+            <h6 class="top-banner-add">Add Medicine</h6>
+            </a>*@
+        </div>
+    </div>
+</div>
+
+
+
+<div class="x_panel shadow p-3 mb-5 bg-white rounded">
+    <div class="x_title">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <h6 class=""><i class="fa fa-building"></i> List of Prescriptions</h6>
+            </div>
+            <div class="col-md-9">
+                <button type="button" class="btn btn-success btn-sm  pull-right" ><i class="fa fa-print"></i> Print</button>
+
+            </div>
+
+        </div>
+
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="tblMedicine" class="table table-striped table-bordered dt-responsive nowrap table-sm" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Medicine</th>
+                                    <th scope="col">WhenToTake</th>
+                                    <th scope="col">Frequency</th>
+                                    <th scope="col">TimePeriod</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Requested By</th>
+                                    <th scope="col">Dispatch </th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.prescriptionDetails != null && Model.prescriptionDetails.Count() > 0)
+                                {
+                                    int count = 1;
+                                    @foreach (var item in Model.prescriptionDetails)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.MedicineName</td>
+                                            <td>@item.WhenToTake</td>
+                                            <td>@item.Frequency</td>
+                                            <td>@item.NoOfDays</td>
+                                            <td>@item.CreateDate.ToShortDateString()</td>
+                                            <td>@item.CreatedByName</td>
+                                            <td>
+                                                @{
+                                                    var status = item.MedicineDispatchStatus;
+
+                                                    if (status == 0)
+                                                    {
+                                                        <span class="pending">Pending</span>
+                                                    }
+                                                    if (status == 1)
+                                                    {
+                                                        <span class="active_user">Medicine Issued</span>
+                                                    }
+                                                }
+
+                                            </td>
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn-info  btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Action
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                                        @{
+                                                            var k = item.MedicineDispatchStatus;
+
+                                                            if (k == 0)
+                                                            {
+                                                                <a class="dropdown-item" href="#" onclick="IssueMedicine('@item.Id')">Issue Drug</a>
+                                                            }
+                                                            if (k == 1)
+                                                            {
+                                                                <a class="dropdown-item" href="#" onclick="UnDoIssueMedicine('@item.Id')">Undo</a>
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        count++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="ModalIssuedMedicine" tabindex="-1" role="dialog" aria-labelledby="ModalIssuedMedicineLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title header" id="ModalIssuedMedicineLabel"> Issue Medicine</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="frmIssuedMedicine">
+
+                    <input type="hidden" id="txtPrescriptionId" name="PrescriptionId" class="form-control myinputs" />
+
+                    <input type="hidden" id="txtMedicineId" name="MedicineId" class="form-control myinputs" />
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-12">
+                           Name
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" id="txtName" name="PatientId" class="form-control myinputs" readonly="readonly" />
+                        </div>
+                    </div>    
+                    
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-12">
+                           Shelf Name
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" id="txtShelfName" name="PatientId" class="form-control myinputs" readonly="readonly" />
+                        </div>
+                    </div>    
+                    
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-12">
+                           Selling Price
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" id="txtSellingPrice" name="SellingPrice" class="form-control myinputs" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-12">Current Stock</label>
+                        <div class="col-sm-12">
+                            <input type="text" id="txtCurrentStock" class="form-control myinputs" readonly="readonly" />
+                        </div>
+                    </div>
+                
+                    
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-12">Enter Quantity</label>
+                        <div class="col-sm-12">
+                            <input type="text" id="txtQuantity" name="Quantity" class="form-control myinputs" />
+                        </div>
+                    </div>                
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSubmit" class="btn btn-success">Submit</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="divLoader" style="display:none;" class="loader">
+    <img src="~/loaders/loading-23.gif" alt="Loader" style="width:20em;" />
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/PharmCareJs/prescription.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#tblMedicine').DataTable();
+
+    });
+
+</script>
+
+
+
+

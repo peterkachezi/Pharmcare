@@ -1,0 +1,42 @@
+﻿
+
+
+
+
+.status-Inactive {
+    background-color: #e84646;
+    border-radius: 9px;
+    display: flex;
+    height: 24px;
+    margin-bottom: 0;
+    position: relative;
+    color: white;
+}
+
+
+
+
+
+.uploaded {
+    background-color: #55ce63;
+/*    border-radius: 9px;*/
+    display: block;
+    height: 24px;
+    margin-bottom: 0;
+    position: relative;
+    min-width: 107px;
+    color: white;
+    text-align: center;
+}
+
+.disabledUser {
+    background-color: #e84646;
+    border-radius: 9px;
+    display: block;
+/*    height: 24px;*/
+    margin-bottom: 0;
+    position: relative;
+/*    min-width: 107px;*/
+    color: white;
+    text-align: center;
+}
