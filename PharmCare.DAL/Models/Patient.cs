@@ -23,5 +23,9 @@ namespace PharmCare.DAL.Models
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? Gender { get; set; }
+        public string? NHIFNo { get; set; }
+        public string? IDNumber { get; set; }
+        public Guid? CountyId { get; set; }
+        public Guid? SubCountyId { get; set; }
     }
 }

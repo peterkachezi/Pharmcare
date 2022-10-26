@@ -22,6 +22,10 @@ namespace PharmCare.DTO.PatientModule
         public string Height { get; set; }
         public string Weight { get; set; }
         public string Gender { get; set; }
+        public string NHIFNo { get; set; }
+        public string IDNumber { get; set; }
+        public Guid CountyId { get; set; }
+        public Guid SubCountyId { get; set; }
         public string NewCreateDate { get { return CreateDate.ToShortDateString(); } }
 
         public int Age

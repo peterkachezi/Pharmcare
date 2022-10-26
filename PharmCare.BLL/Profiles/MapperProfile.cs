@@ -6,6 +6,7 @@ using PharmCare.DTO.Accounts.OpeningBalanceModule;
 using PharmCare.DTO.ApplicationUsersModule;
 using PharmCare.DTO.CategoryModule;
 using PharmCare.DTO.CountryModule;
+using PharmCare.DTO.CountyModule;
 using PharmCare.DTO.LeafSettingModule;
 using PharmCare.DTO.MedicalConditionModule;
 using PharmCare.DTO.MedicineModule;
@@ -67,6 +68,10 @@ namespace PharmCare.BLL.Profiles
             CreateMap<PrescriptionDetail, PrescriptionDetailDTO>().ReverseMap();
 
             CreateMap<Prescription, PrescriptionDTO>().ReverseMap();
+
+            CreateMap<County, CountyDTO>().ReverseMap();
+
+            CreateMap<SubCounty, SubCountyDTO>().ReverseMap();
 
         }
     }

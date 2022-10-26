@@ -27,6 +27,7 @@ using PharmCare.BLL.Repositories.ApplicationUserModule;
 using PharmCare.Services.SMSModule;
 using Rotativa.AspNetCore;
 using Microsoft.Extensions.Caching.Memory;
+using PharmCare.BLL.Repositories.CountyModule;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,13 +80,9 @@ builder.Services.AddTransient<IMailService, MailService>();
 
 builder.Services.AddTransient<IMessagingService, MessagingService>();
 
+builder.Services.AddTransient<ICountyRepository, CountyRepository>();
+
 var app = builder.Build();
-
-
-
-
-
-
 
 
 // Configure the HTTP request pipeline.

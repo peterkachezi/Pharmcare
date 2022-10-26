@@ -401,6 +401,270 @@ namespace PharmCare.DAL.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("PharmCare.DAL.Models.County", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Counties");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e09190d0-c741-48b3-9d5a-eba037380379"),
+                            Name = "Bomet"
+                        },
+                        new
+                        {
+                            Id = new Guid("d4b56342-e3da-4239-be87-67fb1736760a"),
+                            Name = "Bungoma"
+                        },
+                        new
+                        {
+                            Id = new Guid("50663c75-e826-4e8b-b1c5-2937cb85d922"),
+                            Name = "Busia"
+                        },
+                        new
+                        {
+                            Id = new Guid("9c147390-e916-49df-ba6f-6e66efefe050"),
+                            Name = "Elgeyo-Marakwet"
+                        },
+                        new
+                        {
+                            Id = new Guid("a344bdd5-811d-47d8-87fb-0a7a530a1c5d"),
+                            Name = "Embu"
+                        },
+                        new
+                        {
+                            Id = new Guid("9bd5db12-14b7-49c9-a7d6-42408af7067d"),
+                            Name = "Garissa"
+                        },
+                        new
+                        {
+                            Id = new Guid("d5f81aca-2444-4fc4-8aba-a5faabebe3a7"),
+                            Name = "Homa Bay"
+                        },
+                        new
+                        {
+                            Id = new Guid("9be9db94-81ef-4e29-9fe7-51085cd0a676"),
+                            Name = "Isiolo"
+                        },
+                        new
+                        {
+                            Id = new Guid("b37c8be0-f3cc-4e7a-a2b2-84053d02f0fd"),
+                            Name = "Kajiado"
+                        },
+                        new
+                        {
+                            Id = new Guid("79b66320-8f0e-4275-9202-0490f8e66176"),
+                            Name = "Kakamega"
+                        },
+                        new
+                        {
+                            Id = new Guid("a733c794-7944-4512-a57f-9534ed9466b8"),
+                            Name = "Kericho"
+                        },
+                        new
+                        {
+                            Id = new Guid("c8c6335c-c156-4c05-9204-090ce6ccf843"),
+                            Name = "Kiambu"
+                        },
+                        new
+                        {
+                            Id = new Guid("250c1966-23bd-433f-9ba5-de205c237c3e"),
+                            Name = "Kilifi"
+                        },
+                        new
+                        {
+                            Id = new Guid("b41c065f-0f05-4cf0-9f66-085fd684bb19"),
+                            Name = "Kirinyaga"
+                        },
+                        new
+                        {
+                            Id = new Guid("fd760303-8651-4257-a2f2-4229e6c55fa2"),
+                            Name = "Kisii"
+                        },
+                        new
+                        {
+                            Id = new Guid("2e0cbdf1-092c-4872-ad38-0b2e99ea8674"),
+                            Name = "Kisumu"
+                        },
+                        new
+                        {
+                            Id = new Guid("af3e8f08-5f97-4b59-bc63-a723a3ec354c"),
+                            Name = "Kitui"
+                        },
+                        new
+                        {
+                            Id = new Guid("677b6212-6984-4222-9d55-f0f6707ba487"),
+                            Name = "Kwale"
+                        },
+                        new
+                        {
+                            Id = new Guid("54402f02-9108-4b75-ac5f-2525e474d9a1"),
+                            Name = "Laikipia"
+                        },
+                        new
+                        {
+                            Id = new Guid("465996a1-dfdb-448a-bc5c-ff205f45fd52"),
+                            Name = "Lamu"
+                        },
+                        new
+                        {
+                            Id = new Guid("247703b5-8eda-4a54-9ffe-f01e417f7300"),
+                            Name = "Machakos"
+                        },
+                        new
+                        {
+                            Id = new Guid("15aab047-5ae4-4b03-aaaf-cd4813946890"),
+                            Name = "Makueni"
+                        },
+                        new
+                        {
+                            Id = new Guid("d5216efd-240f-48d8-bde5-d3ebf6608b4f"),
+                            Name = "Mandera"
+                        },
+                        new
+                        {
+                            Id = new Guid("960289ea-dd7c-4cc9-9734-55e2a304c7fe"),
+                            Name = "Marsabit"
+                        },
+                        new
+                        {
+                            Id = new Guid("c39280f1-87fe-4650-b893-e8e68667c1b4"),
+                            Name = "Meru"
+                        },
+                        new
+                        {
+                            Id = new Guid("0be56307-5846-4aed-91fb-22cc66e20258"),
+                            Name = "Migori"
+                        },
+                        new
+                        {
+                            Id = new Guid("66e72ae1-0537-4151-be0e-61eda2883454"),
+                            Name = "Mambasa"
+                        },
+                        new
+                        {
+                            Id = new Guid("cef552a9-102a-4007-8385-7205aff77525"),
+                            Name = "Muranga"
+                        },
+                        new
+                        {
+                            Id = new Guid("36fd063a-90e7-4310-8c4a-de8705953275"),
+                            Name = "Nairobi"
+                        },
+                        new
+                        {
+                            Id = new Guid("e2eafa74-b06b-4c65-a8ec-15eb8324113c"),
+                            Name = "Nakuru"
+                        },
+                        new
+                        {
+                            Id = new Guid("a12413a9-456a-49ab-8954-25736d8ed82d"),
+                            Name = "Nandi"
+                        },
+                        new
+                        {
+                            Id = new Guid("148bbd83-780d-4571-b95d-6ea2106f555d"),
+                            Name = "Narok"
+                        },
+                        new
+                        {
+                            Id = new Guid("92534963-3871-42a9-8080-6b94c1bb3ea6"),
+                            Name = "Nyamira"
+                        },
+                        new
+                        {
+                            Id = new Guid("94ec9b45-e2f6-4100-bea5-314e353675f3"),
+                            Name = "Nyandarua"
+                        },
+                        new
+                        {
+                            Id = new Guid("57924d9a-34d7-4e26-8ef3-1d52c34cc453"),
+                            Name = "Nnyeri"
+                        },
+                        new
+                        {
+                            Id = new Guid("c8ad57c5-5329-45b4-88de-f48a88e6b5a6"),
+                            Name = "Samburu"
+                        },
+                        new
+                        {
+                            Id = new Guid("6af53d1e-602b-4af4-b921-864dd959dba7"),
+                            Name = "Siaya"
+                        },
+                        new
+                        {
+                            Id = new Guid("dd0f3ca4-545a-4bbf-9195-c3df76c49cbb"),
+                            Name = "Taita Taveta"
+                        },
+                        new
+                        {
+                            Id = new Guid("2993fb33-e8a6-460d-ab43-6f5ef81d3235"),
+                            Name = "Tana River"
+                        },
+                        new
+                        {
+                            Id = new Guid("f03e117a-9874-4d3e-9b25-5c0963648fb5"),
+                            Name = "Tharaka-Nithi"
+                        },
+                        new
+                        {
+                            Id = new Guid("7b472f22-cfc9-4afd-a2b2-89d218ec58f9"),
+                            Name = "Trans-Nzoia"
+                        },
+                        new
+                        {
+                            Id = new Guid("12b4f02a-6e82-4b25-a821-e5cc0555fa50"),
+                            Name = "Turkana"
+                        },
+                        new
+                        {
+                            Id = new Guid("4de7a490-8516-4930-bbe0-a7e84e95a180"),
+                            Name = "Uasin Gishu"
+                        },
+                        new
+                        {
+                            Id = new Guid("c8763f0f-7076-42f6-a9e0-2f5bfd238bb0"),
+                            Name = "Vihiga"
+                        },
+                        new
+                        {
+                            Id = new Guid("e3a63a94-58bb-4e9d-83cf-32af3a764b56"),
+                            Name = "Wajir"
+                        },
+                        new
+                        {
+                            Id = new Guid("f6ad0065-bb84-46bc-8096-44210d45ed33"),
+                            Name = "West Pokot"
+                        },
+                        new
+                        {
+                            Id = new Guid("62bdd91d-04ec-4ebe-a6ed-6a5fc28e1261"),
+                            Name = "Baringo"
+                        });
+                });
+
             modelBuilder.Entity("PharmCare.DAL.Models.GoodsReceivedHistory", b =>
                 {
                     b.Property<Guid>("Id")
@@ -719,6 +983,9 @@ namespace PharmCare.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CountyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -738,7 +1005,13 @@ namespace PharmCare.DAL.Migrations
                     b.Property<string>("Height")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IDNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NHIFNo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PatientNumber")
@@ -750,6 +1023,9 @@ namespace PharmCare.DAL.Migrations
 
                     b.Property<string>("Residence")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("SubCountyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1043,6 +1319,36 @@ namespace PharmCare.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Stocks");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.SubCounty", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubCounties");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Supplier", b =>
