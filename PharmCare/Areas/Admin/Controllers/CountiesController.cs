@@ -34,6 +34,24 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
+        }      
+        
+        public async Task<IActionResult> Details()
+        {
+            try
+            {
+                var subCounties = await countyRepository.GetAllSubCounties();
+
+                return View(subCounties);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                TempData["Error"] = "Something went wrong";
+
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
         }
         public async Task<IActionResult> Create(CountyDTO countyDTO)
         {
