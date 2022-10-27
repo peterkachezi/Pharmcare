@@ -8,546 +8,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="~/images/favicon.ico" type="image/ico" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!-- Meta, title, CSS, favicons, etc. -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="~/images/favicon.ico" type="image/ico" />
 
-    <title>Mumias West Health Care </title>
-    @*<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">*@
+	<title>Mumias West Health Care </title>
+	@*<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">*@
 
-    <link href="~/dashboard/dataTables.bootstrap4.min.css" rel="stylesheet" />
+	<link href="~/dashboard/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
-    <link href="~/dashboard/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/dashboard/bootstrap.min.css" rel="stylesheet" />
 
 
-    <!-- Bootstrap -->
-    <!-- Font Awesome -->
-    <link href="~/dashboard/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="~/dashboard/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="~/dashboard/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	<!-- Bootstrap -->
+	<!-- Font Awesome -->
+	<link href="~/dashboard/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<!-- NProgress -->
+	<link href="~/dashboard/vendors/nprogress/nprogress.css" rel="stylesheet">
+	<!-- iCheck -->
+	<link href="~/dashboard/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
-    <!-- bootstrap-progressbar -->
-    <link href="~/dashboard/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="~/dashboard/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
-    <!-- bootstrap-daterangepicker -->
-    <link href="~/dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+	<!-- bootstrap-progressbar -->
+	<link href="~/dashboard/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+	<!-- JQVMap -->
+	<link href="~/dashboard/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+	<!-- bootstrap-daterangepicker -->
+	<link href="~/dashboard/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
-    <link href="~/dashboard/build/css/custom.min.css" rel="stylesheet">
+	<!-- Custom Theme Style -->
+	<link href="~/dashboard/build/css/custom.min.css" rel="stylesheet">
 
-    <link href="~/css/status.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet" />
+	<link href="~/css/status.css" rel="stylesheet">
+	<link href="~/css/style.css" rel="stylesheet" />
 
-    <link href="~/sweetalart/sweetalert.min.css" rel="stylesheet" />
+	<link href="~/sweetalart/sweetalert.min.css" rel="stylesheet" />
 
 </head>
 
 <body class="nav-md">
-    <div class="container body">
-        <div class="main_container">
-
-            <div class="col-md-3 left_col">
-                <div class="left_col scroll-view">
-                    <div class="navbar nav_title" style="border: 0;">
-                        <a href="/Admin/dashboard" class="site_title"><i class="fa fa-building"></i> <span>PharmCare </span></a>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <!-- menu profile quick info -->
-                    <div class="profile clearfix">
-                        <div class="profile_pic">
-                            <img src="~/images/img.jpg" alt="..." class="img-circle profile_img">
-                        </div>
-                        <div class="profile_info">
-                            <span>Welcome,</span>
-
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-
-                                var user = await UserManager.FindByEmailAsync(User.Identity.Name);
-
-                                var roles = (await UserManager.GetRolesAsync(user)).FirstOrDefault();
-
-
-                                if (roles == "Admin")
-                                {
-                                    <strong style="color:#d2d7dd;">@User.FindFirst("UserFirstName").Value</strong>
-
-                                    <div>
-                                        <span style="color: #44e716;">@roles</span>
-                                    </div>
-                                }
-
-                                else
-                                {
-                                    var url = "/Account/Logout";
-
-                                    Context.Response.Redirect(url);
-                                }
-
-                            }
-                            else
-                            {
-                                var url = "/Account/Logout";
-
-                                Context.Response.Redirect(url);
-
-                            }
-
-
-                        </div>
-                    </div>
-                    <!-- /menu profile quick info -->
-                    <br />
-                    <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-
-
-                        <div class="menu_section">
-                            <h3>General</h3>
-                            <ul class="nav side-menu">
-
-                                <li>
-                                    <a href="~/Admin/Dashboard/">
-                                        <i class="fa fa-dashboard"></i>Dashboard <span class=""></span>
-                                    </a>
-
-                                </li>
-
-                                <li>
-                                    <a><i class="fa fa-user"></i>Patient <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                              
-                                        <li class=""><a href="/Admin/Patients/"> Patient List</a></li>
-                                        <li class=""><a href="/Admin/Counties/"> List of Counties</a></li>
-                                       
-                                    </ul>
-                                </li>
-
-
-                                <li>
-                                    <a><i class="fa fa-dollar"></i>Medicine <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class=""><a href="/Admin/Categories/">Categories</a></li>
-                                        <li class=""><a href="/Admin/Units/">Unit</a></li>
-                                        <li class=""><a href="/Admin/Shelves/"> Shelves</a></li>
-                                        <li class=""><a href="/Admin/Medicines/"> Manage Medicine</a></li>
-                                        <li class=""><a href="/Admin/MedicalConditions/">Medical Conditions</a></li>
-                                        <li class=""><a href="/Admin/StockManager/OutOfStockProducts/">Out of Stock Products</a></li>
-                                        <li class=""><a href="/Admin/StockManager/ExpiredProducts/">Expired Products</a></li>
-                                    </ul>
-                                </li>
-
-                                <li>
-                                    <a><i class="fa fa-balance-scale"></i>Suppliers <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class=""><a href="/Admin/Suppliers/"> Suppliers List</a></li>
-                                        <li class=""><a href="/Admin/ProductTypes/"> Types of Products</a></li>
-                                        <li><a href="~/Admin/Towns/">Towns</a></li>
-                                        <li><a href="~/Admin/LeafSettings/">Invoice</a></li>
-                                    </ul>
-                                </li>
-
-
-                                <li>
-                                    <a><i class="fa fa-stethoscope"></i>Prescriptions<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="/Admin/Prescriptions/AddPrescription/">Add Prescription</a></li>
-                                        <li><a href="/Admin/Prescriptions">Prescriptions List</a></li>
-                                    </ul>
-                                </li>
-
-                                <li>
-                                    <a><i class="fa fa-share"></i>Stock <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class=""><a href="/Admin/StockManager/"> Add Stock</a></li>
-                                        <li class=""><a href="/Admin/StockManager/ViewStock/"> View Stock</a></li>
-                                    </ul>
-                                </li>
-
-                                <li>
-                                    <a><i class="fa fa-newspaper-o"></i>Sale <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="/Admin/PointOfSale/">POS</a></li>
-                                    </ul>
-                                </li>
-
-                                <li>
-                                    <a><i class="fa fa-user"></i>User Master <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class=""><a href="/Admin/UserManager/">Users</a></li>
-                                    </ul>
-                                </li>
-
-
-                                <li>
-                                    <a><i class="fa fa-file-text-o"></i>Report  <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class=""><a href="/Admin/SalesReport/">Sales Report</a></li>
-                                        <li class=""><a href="/Admin/StockReport/">Stock Report</a></li>
-                                        <li class=""><a href="/Admin/PatientsReport/">Patients Report</a></li>
-                                        <li class=""><a href="/Admin/ExpiredProductsReport/">Expired  Products Report</a></li>
-                                    </ul>
-                                </li>
-
-                                <li>
-                                    <a><i class="fa fa-file-text-o"></i>Invoice  <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li class=""><a href="/Admin/Invoices/">Add Invoice</a></li>
-                                        <li class=""><a href="#">POS Invoice</a></li>
-                                        <li class=""><a href="#"> Invoice List</a></li>
-                                    </ul>
-                                </li>
-
-
-
-
-                                @*                        <li class="active">
-                                <a><i class="fa fa-sitemap"></i> Accounts (comming soon)  <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu" style="">
-                                <li class=""><a href="#" aria-expanded="false">Chart Of Accounts</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Opening Balance</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Manufacturer Payment</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Customer Receive</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Cash Adjustment</a></li>
-                                <li class=""><a href="#r" aria-expanded="false">Debit Voucher</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Credit Voucher</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Contra Voucher</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Journal Voucher</a></li>
-                                <li class=""><a href="#" aria-expanded="false">Voucher List</a></li>
-
-                                <li class="">
-                                <a>Reports<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu" style="display: none;">
-
-                                <li class=""><a href="#">Cash Book</a></li>
-                                <li class=""><a href="#">Bank Book</a></li>
-                                <li class=""><a href="#">General Ledger</a></li>
-                                <li class=""><a href="#">Trial Balance</a></li>
-                                <li class=""><a href="#">Profit Loss</a></li>
-                                <li class=""><a href="#">Cash Flow</a></li>
-                                <li class=""><a href="#">COA Print</a></li>
-                                <li class=""><a href="#">Balance Sheet</a></li>
-                                </ul>
-                                </li>
-
-                                </ul>
-                                </li>*@
-
-                                @*  <li>
-                                <a><i class="fa fa-recycle"></i>Return (comming soon) <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                <li class=""><a href="#">Return From Customer</a></li>
-                                <li class=""><a href="#">Return To Manufacturer</a></li>
-                                <li class=""><a href="#">Invoice Return List</a></li>
-                                <li class=""><a href="#">Manufacturer Return List</a></li>
-                                <li class=""><a href="#">Wastage Return List</a></li>
-                                </ul>
-                                </li>
-
-
-                                <li>
-                                <a><i class="fa fa-book"></i>Service (comming soon)  <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-
-                                <li class=""><a href="#">Add Service</a></li>
-                                <li class=""><a href="#"> Service List</a></li>
-                                <li class=""><a href="#"> Add Invoice</a></li>
-                                <li class=""><a href="#"> Invoice List</a></li>
-
-                                </ul>
-                                </li>
-
-
-
-                                *@
-
-
-
-
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /sidebar menu -->
-                    <!-- /menu footer buttons -->
-                    <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Lock">
-                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <!-- /menu footer buttons -->
-                </div>
-            </div>
-
-            <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-                    </div>
-                    <nav class="nav navbar-nav">
-                        <ul class=" navbar-right">
-                            <li class="nav-item dropdown open" style="padding-left: 15px;">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/images/img.jpg" alt="">
-
-                                    @*@{
-
-                                    if (user == null)
-                                    {
-                                    var url = "/Account/Login/";
-                                    Response.Redirect(url);
-                                    }
-                                    else
-                                    {
-                                    <span>@user</span>
-                                    }
-                                    }*@
-                                </a>
-                                <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="javascript:;"> Profile</a>
-                                    <a class="dropdown-item" href="javascript:;">
-                                        <span class="badge bg-red pull-right">50%</span>
-                                        <span>Settings</span>
-                                    </a>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ModalChangePassword" data-backdrop="static" data-keyboard="false">Change Password</a>
-                                    <a class="dropdown-item" href="@Url.Action("Logout","Account", new { area="" })"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-                                </div>
-                            </li>
-
-
-                            <li role="presentation" class="nav-item dropdown open">
-                                <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
-                                </a>
-                                <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" href="/Admin/StockManager/OutOfStockProducts/">
-                                            @*<span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>*@
-                                            <span>
-                                                <span>Products</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                @ViewBag.OutOfStock Items are out of stock
-
-                                            </span>
-
-
-
-                                        </a>
-                                    </li>
-                                    @*<li class="nav-item">
-                                    <a class="dropdown-item">
-                                    <span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>
-                                    <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                    </span>
-                                    <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                    </li>
-                                    <li class="nav-item">
-                                    <a class="dropdown-item">
-                                    <span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>
-                                    <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                    </span>
-                                    <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                    </li>
-                                    <li class="nav-item">
-                                    <a class="dropdown-item">
-                                    <span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>
-                                    <span>
-                                    <span>John Smith</span>
-                                    <span class="time">3 mins ago</span>
-                                    </span>
-                                    <span class="message">
-                                    Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                    </li>
-                                    <li class="nav-item">
-                                    <div class="text-center">
-                                    <a class="dropdown-item">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                    </a>
-                                    </div>
-                                    </li>*@
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <!-- /top navigation -->
-            <!-- page content -->
-            <div class="right_col" role="main">
-                <!-- top tiles -->
-                <!-- /top tiles -->
-                @RenderBody()
-
-
-            </div>
-            <!-- /page content -->
-            <!-- footer content -->
-            <footer>
-                <div class="pull-right">
-                    <p style="text-align: center"> Copyright &copy; <script>document.write(new Date().getFullYear())</script> Skisoft Systems. All Rights Reserved</p>
-                </div>
-                <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="ModalChangePassword" tabindex="-1" role="dialog" aria-labelledby="ModalCreateCategory" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title Header" id="ModalCreateCategory">Change Password</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-
-                    <div style="display:none;" id="dvError">
-                        <div class="alert alert-danger" role="alert">
-                            <h6 id="info"></h6>
-                        </div>
-                    </div>
-
-                    <div style="display:none;" id="dvSuccess">
-                        <div class="alert alert-success" role="alert">
-                            <h6 id="passwordChangeSuccess"></h6>
-                        </div>
-                    </div>
-
-                    <form id="frmChangePassword">
-
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail1"> Old Password</label>
-                            <input type="password" class="form-control myinputs" id="txtCurrentPassword" name="CurrentPassword">
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail1"> New Password</label>
-                            <input type="password" class="form-control myinputs" id="txtNewPassword" name="NewPassword">
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">  Confirm Password</label>
-                            <input type="password" class="form-control myinputs" id="txtConfirmPassword" name="ConfirmPassword">
-                        </div>
-
-
-
-
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" id="btnChangePassword" class="btn btn-success">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="divLoader" style="display:none;" class="loader">
-        <img src="~/loaders/loading-23.gif" alt="Loader" style="width:20em;" />
-    </div>
-
-
-
-
-    <!-- jQuery -->
-    <script src="~/dashboard/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/dashboard/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/dashboard/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="~/dashboard/vendors/nprogress/nprogress.js"></script>
-    <!-- Chart.js -->
-    <script src="~/dashboard/vendors/Chart.js/dist/Chart.min.js"></script>
-    <!-- gauge.js -->
-    <script src="~/dashboard/vendors/gauge.js/dist/gauge.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="~/dashboard/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="~/dashboard/vendors/iCheck/icheck.min.js"></script>
-    <!-- Skycons -->
-    <script src="~/dashboard/vendors/skycons/skycons.js"></script>
-    <!-- Flot -->
-    <script src="~/dashboard/vendors/Flot/jquery.flot.js"></script>
-    <script src="~/dashboard/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="~/dashboard/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="~/dashboard/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="~/dashboard/vendors/Flot/jquery.flot.resize.js"></script>
-    <!-- Flot plugins -->
-    <script src="~/dashboard/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-    <script src="~/dashboard/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-    <script src="~/dashboard/vendors/flot.curvedlines/curvedLines.js"></script>
-    <!-- DateJS -->
-    <script src="~/dashboard/vendors/DateJS/build/date.js"></script>
-    <!-- JQVMap -->
-    <script src="~/dashboard/vendors/jqvmap/dist/jquery.vmap.js"></script>
-    <script src="~/dashboard/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-    <script src="~/dashboard/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-    <!-- bootstrap-daterangepicker -->
-    <script src="~/dashboard/vendors/moment/min/moment.min.js"></script>
-    <script src="~/dashboard/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="~/dashboard/build/js/custom.min.js"></script>
-    <!-- Bootstrap core JavaScript-->
-    <!-- Page level plugin JavaScript-->
-    @*<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-
-    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>*@
-
-    <script src="~/dashboard/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
-
-    <script src="~/dashboard/jquery.dataTables.min.js"></script>
-
-    <script src="~/dashboard/dataTables.bootstrap4.min.js"></script>
-
-    <script src="~/sweetalart/sweetalert.min.js"></script>
+	<div class="container body">
+		<div class="main_container">
+
+			<div class="col-md-3 left_col">
+				<div class="left_col scroll-view">
+					<div class="navbar nav_title" style="border: 0;">
+						<a href="/Admin/dashboard" class="site_title"><i class="fa fa-building"></i> <span>PharmCare </span></a>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<!-- menu profile quick info -->
+					<div class="profile clearfix">
+						<div class="profile_pic">
+							<img src="~/images/img.jpg" alt="..." class="img-circle profile_img">
+						</div>
+						<div class="profile_info">
+							<span>Welcome,</span>
+
+							@if (SignInManager.IsSignedIn(User))
+							{
+
+								var user = await UserManager.FindByEmailAsync(User.Identity.Name);
+
+								var roles = (await UserManager.GetRolesAsync(user)).FirstOrDefault();
+
+
+								if (roles == "Admin")
+								{
+									<strong style="color:#d2d7dd;">@User.FindFirst("UserFirstName").Value</strong>
+
+									<div>
+										<span style="color: #44e716;">@roles</span>
+									</div>
+								}
+
+								else
+								{
+									var url = "/Account/Logout";
+
+									Context.Response.Redirect(url);
+								}
+
+							}
+							else
+							{
+								var url = "/Account/Logout";
+
+								Context.Response.Redirect(url);
+
+							}
+
+
+						</div>
+					</div>
+					<!-- /menu profile quick info -->
+					<br />
+					<!-- sidebar menu -->
+					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+
+						<div class="menu_section">
+							<h3>General</h3>
+							<ul class="nav side-menu">
+
+								<li>
+									<a href="~/Admin/Dashboard/">
+										<i class="fa fa-dashboard"></i>Dashboard <span class=""></span>
+									</a>
+
+								</li>
+
+								<li>
+									<a><i class="fa fa-user"></i>Patient <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+
+										<li class=""><a href="/Admin/Patients/"> Patient List</a></li>
+
+									</ul>
+								</li>
+
+
+								<li>
+									<a><i class="fa fa-dollar"></i>Medicine <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li class=""><a href="/Admin/Categories/">Categories</a></li>
+										<li class=""><a href="/Admin/Units/">Unit</a></li>
+										<li class=""><a href="/Admin/Shelves/"> Shelves</a></li>
+										<li class=""><a href="/Admin/Medicines/"> Manage Medicine</a></li>
+										<li class=""><a href="/Admin/MedicalConditions/">Medical Conditions</a></li>
+										<li class=""><a href="/Admin/StockManager/OutOfStockProducts/">Out of Stock Products</a></li>
+										<li class=""><a href="/Admin/StockManager/ExpiredProducts/">Expired Products</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a><i class="fa fa-balance-scale"></i>Suppliers <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li class=""><a href="/Admin/Suppliers/"> Suppliers List</a></li>
+										<li class=""><a href="/Admin/ProductTypes/"> Types of Products</a></li>
+										<li><a href="~/Admin/LeafSettings/">Invoice</a></li>
+									</ul>
+								</li>
+
+
+								<li>
+									<a><i class="fa fa-stethoscope"></i>Prescriptions<span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="/Admin/Prescriptions/AddPrescription/">Add Prescription</a></li>
+										<li><a href="/Admin/Prescriptions">Prescriptions List</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a><i class="fa fa-book"></i>Payments  <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+
+										<li class=""><a href="#">Add Service</a></li>
+										<li class=""><a href="#"> Service List</a></li>
+										<li class=""><a href="#"> Add Invoice</a></li>
+										<li class=""><a href="#"> Invoice List</a></li>
+
+									</ul>
+								</li>
+
+								<li>
+									<a><i class="fa fa-share"></i>Stock <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li class=""><a href="/Admin/StockManager/"> Add Stock</a></li>
+										<li class=""><a href="/Admin/StockManager/ViewStock/"> View Stock</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a><i class="fa fa-newspaper-o"></i>Sale <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="/Admin/PointOfSale/">POS</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a><i class="fa fa-user"></i>User Master <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li class=""><a href="/Admin/UserManager/">Users</a></li>
+									</ul>
+								</li>
+
+
+								<li>
+									<a><i class="fa fa-file-text-o"></i>Report  <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li class=""><a href="/Admin/SalesReport/">Sales Report</a></li>
+										<li class=""><a href="/Admin/StockReport/">Stock Report</a></li>
+										<li class=""><a href="/Admin/PatientsReport/">Patients Report</a></li>
+										<li class=""><a href="/Admin/ExpiredProductsReport/">Expired  Products Report</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a><i class="fa fa-file-text-o"></i>Invoice  <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li class=""><a href="/Admin/Invoices/">Add Invoice</a></li>
+										<li class=""><a href="#">POS Invoice</a></li>
+										<li class=""><a href="#"> Invoice List</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<a><i class="fa fa-gear"></i>miscellaneous  <span class="fa fa-chevron-down"></span></a>
+									<ul class="nav child_menu">
+										<li><a href="/Admin/Counties/"> Counties</a></li>
+										<li><a href="~/Admin/Towns/">Towns</a></li>
+									</ul>
+								</li>
+
+
+
+
+								@*                        <li class="active">
+								<a><i class="fa fa-sitemap"></i> Accounts (comming soon)  <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu" style="">
+								<li class=""><a href="#" aria-expanded="false">Chart Of Accounts</a></li>
+								<li class=""><a href="#" aria-expanded="false">Opening Balance</a></li>
+								<li class=""><a href="#" aria-expanded="false">Manufacturer Payment</a></li>
+								<li class=""><a href="#" aria-expanded="false">Customer Receive</a></li>
+								<li class=""><a href="#" aria-expanded="false">Cash Adjustment</a></li>
+								<li class=""><a href="#r" aria-expanded="false">Debit Voucher</a></li>
+								<li class=""><a href="#" aria-expanded="false">Credit Voucher</a></li>
+								<li class=""><a href="#" aria-expanded="false">Contra Voucher</a></li>
+								<li class=""><a href="#" aria-expanded="false">Journal Voucher</a></li>
+								<li class=""><a href="#" aria-expanded="false">Voucher List</a></li>
+
+								<li class="">
+								<a>Reports<span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu" style="display: none;">
+
+								<li class=""><a href="#">Cash Book</a></li>
+								<li class=""><a href="#">Bank Book</a></li>
+								<li class=""><a href="#">General Ledger</a></li>
+								<li class=""><a href="#">Trial Balance</a></li>
+								<li class=""><a href="#">Profit Loss</a></li>
+								<li class=""><a href="#">Cash Flow</a></li>
+								<li class=""><a href="#">COA Print</a></li>
+								<li class=""><a href="#">Balance Sheet</a></li>
+								</ul>
+								</li>
+
+								</ul>
+								</li>*@
+
+								@*  <li>
+								<a><i class="fa fa-recycle"></i>Return (comming soon) <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+								<li class=""><a href="#">Return From Customer</a></li>
+								<li class=""><a href="#">Return To Manufacturer</a></li>
+								<li class=""><a href="#">Invoice Return List</a></li>
+								<li class=""><a href="#">Manufacturer Return List</a></li>
+								<li class=""><a href="#">Wastage Return List</a></li>
+								</ul>
+								</li>
+
+
+								<li>
+								<a><i class="fa fa-book"></i>Service (comming soon)  <span class="fa fa-chevron-down"></span></a>
+								<ul class="nav child_menu">
+
+								<li class=""><a href="#">Add Service</a></li>
+								<li class=""><a href="#"> Service List</a></li>
+								<li class=""><a href="#"> Add Invoice</a></li>
+								<li class=""><a href="#"> Invoice List</a></li>
+
+								</ul>
+								</li>
+
+
+
+								*@
+
+
+
+
+							</ul>
+						</div>
+
+					</div>
+					<!-- /sidebar menu -->
+					<!-- /menu footer buttons -->
+					<div class="sidebar-footer hidden-small">
+						<a data-toggle="tooltip" data-placement="top" title="Settings">
+							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						</a>
+						<a data-toggle="tooltip" data-placement="top" title="FullScreen">
+							<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+						</a>
+						<a data-toggle="tooltip" data-placement="top" title="Lock">
+							<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+						</a>
+						<a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+						</a>
+					</div>
+					<!-- /menu footer buttons -->
+				</div>
+			</div>
+
+			<!-- top navigation -->
+			<div class="top_nav">
+				<div class="nav_menu">
+					<div class="nav toggle">
+						<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+					</div>
+					<nav class="nav navbar-nav">
+						<ul class=" navbar-right">
+							<li class="nav-item dropdown open" style="padding-left: 15px;">
+								<a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+									<img src="~/images/img.jpg" alt="">
+
+									@*@{
+
+									if (user == null)
+									{
+									var url = "/Account/Login/";
+									Response.Redirect(url);
+									}
+									else
+									{
+									<span>@user</span>
+									}
+									}*@
+								</a>
+								<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="javascript:;"> Profile</a>
+									<a class="dropdown-item" href="javascript:;">
+										<span class="badge bg-red pull-right">50%</span>
+										<span>Settings</span>
+									</a>
+									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#ModalChangePassword" data-backdrop="static" data-keyboard="false">Change Password</a>
+									<a class="dropdown-item" href="@Url.Action("Logout","Account", new { area="" })"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+								</div>
+							</li>
+
+
+							<li role="presentation" class="nav-item dropdown open">
+								<a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+									<i class="fa fa-envelope-o"></i>
+									<span class="badge bg-green">6</span>
+								</a>
+								<ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+									<li class="nav-item">
+										<a class="dropdown-item" href="/Admin/StockManager/OutOfStockProducts/">
+											@*<span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>*@
+											<span>
+												<span>Products</span>
+												<span class="time">3 mins ago</span>
+											</span>
+											<span class="message">
+												@ViewBag.OutOfStock Items are out of stock
+
+											</span>
+
+
+
+										</a>
+									</li>
+									@*<li class="nav-item">
+									<a class="dropdown-item">
+									<span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>
+									<span>
+									<span>John Smith</span>
+									<span class="time">3 mins ago</span>
+									</span>
+									<span class="message">
+									Film festivals used to be do-or-die moments for movie makers. They were where...
+									</span>
+									</a>
+									</li>
+									<li class="nav-item">
+									<a class="dropdown-item">
+									<span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>
+									<span>
+									<span>John Smith</span>
+									<span class="time">3 mins ago</span>
+									</span>
+									<span class="message">
+									Film festivals used to be do-or-die moments for movie makers. They were where...
+									</span>
+									</a>
+									</li>
+									<li class="nav-item">
+									<a class="dropdown-item">
+									<span class="image"><img src="~/images/img.jpg" alt="Profile Image" /></span>
+									<span>
+									<span>John Smith</span>
+									<span class="time">3 mins ago</span>
+									</span>
+									<span class="message">
+									Film festivals used to be do-or-die moments for movie makers. They were where...
+									</span>
+									</a>
+									</li>
+									<li class="nav-item">
+									<div class="text-center">
+									<a class="dropdown-item">
+									<strong>See All Alerts</strong>
+									<i class="fa fa-angle-right"></i>
+									</a>
+									</div>
+									</li>*@
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<!-- /top navigation -->
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<!-- top tiles -->
+				<!-- /top tiles -->
+				@RenderBody()
+
+
+			</div>
+			<!-- /page content -->
+			<!-- footer content -->
+			<footer>
+				<div class="pull-right">
+					<p style="text-align: center"> Copyright &copy; <script>document.write(new Date().getFullYear())</script> Skisoft Systems. All Rights Reserved</p>
+				</div>
+				<div class="clearfix"></div>
+			</footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="ModalChangePassword" tabindex="-1" role="dialog" aria-labelledby="ModalCreateCategory" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title Header" id="ModalCreateCategory">Change Password</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+
+					<div style="display:none;" id="dvError">
+						<div class="alert alert-danger" role="alert">
+							<h6 id="info"></h6>
+						</div>
+					</div>
+
+					<div style="display:none;" id="dvSuccess">
+						<div class="alert alert-success" role="alert">
+							<h6 id="passwordChangeSuccess"></h6>
+						</div>
+					</div>
+
+					<form id="frmChangePassword">
+
+
+						<div class="form-group">
+							<label for="exampleInputEmail1"> Old Password</label>
+							<input type="password" class="form-control myinputs" id="txtCurrentPassword" name="CurrentPassword">
+						</div>
+
+
+
+						<div class="form-group">
+							<label for="exampleInputEmail1"> New Password</label>
+							<input type="password" class="form-control myinputs" id="txtNewPassword" name="NewPassword">
+						</div>
+
+
+						<div class="form-group">
+							<label for="exampleInputEmail1">  Confirm Password</label>
+							<input type="password" class="form-control myinputs" id="txtConfirmPassword" name="ConfirmPassword">
+						</div>
+
+
+
+
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					<button type="button" id="btnChangePassword" class="btn btn-success">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="divLoader" style="display:none;" class="loader">
+		<img src="~/loaders/loading-23.gif" alt="Loader" style="width:20em;" />
+	</div>
+
+
+
+
+	<!-- jQuery -->
+	<script src="~/dashboard/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="~/dashboard/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- FastClick -->
+	<script src="~/dashboard/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="~/dashboard/vendors/nprogress/nprogress.js"></script>
+	<!-- Chart.js -->
+	<script src="~/dashboard/vendors/Chart.js/dist/Chart.min.js"></script>
+	<!-- gauge.js -->
+	<script src="~/dashboard/vendors/gauge.js/dist/gauge.min.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script src="~/dashboard/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="~/dashboard/vendors/iCheck/icheck.min.js"></script>
+	<!-- Skycons -->
+	<script src="~/dashboard/vendors/skycons/skycons.js"></script>
+	<!-- Flot -->
+	<script src="~/dashboard/vendors/Flot/jquery.flot.js"></script>
+	<script src="~/dashboard/vendors/Flot/jquery.flot.pie.js"></script>
+	<script src="~/dashboard/vendors/Flot/jquery.flot.time.js"></script>
+	<script src="~/dashboard/vendors/Flot/jquery.flot.stack.js"></script>
+	<script src="~/dashboard/vendors/Flot/jquery.flot.resize.js"></script>
+	<!-- Flot plugins -->
+	<script src="~/dashboard/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+	<script src="~/dashboard/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+	<script src="~/dashboard/vendors/flot.curvedlines/curvedLines.js"></script>
+	<!-- DateJS -->
+	<script src="~/dashboard/vendors/DateJS/build/date.js"></script>
+	<!-- JQVMap -->
+	<script src="~/dashboard/vendors/jqvmap/dist/jquery.vmap.js"></script>
+	<script src="~/dashboard/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+	<script src="~/dashboard/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="~/dashboard/vendors/moment/min/moment.min.js"></script>
+	<script src="~/dashboard/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+	<!-- Custom Theme Scripts -->
+	<script src="~/dashboard/build/js/custom.min.js"></script>
+	<!-- Bootstrap core JavaScript-->
+	<!-- Page level plugin JavaScript-->
+	@*<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+	<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>*@
+
+	<script src="~/dashboard/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
+
+	<script src="~/dashboard/jquery.dataTables.min.js"></script>
+
+	<script src="~/dashboard/dataTables.bootstrap4.min.js"></script>
+
+	<script src="~/sweetalart/sweetalert.min.js"></script>
 
 </body>
 </html>
@@ -556,110 +574,110 @@
 
 <script>
 
-    $("#btnChangePassword").click(function () {
+	$("#btnChangePassword").click(function () {
 
-        $("#ModalChangePassword").modal('hide');
+		$("#ModalChangePassword").modal('hide');
 
-        $("#divLoader").show();
+		$("#divLoader").show();
 
-        if ($('#txtCurrentPassword').val() == '') {
+		if ($('#txtCurrentPassword').val() == '') {
 
-            $('#txtCurrentPassword').focus();
+			$('#txtCurrentPassword').focus();
 
-            $("#dvError").show();
+			$("#dvError").show();
 
-            $("#info").text("Current password is required");
+			$("#info").text("Current password is required");
 
-            return false;
-        }
+			return false;
+		}
 
-        if ($('#txtNewPassword').val() == '') {
+		if ($('#txtNewPassword').val() == '') {
 
-            $('#txtNewPassword').focus();
+			$('#txtNewPassword').focus();
 
-            $("#dvError").show();
+			$("#dvError").show();
 
-            $("#info").text("New password is required");
+			$("#info").text("New password is required");
 
-            return false;
-        }
+			return false;
+		}
 
-        if ($('#txtConfirmPassword').val() == '') {
+		if ($('#txtConfirmPassword').val() == '') {
 
-            $('#txtConfirmPassword').focus();
+			$('#txtConfirmPassword').focus();
 
-            $("#dvError").show();
+			$("#dvError").show();
 
-            $("#info").text("Confirm password is required");
+			$("#info").text("Confirm password is required");
 
-            return false;
-        }
+			return false;
+		}
 
-        if ($('#txtNewPassword').val() != $('#txtConfirmPassword').val()) {
+		if ($('#txtNewPassword').val() != $('#txtConfirmPassword').val()) {
 
-            $('#txtNewPassword').focus();
+			$('#txtNewPassword').focus();
 
-            $("#dvError").show();
+			$("#dvError").show();
 
-            $("#info").text("Password and confirm password do not match");
+			$("#info").text("Password and confirm password do not match");
 
-            return false;
-        }
+			return false;
+		}
 
-        var data = $("#frmChangePassword").serialize();
+		var data = $("#frmChangePassword").serialize();
 
-        $.ajax({
+		$.ajax({
 
-            type: "POST",
+			type: "POST",
 
-            url: "/Admin/UserManager/UpdatePassword/",
+			url: "/Admin/UserManager/UpdatePassword/",
 
-            data: data,
+			data: data,
 
-            success: function (response) {
+			success: function (response) {
 
-                if (response.success) {
+				if (response.success) {
 
-                    $("#dvSuccess").show();
+					$("#dvSuccess").show();
 
-                    $("#passwordChangeSuccess").text(response.responseText);
-
-
-                    swal({
-                        position: 'top-end',
-
-                        type: "success",
-
-                        title: response.responseText,
-
-                        showConfirmButton: false,
-
-                    }),
-
-                        setTimeout(function () {
-
-                            window.location = "@Url.Action("Logout","Account", new { area="" })";
-
-                        }, 3000);
-
-                } else {
-                    $("#dvError").show();
-
-                    $("#info").text(response.responseText);
-                }
-            },
+					$("#passwordChangeSuccess").text(response.responseText);
 
 
-            error: function (response) {
-                alert("error!");  //
+					swal({
+						position: 'top-end',
 
-            },
-            complete: function () {
-                $("#divLoader").hide();
-            }
-        })
+						type: "success",
 
-    })
+						title: response.responseText,
+
+						showConfirmButton: false,
+
+					}),
+
+						setTimeout(function () {
+
+							window.location = "@Url.Action("Logout","Account", new { area="" })";
+
+						}, 3000);
+
+				} else {
+					$("#dvError").show();
+
+					$("#info").text(response.responseText);
+				}
+			},
+
+
+			error: function (response) {
+				alert("error!");  //
+
+			},
+			complete: function () {
+				$("#divLoader").hide();
+			}
+		})
+
+	})
 </script>
 
 

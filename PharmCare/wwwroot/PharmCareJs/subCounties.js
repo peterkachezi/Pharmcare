@@ -6,7 +6,7 @@ $(document).ready(function () {
 function DeleteRecord(e) {
 
     $("#divLoader").show();
-    var id = e;m
+    var id = e;
 
     console.log(id);
 
@@ -231,7 +231,7 @@ function GetRecord(e) {
             alert("Does not exist");
         } else {
 
-            $("#txtId").val(data.data.id);
+            $("#txtId1").val(data.data.id);
 
             $("#txtName1").val(data.data.name);
 

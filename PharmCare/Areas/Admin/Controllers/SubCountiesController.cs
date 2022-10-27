@@ -6,6 +6,7 @@ using PharmCare.DTO.CountyModule;
 
 namespace PharmCare.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SubCountiesController : Controller
     {
         private readonly ICountyRepository countyRepository;
@@ -54,11 +55,11 @@ namespace PharmCare.Areas.Admin.Controllers
 
                     if (result != null)
                     {
-                        return Json(new { success = true, responseText = "Record has been successfully created" });
+                        return Json(new { success = true, responseText = "Sub county has been successfully created" });
                     }
                     else
                     {
-                        return Json(new { success = false, responseText = "Failed to create record" });
+                        return Json(new { success = false, responseText = "Failed to create Sub county" });
                     }
                 }
 
@@ -161,6 +162,28 @@ namespace PharmCare.Areas.Admin.Controllers
                 Console.WriteLine(ex.Message);
 
                 return Json(new { success = false, responseText = "Something went wrong" });
+            }
+        }
+        public async Task<ActionResult> GetByCountyId(Guid Id)
+        {
+            try
+            {
+                var streams = (await countyRepository.GetAllSubCounties()).Where(x => x.CountyId == Id).ToList();
+
+                return Json(streams.Select(x => new
+                {
+                    SubCountyId = x.Id,
+
+                    SubCountyName = x.Name
+
+                }).ToList());
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
             }
         }
     }

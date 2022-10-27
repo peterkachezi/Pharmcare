@@ -6,7 +6,9 @@ using PharmCare.BLL.Utils;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
 using PharmCare.DTO.PatientModule;
+using SkiaSharp;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Security.Policy;
 
 
@@ -122,11 +124,56 @@ namespace PharmCare.BLL.Repositories.PatientModule
         {
             try
             {
-                var data = await context.Patients.OrderByDescending(x => x.CreateDate).ToListAsync();
+                var patients = (from patient in context.Patients
 
-                var patient = mapper.Map<List<PatientDTO>>(data);
+                                join c in context.Counties on patient.CountyId equals c.Id into tblCounty
 
-                return patient;
+                                from county in tblCounty.DefaultIfEmpty()
+
+                                join sc in context.SubCounties on patient.SubCountyId equals sc.Id into tblSubCounty
+
+                                from SubCounty in tblSubCounty.DefaultIfEmpty()
+
+                                select new PatientDTO
+                                {
+                                    Id = patient.Id,
+
+                                    FirstName = patient.FirstName,
+
+                                    LastName = patient.LastName,
+
+                                    Gender = patient.Gender,
+
+                                    Residence = patient.Residence,
+
+                                    IDNumber = patient.IDNumber,
+
+                                    NHIFNo = patient.NHIFNo,
+
+                                    Height = patient.Height,
+
+                                    Weight = patient.Weight,
+
+                                    DateOfBirth = patient.DateOfBirth,
+
+                                    CreateDate = patient.CreateDate,
+
+                                    CountyId = patient.CountyId.Value,
+
+                                    SubCountyId = patient.SubCountyId.Value,
+
+                                    PatientNumber = patient.PatientNumber,
+
+                                    PhoneNumber = patient.PhoneNumber,
+
+                                    CountyName= county.Name == null ? "" : county.Name,
+
+                                    SubCountyName= SubCounty.Name == null ? "" : SubCounty.Name,
+
+                                }).OrderByDescending(c => c.CreateDate).ToListAsync();
+
+
+                return await patients;
 
             }
             catch (Exception ex)

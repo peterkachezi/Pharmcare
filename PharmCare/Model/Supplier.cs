@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace PharmCare.DAL.Models
+namespace PharmCare.Model
 {
     [Index(nameof(CountryId), Name = "IX_Suppliers_CountryId")]
     [Index(nameof(ProductTypeId), Name = "IX_Suppliers_ProductTypeId")]
@@ -28,8 +28,6 @@ namespace PharmCare.DAL.Models
         [ForeignKey(nameof(CountryId))]
         [InverseProperty("Suppliers")]
         public virtual Country Country { get; set; } = null!;
-
-
         [ForeignKey(nameof(ProductTypeId))]
         [InverseProperty("Suppliers")]
         public virtual ProductType ProductType { get; set; } = null!;

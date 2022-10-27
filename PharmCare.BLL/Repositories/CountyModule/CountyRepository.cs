@@ -22,6 +22,10 @@ namespace PharmCare.BLL.Repositories.CountyModule
         {
             try
             {
+                countyDTO.Id = Guid.NewGuid();
+
+                countyDTO.CreateDate = DateTime.Now;
+
                 var data = mapper.Map<County>(countyDTO);
 
                 context.Counties.Add(data);
@@ -43,7 +47,7 @@ namespace PharmCare.BLL.Repositories.CountyModule
             {
                 var county = await context.Counties.ToListAsync();
 
-                var counties = mapper.Map<List<CountyDTO>>(county);
+                var counties = mapper.Map<List<CountyDTO>>(county).OrderByDescending(x=>x.CreateDate).ToList();
 
                 return counties;
             }
@@ -75,6 +79,10 @@ namespace PharmCare.BLL.Repositories.CountyModule
         {
             try
             {
+                subCountyDTO.Id = Guid.NewGuid();
+
+                subCountyDTO.CreateDate = DateTime.Now;
+
                 var data = mapper.Map<SubCounty>(subCountyDTO);
 
                 context.SubCounties.Add(data);
@@ -96,7 +104,7 @@ namespace PharmCare.BLL.Repositories.CountyModule
             {
                 var data = await context.SubCounties.ToListAsync();
 
-                var subCounties = mapper.Map<List<SubCountyDTO>>(data);
+                var subCounties = mapper.Map<List<SubCountyDTO>>(data).OrderByDescending(x=>x.CreateDate).ToList();
 
                 return subCounties;
             }
@@ -246,22 +254,22 @@ namespace PharmCare.BLL.Repositories.CountyModule
         {
             try
             {
-                var subCounty = await context.Counties.FindAsync(subCountyDTO.Id);
+                var subCounty = await context.SubCounties.FindAsync(subCountyDTO.Id);
 
                 if (subCounty != null)
                 {
                     using (var transaction = context.Database.BeginTransaction())
                     {
-                        subCounty.Name = subCounty.Name;
+                        subCounty.Name = subCountyDTO.Name;
 
-                        subCounty.UpdatedBy = subCounty.UpdatedBy;
+                        subCounty.UpdatedBy = subCountyDTO.UpdatedBy;
 
                         subCounty.UpdatedDate = DateTime.Now;
 
-                        transaction.Commit();
-
-                        await context.SaveChangesAsync();
+                        transaction.Commit();                   
                     }
+                    await context.SaveChangesAsync();
+
                     return subCountyDTO;
                 }
 

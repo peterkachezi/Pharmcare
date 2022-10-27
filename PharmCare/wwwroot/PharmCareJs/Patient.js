@@ -451,3 +451,29 @@ function GetPatientRecord(e) {
 
     });
 };
+
+
+function GetSubCounties() {
+
+    var countyId = $('#txtCountyId').val();
+
+    console.log(countyId);
+
+    $.ajax({
+        type: "GET",
+        url: "/Admin/SubCounties/GetByCountyId/" + countyId,
+        data: "{}",
+
+        success: function (data) {
+            var s = '<option value="-1">Please Select sub county</option>';
+            for (var i = 0; i < data.length; i++) {
+                s += '<option value="' + data[i].subCountyId + '">' + data[i].subCountyName + '</option>';
+            }
+            $("#subCountyDropdown").html(s);
+
+            console.log(data);
+        }
+
+
+    });
+}

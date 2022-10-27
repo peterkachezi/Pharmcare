@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 function DeleteRecord(e) {
 
-    $("#divLoader").show();
+
     var id = e;
 
     console.log(id);

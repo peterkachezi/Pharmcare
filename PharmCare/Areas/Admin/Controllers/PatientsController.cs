@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PharmCare.BLL.Repositories.CountyModule;
 using PharmCare.BLL.Repositories.MedecineModule;
 using PharmCare.BLL.Repositories.MedicalConditionModule;
 using PharmCare.BLL.Repositories.PatientModule;
@@ -20,7 +21,9 @@ namespace PharmCare.Areas.Admin.Controllers
         private readonly IMedicineRepository medicineRepository;
 
         private readonly IMedicalConditionRepository medicalConditionRepository;
-        public PatientsController(IMedicalConditionRepository medicalConditionRepository,IMedicineRepository medicineRepository,IPatientRepository patientRepository, UserManager<AppUser> userManager)
+
+        private readonly ICountyRepository countyRepository;
+        public PatientsController(ICountyRepository countyRepository,IMedicalConditionRepository medicalConditionRepository,IMedicineRepository medicineRepository,IPatientRepository patientRepository, UserManager<AppUser> userManager)
         {
             this.patientRepository = patientRepository;
 
@@ -30,6 +33,8 @@ namespace PharmCare.Areas.Admin.Controllers
 
             this.medicalConditionRepository = medicalConditionRepository;   
 
+            this.countyRepository = countyRepository;   
+
         }
         public async Task<IActionResult> Index()
         {
@@ -38,6 +43,8 @@ namespace PharmCare.Areas.Admin.Controllers
                 ViewBag.MedicalConditions = await medicalConditionRepository.GetAll();
 
                 ViewBag.Medicines = await medicineRepository.GetAll();
+
+                ViewBag.Counties = (await countyRepository.GetAllCounties()).OrderByDescending(x=>x.Name);
 
                 var patients =await patientRepository.GetAll();  
 
