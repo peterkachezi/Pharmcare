@@ -1,7 +1,4 @@
-﻿
-
-using PharmCare.DTO.CountryModule;
-using PharmCare.DTO.CountyModule;
+﻿using PharmCare.DTO.CountyModule;
 
 namespace PharmCare.BLL.Repositories.CountyModule
 {

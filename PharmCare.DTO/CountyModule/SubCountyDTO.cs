@@ -1,6 +1,4 @@
-﻿
-
-namespace PharmCare.DTO.CountryModule
+﻿namespace PharmCare.DTO.CountyModule
 {
     public class SubCountyDTO
     {

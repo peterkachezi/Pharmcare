@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
-using PharmCare.DTO.CountryModule;
 using PharmCare.DTO.CountyModule;
 using PharmCare.DTO.LeafSettingModule;
 

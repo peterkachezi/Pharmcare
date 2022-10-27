@@ -6,7 +6,7 @@ $(document).ready(function () {
 function DeleteRecord(e) {
 
     $("#divLoader").show();
-    var id = e;
+    var id = e;m
 
     console.log(id);
 
@@ -34,7 +34,7 @@ function DeleteRecord(e) {
 
                 type: "GET",
 
-                url: "/Admin/Counties/Delete/" + id,
+                url: "/Admin/SubCounties/Delete/" + id,
 
                 success: function (response) {
 
@@ -93,7 +93,7 @@ $("#btnSubmit").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "County name is a required field ",
+            title: "Sub County name is a required field ",
             showConfirmButton: true,
         });
 
@@ -101,15 +101,15 @@ $("#btnSubmit").click(function () {
     }
 
 
-    $("#ModalCreateCounty").modal('hide');
+    $("#ModalCreateSubCounty").modal('hide');
 
     $("#divLoader").show();
 
-    var formData = new FormData($('#frmAddCounty').get(0));
+    var formData = new FormData($('#frmAddSubCounty').get(0));
 
     $.ajax({
         type: "POST",
-        url: "/Admin/Counties/Create", // NB: Use the correct action name
+        url: "/Admin/SubCounties/Create", // NB: Use the correct action name
         data: formData,
         dataType: 'json',
         contentType: false,
@@ -155,31 +155,28 @@ $("#btnSubmit").click(function () {
 
 $("#btnUpdate").click(function () {
 
-
     if ($('#txtName1').val() == '') {
         $('#txtName1').focus();
         swal({
             position: 'top-end',
             type: "error",
-            title: "County name is a required field",
+            title: "Sub County name is a required field ",
             showConfirmButton: true,
         });
 
         return false;
     }
 
-
-
-    $("#ModalUpdateCounty").modal('hide');
+    $("#ModalUpdateSubCounty").modal('hide');
 
     $("#divLoader").show();
 
 
-    var formData = new FormData($('#frmUpdateCounty').get(0));
+    var formData = new FormData($('#frmUpdateSubCounty').get(0));
 
     $.ajax({
         type: "POST",
-        url: "/Admin/Counties/Update", // NB: Use the correct action name
+        url: "/Admin/SubCounties/Update", // NB: Use the correct action name
         data: formData,
         dataType: 'json',
         contentType: false,
@@ -227,7 +224,7 @@ function GetRecord(e) {
 
     var id = e;
 
-    $.get("/Admin/Counties/GetById/?Id=" + id, function (data, status) {
+    $.get("/Admin/SubCounties/GetById/?Id=" + id, function (data, status) {
 
         console.log(data);
         if (data == null) {
@@ -238,8 +235,8 @@ function GetRecord(e) {
 
             $("#txtName1").val(data.data.name);
 
-            $('#ModalUpdateCounty').modal({ backdrop: 'static', keyboard: false })
-            $("#ModalUpdateCounty").modal('show');
+            $('#ModalUpdateSubCounty').modal({ backdrop: 'static', keyboard: false })
+            $("#ModalUpdateSubCounty").modal('show');
         }
 
     });
@@ -249,7 +246,7 @@ function SubCountyDetails(e) {
 
     var id = e;
 
-    window.location.href = "/Admin/Counties/Details/" + id;
+    window.location.href = "/Admin/SubCounties/Details/" + id;
 
 }
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PharmCare.BLL.Repositories.CountyModule;
 using PharmCare.DAL.Models;
-using PharmCare.DTO.CountryModule;
 using PharmCare.DTO.CountyModule;
 
 namespace PharmCare.Areas.Admin.Controllers
@@ -39,6 +38,9 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
+                var name = subCountyDTO.Name.Substring(0, 1).ToUpper() + subCountyDTO.Name.Substring(1).ToLower().Trim();
+
+                subCountyDTO.Name = name;
 
                 bool IsPatientExist = (await countyRepository.CheckIfSubCountyExist(subCountyDTO));
 
@@ -83,6 +85,10 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
+                var name = subCountyDTO.Name.Substring(0, 1).ToUpper() + subCountyDTO.Name.Substring(1).ToLower().Trim();
+
+                subCountyDTO.Name = name;
+
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
                 subCountyDTO.UpdatedBy = user.Id;

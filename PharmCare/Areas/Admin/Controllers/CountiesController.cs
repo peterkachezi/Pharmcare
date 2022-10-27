@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PharmCare.BLL.Repositories.CountyModule;
 using PharmCare.DAL.Models;
@@ -34,13 +36,18 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
-        }      
-        
-        public async Task<IActionResult> Details()
+        }
+        public async Task<IActionResult> Details(Guid Id)
         {
             try
             {
-                var subCounties = await countyRepository.GetAllSubCounties();
+                var county = await countyRepository.GetAllCountyById(Id);
+
+                ViewBag.CountName = county.Name;
+
+                ViewBag.CountId = county.Id;
+
+                var subCounties = (await countyRepository.GetAllSubCounties()).Where(x => x.CountyId ==Id);
 
                 return View(subCounties);
             }
@@ -57,6 +64,9 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
+                var name = countyDTO.Name.Substring(0, 1).ToUpper() + countyDTO.Name.Substring(1).ToLower().Trim();
+
+                countyDTO.Name = name;
 
                 bool IsPatientExist = (await countyRepository.CheckIfCountyExist(countyDTO));
 
@@ -101,6 +111,10 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
+                var name = countyDTO.Name.Substring(0, 1).ToUpper() + countyDTO.Name.Substring(1).ToLower().Trim();
+
+                countyDTO.Name = name;
+
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
                 countyDTO.UpdatedBy = user.Id;
