@@ -23,9 +23,20 @@ namespace PharmCare.DAL.Models
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? Gender { get; set; }
-        public string? NHIFNo { get; set; }
-        public string? IDNumber { get; set; }
+        public string NHIFNo { get; set; }
+        public string IDNumber { get; set; }
+        [Column("NHIFNo")]
+        public string? Nhifno { get; set; }
+        [Column("IDNumber")]
+        public string? Idnumber { get; set; }
         public Guid? CountyId { get; set; }
         public Guid? SubCountyId { get; set; }
+
+        [ForeignKey(nameof(CountyId))]
+        [InverseProperty("Patients")]
+        public virtual County? County { get; set; }
+        [ForeignKey(nameof(SubCountyId))]
+        [InverseProperty("Patients")]
+        public virtual SubCounty? SubCounty { get; set; }
     }
 }

@@ -23,7 +23,6 @@ namespace PharmCare.DTO.SupplierModule
         public DateTime CreateDate { get; set; }
         public Guid CountryId { get; set; }
         public Guid ContactCountryId { get; set; }
-        public string CountryName { get; set; }
         public string Town { get; set; }
         public string PhysicalAddress { get; set; }
         public string NewCreateDate { get { return CreateDate.ToShortDateString(); } }

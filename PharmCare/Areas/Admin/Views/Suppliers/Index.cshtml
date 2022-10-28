@@ -55,6 +55,8 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Phone Number</th>
                                     <th scope="col">Email</th>
+                                    <th scope="col">Town</th>
+                                    <th scope="col">Product Type </th>
                                     <th scope="col">Entry Date</th>
                                     <th scope="col">Options</th>
                                 </tr>
@@ -72,6 +74,8 @@
                                             <td>@item.Name</td>
                                             <td>@item.PhoneNumber</td>
                                             <td>@item.Email</td>
+                                            <td>@item.Town</td>
+                                            <td>@item.ProductTypeName</td>
                                             <td>@item.CreateDate.ToShortDateString()</td>
                                             <td>
                                                 <a class=" btn-success  btn-sm" href="#" onclick="GetRecord('@item.Id')" value=""><i class="fa fa-edit"> Edit</i></a>

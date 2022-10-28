@@ -58,17 +58,17 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                if (supplierDTO.CountryId == null || supplierDTO.CountryId == Guid.Empty)
-                {
-                    return Json(new { success = false, responseText = "Please select manufucturer's  country" });
+                //if (supplierDTO.CountryId == null || supplierDTO.CountryId == Guid.Empty)
+                //{
+                //    return Json(new { success = false, responseText = "Please select supplier's  town" });
 
-                }                              
+                //}                              
 
-                if (supplierDTO.ProductTypeId == null || supplierDTO.ProductTypeId == Guid.Empty)
-                {
-                    return Json(new { success = false, responseText = "Please select product type" });
+                //if (supplierDTO.ProductTypeId == null || supplierDTO.ProductTypeId == Guid.Empty)
+                //{
+                //    return Json(new { success = false, responseText = "Please select supplier's product type" });
 
-                }
+                //}
 
                 var firstName = supplierDTO.Name.Substring(0, 1).ToUpper() + supplierDTO.Name.Substring(1).ToLower().Trim();
 

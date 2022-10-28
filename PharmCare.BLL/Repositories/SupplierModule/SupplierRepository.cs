@@ -170,31 +170,19 @@ namespace PharmCare.BLL.Repositories.SupplierModule
 
                                         ProductTypeName = newprodType.Name == null ? "" : newprodType.Name,
 
-                                        CountryName = newcountry.Name == null ? "" : newcountry.Name,
+                                        Town = newcountry.Name == null ? "" : newcountry.Name,
 
                                         SupplierNo = man.SupplierNo,
 
                                         PhoneNumber = man.PhoneNumber,
 
                                         Email = man.Email,
-
-                                        Town = man.Town,
-
+                                        
                                         PhysicalAddress = man.PhysicalAddress,
 
                                         CreateDate = man.CreateDate,
 
                                         CreatedBy = man.CreatedBy,
-
-                                        ContactId = newCont.Id == null ? Guid.NewGuid() : newCont.Id,
-
-                                        ContactFirstName = newCont.FirstName == null ? "" : newCont.FirstName,
-
-                                        ContactLastName = newCont.LastName == null ? "" : newCont.LastName,
-
-                                        ContactEmail = newCont.Email == null ? "" : newCont.Email,
-
-                                        ContactPhoneNumber = newCont.PhoneNumber,
 
                                     }).ToListAsync();
 
@@ -235,7 +223,7 @@ namespace PharmCare.BLL.Repositories.SupplierModule
 
                                         ProductTypeId = man.ProductTypeId,
 
-                                        CountryName = newprodType.Name == null ? "" : newcountry.Name,
+                                        Town = newprodType.Name == null ? "" : newcountry.Name,
 
                                         ProductTypeName = newcountry.Name == null ? "" : newcountry.Name,
 
@@ -243,9 +231,7 @@ namespace PharmCare.BLL.Repositories.SupplierModule
 
                                         PhoneNumber = man.PhoneNumber,
 
-                                        Email = man.Email,
-
-                                        Town = man.Town,
+                                        Email = man.Email,                                  
 
                                         PhysicalAddress = man.PhysicalAddress,
 

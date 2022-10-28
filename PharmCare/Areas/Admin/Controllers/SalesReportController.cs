@@ -137,7 +137,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                         worksheet.Cells[row, 3].Value = salesData.CreateDate.ToShortDateString();
 
-                        worksheet.Cells[row, 4].Style.Numberformat.Format = "#,##0.00";
+                   
                         worksheet.Cells[row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 4].Value = salesData.Quantity;
 
@@ -304,7 +304,6 @@ namespace PharmCare.Areas.Admin.Controllers
 
                         worksheet.Cells[row, 3].Value = salesData.CreateDate.ToShortDateString();
 
-                        worksheet.Cells[row, 4].Style.Numberformat.Format = "#,##0.00";
                         worksheet.Cells[row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 4].Value = salesData.Quantity;
 

@@ -229,7 +229,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Bank", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AccountName")
@@ -269,7 +268,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Bill", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BillNo")
@@ -303,7 +301,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -334,7 +331,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.ContactPerson", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CountryId")
@@ -376,7 +372,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Country", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -404,7 +399,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.County", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CreateDate")
@@ -426,249 +420,11 @@ namespace PharmCare.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Counties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b4e94f29-82c2-4b01-a19a-e2dc7700ad31"),
-                            Name = "Bomet"
-                        },
-                        new
-                        {
-                            Id = new Guid("205aa496-2900-47ab-bd56-858b8b5cb264"),
-                            Name = "Bungoma"
-                        },
-                        new
-                        {
-                            Id = new Guid("2c878282-536f-469b-8d7a-24753f4e3b9d"),
-                            Name = "Busia"
-                        },
-                        new
-                        {
-                            Id = new Guid("684cf6ae-b3d5-4fcc-a388-75fc2f3e697e"),
-                            Name = "Elgeyo-Marakwet"
-                        },
-                        new
-                        {
-                            Id = new Guid("5cff59ca-e862-4397-b667-6904cfd5042a"),
-                            Name = "Embu"
-                        },
-                        new
-                        {
-                            Id = new Guid("d0ce7e2f-8a5f-473a-9a5b-26886dae0980"),
-                            Name = "Garissa"
-                        },
-                        new
-                        {
-                            Id = new Guid("051b8d70-346a-423e-a0ec-d84b806d615d"),
-                            Name = "Homa Bay"
-                        },
-                        new
-                        {
-                            Id = new Guid("d31e2e70-bdcc-4c91-80ca-8b3d72379a0e"),
-                            Name = "Isiolo"
-                        },
-                        new
-                        {
-                            Id = new Guid("56e1cb13-d7c1-4304-80c9-80f7353efbbc"),
-                            Name = "Kajiado"
-                        },
-                        new
-                        {
-                            Id = new Guid("34fe814b-2eac-40d5-a82e-45fc204f62d2"),
-                            Name = "Kakamega"
-                        },
-                        new
-                        {
-                            Id = new Guid("70c552f6-9c3a-4161-b7be-8ff845dc73f0"),
-                            Name = "Kericho"
-                        },
-                        new
-                        {
-                            Id = new Guid("f7d71eea-dab4-46f0-b0d0-f6c0d4e17411"),
-                            Name = "Kiambu"
-                        },
-                        new
-                        {
-                            Id = new Guid("e754d467-ca1b-49e6-969d-5a53bbd30c02"),
-                            Name = "Kilifi"
-                        },
-                        new
-                        {
-                            Id = new Guid("3fcc55bb-3a49-4f63-8aac-97afe2bdaade"),
-                            Name = "Kirinyaga"
-                        },
-                        new
-                        {
-                            Id = new Guid("3ce511af-ac6d-48c5-81ca-97e71101713b"),
-                            Name = "Kisii"
-                        },
-                        new
-                        {
-                            Id = new Guid("546502ce-f899-4e67-b44b-9e27afa6b4d9"),
-                            Name = "Kisumu"
-                        },
-                        new
-                        {
-                            Id = new Guid("cca296d3-b300-4844-bb5e-34299c34e89b"),
-                            Name = "Kitui"
-                        },
-                        new
-                        {
-                            Id = new Guid("699533df-32b3-4a12-9074-e3d7ea5c595d"),
-                            Name = "Kwale"
-                        },
-                        new
-                        {
-                            Id = new Guid("d0898faa-41ef-4c1a-a666-2a2bd0a1471d"),
-                            Name = "Laikipia"
-                        },
-                        new
-                        {
-                            Id = new Guid("5ea8a3b8-99a1-4174-b09d-acb2f3ddb60e"),
-                            Name = "Lamu"
-                        },
-                        new
-                        {
-                            Id = new Guid("1e902d3d-4c13-4c8a-9840-da53a2f14726"),
-                            Name = "Machakos"
-                        },
-                        new
-                        {
-                            Id = new Guid("2867cd62-730d-4495-86a0-21caae1ae6ed"),
-                            Name = "Makueni"
-                        },
-                        new
-                        {
-                            Id = new Guid("eca2ae3a-d9b5-4301-9959-9347d53e3981"),
-                            Name = "Mandera"
-                        },
-                        new
-                        {
-                            Id = new Guid("d4e332ac-7516-435a-9e37-081e1d42af97"),
-                            Name = "Marsabit"
-                        },
-                        new
-                        {
-                            Id = new Guid("e20fafab-8bee-42e9-a9a0-6a004f1434da"),
-                            Name = "Meru"
-                        },
-                        new
-                        {
-                            Id = new Guid("0891558a-3064-4d16-8280-1f071f330b53"),
-                            Name = "Migori"
-                        },
-                        new
-                        {
-                            Id = new Guid("76447f19-0361-4785-b5fe-09ad26f5f398"),
-                            Name = "Mambasa"
-                        },
-                        new
-                        {
-                            Id = new Guid("9b3deee0-49e0-4e39-a84d-f84343d0af92"),
-                            Name = "Muranga"
-                        },
-                        new
-                        {
-                            Id = new Guid("eaa6c867-83a6-4f00-8050-4108ea8fb879"),
-                            Name = "Nairobi"
-                        },
-                        new
-                        {
-                            Id = new Guid("5db4b87a-3c0b-4cc4-8cd3-c51e978179af"),
-                            Name = "Nakuru"
-                        },
-                        new
-                        {
-                            Id = new Guid("0d3c9276-1dbe-4a36-bd4d-f8e349bd8fa2"),
-                            Name = "Nandi"
-                        },
-                        new
-                        {
-                            Id = new Guid("0b7c63e6-4793-4fe1-b341-505a82810390"),
-                            Name = "Narok"
-                        },
-                        new
-                        {
-                            Id = new Guid("6d171d50-f76b-4206-9cf6-8187b7e0235f"),
-                            Name = "Nyamira"
-                        },
-                        new
-                        {
-                            Id = new Guid("90bea7b4-e2ef-4a8f-9660-97c54735c6f4"),
-                            Name = "Nyandarua"
-                        },
-                        new
-                        {
-                            Id = new Guid("50f2f851-5191-4a43-96b2-01ddfa2ee359"),
-                            Name = "Nnyeri"
-                        },
-                        new
-                        {
-                            Id = new Guid("ed031428-cf2b-4e19-a84d-accb33a4c738"),
-                            Name = "Samburu"
-                        },
-                        new
-                        {
-                            Id = new Guid("03495340-b756-4514-9eaa-610f8ca67d76"),
-                            Name = "Siaya"
-                        },
-                        new
-                        {
-                            Id = new Guid("4a360bc0-d9fd-4a30-a631-5b486a93fc69"),
-                            Name = "Taita Taveta"
-                        },
-                        new
-                        {
-                            Id = new Guid("529dad3f-c594-4367-94d9-280428f116ea"),
-                            Name = "Tana River"
-                        },
-                        new
-                        {
-                            Id = new Guid("5fc8c896-ddfd-4ae7-9bb8-ebac14a92ba4"),
-                            Name = "Tharaka-Nithi"
-                        },
-                        new
-                        {
-                            Id = new Guid("ff0e5a77-5c94-45fa-9537-5bca914d79e2"),
-                            Name = "Trans-Nzoia"
-                        },
-                        new
-                        {
-                            Id = new Guid("91689b95-3b62-4ed5-9015-2f24bb4f1d8a"),
-                            Name = "Turkana"
-                        },
-                        new
-                        {
-                            Id = new Guid("53b35089-1f4e-4112-bd96-3e2f4101fbc7"),
-                            Name = "Uasin Gishu"
-                        },
-                        new
-                        {
-                            Id = new Guid("19ae233b-d77d-4121-9ffc-4937ed75225b"),
-                            Name = "Vihiga"
-                        },
-                        new
-                        {
-                            Id = new Guid("4daf0031-73ea-4ca5-99eb-8c2882ba7eea"),
-                            Name = "Wajir"
-                        },
-                        new
-                        {
-                            Id = new Guid("b13d1e4e-f53e-44da-a4d1-21a98182a8ff"),
-                            Name = "West Pokot"
-                        },
-                        new
-                        {
-                            Id = new Guid("b8f93c6c-2f8b-4c6c-a180-563ed8d9474f"),
-                            Name = "Baringo"
-                        });
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.GoodsReceivedHistory", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BatchNo")
@@ -729,7 +485,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.GoodsReceivedNote", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -773,7 +528,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.LeafSetting", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -808,7 +562,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.ManufacturerPayment", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Amount")
@@ -852,7 +605,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.MedicalCondition", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -880,7 +632,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Medicine", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CategoryId")
@@ -929,7 +680,13 @@ namespace PharmCare.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("MedicalConditionId");
+
                     b.HasIndex("ShelfId");
+
+                    b.HasIndex("UnitId");
 
                     b.ToTable("Medicines");
                 });
@@ -937,7 +694,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.OpeningBalance", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AccountHead")
@@ -980,7 +736,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Patient", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CountyId")
@@ -1006,13 +761,25 @@ namespace PharmCare.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IDNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IDNumber1");
+
+                    b.Property<string>("Idnumber")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("IDNumber");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NHIFNo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NHIFNo1");
+
+                    b.Property<string>("Nhifno")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("NHIFNo");
 
                     b.Property<string>("PatientNumber")
                         .IsRequired()
@@ -1038,13 +805,16 @@ namespace PharmCare.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CountyId");
+
+                    b.HasIndex("SubCountyId");
+
                     b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Prescription", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BillNo")
@@ -1084,7 +854,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.PrescriptionDetail", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BillNo")
@@ -1144,7 +913,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -1172,7 +940,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.ProductType", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -1200,7 +967,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Sale", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal?>("AmountPaid")
@@ -1231,7 +997,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.SalesDetail", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -1268,7 +1033,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Shelf", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -1294,7 +1058,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Stock", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -1324,7 +1087,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.SubCounty", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CountyId")
@@ -1348,13 +1110,14 @@ namespace PharmCare.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CountyId");
+
                     b.ToTable("SubCounties");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Supplier", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CountryId")
@@ -1406,7 +1169,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Unit", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
@@ -1512,11 +1274,54 @@ namespace PharmCare.DAL.Migrations
 
             modelBuilder.Entity("PharmCare.DAL.Models.Medicine", b =>
                 {
-                    b.HasOne("PharmCare.DAL.Models.Shelf", null)
+                    b.HasOne("PharmCare.DAL.Models.Category", "Category")
+                        .WithMany("Medicines")
+                        .HasForeignKey("CategoryId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Medicines_Categories");
+
+                    b.HasOne("PharmCare.DAL.Models.MedicalCondition", "MedicalCondition")
+                        .WithMany("Medicines")
+                        .HasForeignKey("MedicalConditionId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Medicines_MedicalConditions");
+
+                    b.HasOne("PharmCare.DAL.Models.Shelf", "Shelf")
                         .WithMany("Medicines")
                         .HasForeignKey("ShelfId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("PharmCare.DAL.Models.Unit", "Unit")
+                        .WithMany("Medicines")
+                        .HasForeignKey("UnitId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Medicines_Units");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("MedicalCondition");
+
+                    b.Navigation("Shelf");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.Patient", b =>
+                {
+                    b.HasOne("PharmCare.DAL.Models.County", "County")
+                        .WithMany("Patients")
+                        .HasForeignKey("CountyId")
+                        .HasConstraintName("FK_Patients_Counties");
+
+                    b.HasOne("PharmCare.DAL.Models.SubCounty", "SubCounty")
+                        .WithMany("Patients")
+                        .HasForeignKey("SubCountyId")
+                        .HasConstraintName("FK_Patients_SubCounties");
+
+                    b.Navigation("County");
+
+                    b.Navigation("SubCounty");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.PrescriptionDetail", b =>
@@ -1528,6 +1333,17 @@ namespace PharmCare.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Prescription");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.SubCounty", b =>
+                {
+                    b.HasOne("PharmCare.DAL.Models.County", "County")
+                        .WithMany("SubCounties")
+                        .HasForeignKey("CountyId")
+                        .IsRequired()
+                        .HasConstraintName("FK_SubCounties_Counties");
+
+                    b.Navigation("County");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Supplier", b =>
@@ -1549,9 +1365,26 @@ namespace PharmCare.DAL.Migrations
                     b.Navigation("ProductType");
                 });
 
+            modelBuilder.Entity("PharmCare.DAL.Models.Category", b =>
+                {
+                    b.Navigation("Medicines");
+                });
+
             modelBuilder.Entity("PharmCare.DAL.Models.Country", b =>
                 {
                     b.Navigation("Suppliers");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.County", b =>
+                {
+                    b.Navigation("Patients");
+
+                    b.Navigation("SubCounties");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.MedicalCondition", b =>
+                {
+                    b.Navigation("Medicines");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Prescription", b =>
@@ -1565,6 +1398,16 @@ namespace PharmCare.DAL.Migrations
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Shelf", b =>
+                {
+                    b.Navigation("Medicines");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.SubCounty", b =>
+                {
+                    b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.Unit", b =>
                 {
                     b.Navigation("Medicines");
                 });

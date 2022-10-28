@@ -164,7 +164,6 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 7].Value = user.SellingPrice;
 
-                        worksheet.Cells[row, 8].Style.Numberformat.Format = "#,##0.00";
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
 
@@ -320,7 +319,7 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 7].Value = user.SellingPrice;
 
-                        worksheet.Cells[row, 8].Style.Numberformat.Format = "#,##0.00";
+                     
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
 
@@ -475,7 +474,7 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 7].Value = user.SellingPrice;
 
-                        worksheet.Cells[row, 8].Style.Numberformat.Format = "#,##0.00";
+            
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
 
@@ -648,7 +647,7 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 7].Value = user.SellingPrice;
 
-                        worksheet.Cells[row, 8].Style.Numberformat.Format = "#,##0.00";
+                   
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
 

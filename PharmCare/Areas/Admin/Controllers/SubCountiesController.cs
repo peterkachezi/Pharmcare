@@ -55,7 +55,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                     if (result != null)
                     {
-                        return Json(new { success = true, responseText = "Sub county has been successfully created" });
+                        return Json(new { success = true, responseText = "Record has been successfully created" });
                     }
                     else
                     {

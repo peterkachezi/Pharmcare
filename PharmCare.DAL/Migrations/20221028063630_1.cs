@@ -134,7 +134,11 @@ namespace PharmCare.DAL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -278,34 +282,6 @@ namespace PharmCare.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OpeningBalances", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Patients",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PatientNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Residence = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Height = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NHIFNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CountyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SubCountyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Patients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -553,6 +529,28 @@ namespace PharmCare.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubCounties",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CountyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubCounties", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubCounties_Counties",
+                        column: x => x.CountyId,
+                        principalTable: "Counties",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PrescriptionDetails",
                 columns: table => new
                 {
@@ -642,72 +640,66 @@ namespace PharmCare.DAL.Migrations
                 {
                     table.PrimaryKey("PK_Medicines", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Medicines_Categories",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Medicines_MedicalConditions",
+                        column: x => x.MedicalConditionId,
+                        principalTable: "MedicalConditions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Medicines_Shelves_ShelfId",
                         column: x => x.ShelfId,
                         principalTable: "Shelves",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Medicines_Units",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id");
                 });
 
-            migrationBuilder.InsertData(
-                table: "Counties",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
                 {
-                    { new Guid("0485351e-1696-49f5-9e5f-b05d583247bc"), "Tana River" },
-                    { new Guid("08442ffc-9c00-43fb-8fb0-1c74e7f557a4"), "Kakamega" },
-                    { new Guid("1286e873-5cae-4f81-955d-52c719161b36"), "Vihiga" },
-                    { new Guid("14865093-87a6-4cb4-9723-33f3e371a1e1"), "Kirinyaga" },
-                    { new Guid("1a183eea-7ffc-4550-9e3e-cb1e18086ff3"), "Meru" },
-                    { new Guid("1fb750f6-7d90-4483-900e-f5f528c06065"), "Muranga" },
-                    { new Guid("29c78a7e-bf8d-4dcf-ae18-7f9a4a1dd380"), "Nandi" },
-                    { new Guid("368c5ab1-54aa-4e29-9d30-25a1f28b6935"), "Kisii" },
-                    { new Guid("3a220ad3-af8b-44e6-ba7d-e9c8787fbda0"), "Laikipia" },
-                    { new Guid("3a4e0663-eafc-43bc-b461-248a9be8605f"), "Marsabit" },
-                    { new Guid("48cd38fb-c671-4ed6-8801-16460ff7aaa2"), "Nairobi" },
-                    { new Guid("4dcfd494-f8c0-4370-ad78-c85adc7da1cb"), "Wajir" },
-                    { new Guid("4dd14e10-03e8-47b8-bd71-6c809be42c55"), "Machakos" },
-                    { new Guid("53e4f046-2dec-4f02-ac53-362a769717eb"), "Bomet" },
-                    { new Guid("5c71bf53-60bc-46b5-b181-60a9b2ff2a51"), "Elgeyo-Marakwet" },
-                    { new Guid("651fb9ed-d466-4697-b4ae-c62bab97b5e9"), "Samburu" },
-                    { new Guid("66d470bb-bb2a-4d13-ba3a-de7fd6f18b1c"), "Kericho" },
-                    { new Guid("68f7de39-2c9a-405b-801f-c7318e41ecfc"), "Garissa" },
-                    { new Guid("69e2b213-e7db-4970-888a-909192e852c1"), "Kajiado" },
-                    { new Guid("6f7b0817-6f0e-4f8e-9f09-39e45954f9a1"), "Tharaka-Nithi" },
-                    { new Guid("84ed8d3d-8731-4974-aef2-4c4ab061718f"), "Kitui" },
-                    { new Guid("88eda409-cb97-4a25-adaf-e161301819b8"), "Busia" },
-                    { new Guid("8c3a238e-6436-4736-bba6-b089b79e2cb4"), "Trans-Nzoia" },
-                    { new Guid("8e43e4f9-8cf6-4ee3-9a33-099b5a0f1095"), "Kilifi" },
-                    { new Guid("8e526309-c903-4323-a0dd-89f6f797f6c3"), "Narok" },
-                    { new Guid("90731a6b-46f4-4391-819b-9ff2e523a13d"), "Kwale" },
-                    { new Guid("929698b9-c447-4326-87d2-2734efe680dd"), "Embu" },
-                    { new Guid("92a5f52f-5bea-4490-86af-f48ea6b95637"), "Baringo" },
-                    { new Guid("9ca76a74-916a-4c24-9e90-e9b323c1fae8"), "Isiolo" },
-                    { new Guid("9d0957ad-aeeb-4a0e-8a08-c96f06793987"), "Lamu" },
-                    { new Guid("9e78a3ab-2040-4f5f-b41a-21677381b09a"), "Turkana" },
-                    { new Guid("a7238636-6a0a-4d2f-a6f4-1be354b3a9f4"), "Nnyeri" },
-                    { new Guid("aaff1d1e-429e-4298-ba9e-656ca3ef7afb"), "Nyamira" },
-                    { new Guid("ad34d2e5-4f33-4e44-9dca-6fa6dbec28d6"), "Migori" },
-                    { new Guid("b8a8284d-da61-4a54-a446-34af23015ab9"), "Homa Bay" },
-                    { new Guid("bc381690-794e-4a39-b600-98e7b8c16017"), "Bungoma" },
-                    { new Guid("be5b1679-d20c-45ff-a56f-b369347f6173"), "Nyandarua" },
-                    { new Guid("c3c2233a-af5c-4b2e-a86d-0b12c620c9dd"), "Siaya" },
-                    { new Guid("c6271261-7962-43eb-b1a4-21ba197ab638"), "Taita Taveta" },
-                    { new Guid("c916f783-6085-4b03-aa1b-2d0240dc8c78"), "Uasin Gishu" },
-                    { new Guid("d679bdc9-29d8-4d51-9171-c74e0fe6e7bd"), "Kisumu" },
-                    { new Guid("e93a3053-7cda-4dfd-881f-110f9d2765d1"), "Makueni" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Counties",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PatientNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Residence = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Height = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NHIFNo1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IDNumber1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NHIFNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CountyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SubCountyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
                 {
-                    { new Guid("ea213a76-2acf-42f5-82e4-bb7be9cae172"), "Mambasa" },
-                    { new Guid("ea797974-987d-42ae-ac4b-8d3fd246ba6a"), "Nakuru" },
-                    { new Guid("f25febfd-6602-42a8-b278-09c6c1065507"), "West Pokot" },
-                    { new Guid("f5b680af-2d82-4d17-bde9-5497b2032e67"), "Mandera" },
-                    { new Guid("f83e7fe3-e61f-4e11-a812-4a2d55718b9d"), "Kiambu" }
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_Counties",
+                        column: x => x.CountyId,
+                        principalTable: "Counties",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Patients_SubCounties",
+                        column: x => x.SubCountyId,
+                        principalTable: "SubCounties",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -750,14 +742,44 @@ namespace PharmCare.DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Medicines_CategoryId",
+                table: "Medicines",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medicines_MedicalConditionId",
+                table: "Medicines",
+                column: "MedicalConditionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Medicines_ShelfId",
                 table: "Medicines",
                 column: "ShelfId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Medicines_UnitId",
+                table: "Medicines",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_CountyId",
+                table: "Patients",
+                column: "CountyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_SubCountyId",
+                table: "Patients",
+                column: "SubCountyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PrescriptionDetails_PrescriptionId",
                 table: "PrescriptionDetails",
                 column: "PrescriptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubCounties_CountyId",
+                table: "SubCounties",
+                column: "CountyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Suppliers_CountryId",
@@ -794,13 +816,7 @@ namespace PharmCare.DAL.Migrations
                 name: "Bills");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "ContactPersons");
-
-            migrationBuilder.DropTable(
-                name: "Counties");
 
             migrationBuilder.DropTable(
                 name: "GoodsReceivedHistories");
@@ -813,9 +829,6 @@ namespace PharmCare.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "ManufacturerPayments");
-
-            migrationBuilder.DropTable(
-                name: "MedicalConditions");
 
             migrationBuilder.DropTable(
                 name: "Medicines");
@@ -845,16 +858,25 @@ namespace PharmCare.DAL.Migrations
                 name: "Suppliers");
 
             migrationBuilder.DropTable(
-                name: "Units");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "MedicalConditions");
+
+            migrationBuilder.DropTable(
                 name: "Shelves");
+
+            migrationBuilder.DropTable(
+                name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "SubCounties");
 
             migrationBuilder.DropTable(
                 name: "Prescriptions");
@@ -864,6 +886,9 @@ namespace PharmCare.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");
+
+            migrationBuilder.DropTable(
+                name: "Counties");
         }
     }
 }

@@ -90,7 +90,7 @@ $("#btnSubmit").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's name",
+            title: "Please enter supplier's name",
             showConfirmButton: true,
         });
         return false;
@@ -101,7 +101,7 @@ $("#btnSubmit").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's email",
+            title: "Please enter supplier's email",
             showConfirmButton: true,
         });
         return false;
@@ -112,7 +112,7 @@ $("#btnSubmit").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's phone number",
+            title: "Please enter supplier's phone number",
             showConfirmButton: true,
         });
         return false;
@@ -123,33 +123,13 @@ $("#btnSubmit").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's town",
+            title: "Please enter supplier's town",
             showConfirmButton: true,
         });
         return false;
     }
 
-    if ($('#txtFirstName').val() == '') {
-        $('#txtFirstName').focus();
-        swal({
-            position: 'top-end',
-            type: "error",
-            title: "Please enter contact person's first name",
-            showConfirmButton: true,
-        });
-        return false;
-    }
 
-    if ($('#txtLastName').val() == '') {
-        $('#txtLastName').focus();
-        swal({
-            position: 'top-end',
-            type: "error",
-            title: "Please enter contact person's last name",
-            showConfirmButton: true,
-        });
-        return false;
-    }
 
     $("#ModalCreateSupplier").modal('hide');
 
@@ -211,7 +191,7 @@ $("#btnUpdate").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's name",
+            title: "Please enter supplier's name",
             showConfirmButton: true,
         });
         return false;
@@ -222,7 +202,7 @@ $("#btnUpdate").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's email",
+            title: "Please enter supplier's email",
             showConfirmButton: true,
         });
         return false;
@@ -233,7 +213,7 @@ $("#btnUpdate").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's phone number",
+            title: "Please enter supplier's phone number",
             showConfirmButton: true,
         });
         return false;
@@ -244,33 +224,13 @@ $("#btnUpdate").click(function () {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please enter manufacturer's town",
+            title: "Please enter supplier's town",
             showConfirmButton: true,
         });
         return false;
     }
 
-    if ($('#txtFirstName1').val() == '') {
-        $('#txtFirstName1').focus();
-        swal({
-            position: 'top-end',
-            type: "error",
-            title: "Please enter contact person's first name",
-            showConfirmButton: true,
-        });
-        return false;
-    }
 
-    if ($('#txtLastName1').val() == '') {
-        $('#txtLastName1').focus();
-        swal({
-            position: 'top-end',
-            type: "error",
-            title: "Please enter contact person's last name",
-            showConfirmButton: true,
-        });
-        return false;
-    }
 
   
 
