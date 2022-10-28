@@ -30,13 +30,7 @@ namespace PharmCare.DAL.Models
         [Column("IDNumber")]
         public string? Idnumber { get; set; }
         public Guid? CountyId { get; set; }
-        public Guid? SubCountyId { get; set; }
+        public Guid? SubCountyId { get; set; }      
 
-        [ForeignKey(nameof(CountyId))]
-        [InverseProperty("Patients")]
-        public virtual County? County { get; set; }
-        [ForeignKey(nameof(SubCountyId))]
-        [InverseProperty("Patients")]
-        public virtual SubCounty? SubCounty { get; set; }
     }
 }

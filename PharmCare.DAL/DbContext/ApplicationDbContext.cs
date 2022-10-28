@@ -102,48 +102,23 @@ namespace PharmCare.DAL.DbContext
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<Medicine>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+            //modelBuilder.Entity<Medicine>(entity =>
+            //{
+            //    entity.Property(e => e.Id).ValueGeneratedNever();
+                            
 
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.Medicines)
-                    .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Medicines_Categories");
-
-                entity.HasOne(d => d.MedicalCondition)
-                    .WithMany(p => p.Medicines)
-                    .HasForeignKey(d => d.MedicalConditionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Medicines_MedicalConditions");
-
-                entity.HasOne(d => d.Unit)
-                    .WithMany(p => p.Medicines)
-                    .HasForeignKey(d => d.UnitId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Medicines_Units");
-            });
+            //    entity.HasOne(d => d.Unit)
+            //        .WithMany(p => p.Medicines)
+            //        .HasForeignKey(d => d.UnitId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("FK_Medicines_Units");
+            //});
 
             modelBuilder.Entity<OpeningBalance>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
-
-            modelBuilder.Entity<Patient>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.County)
-                    .WithMany(p => p.Patients)
-                    .HasForeignKey(d => d.CountyId)
-                    .HasConstraintName("FK_Patients_Counties");
-
-                entity.HasOne(d => d.SubCounty)
-                    .WithMany(p => p.Patients)
-                    .HasForeignKey(d => d.SubCountyId)
-                    .HasConstraintName("FK_Patients_SubCounties");
-            });
+                       
 
             modelBuilder.Entity<Prescription>(entity =>
             {

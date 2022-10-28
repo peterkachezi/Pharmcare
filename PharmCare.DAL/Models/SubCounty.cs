@@ -6,10 +6,7 @@ namespace PharmCare.DAL.Models
 {
     public  partial class SubCounty
     {
-        public SubCounty()
-        {
-            Patients = new HashSet<Patient>();
-        }
+       
 
         [Key]
         public Guid Id { get; set; }
@@ -19,11 +16,7 @@ namespace PharmCare.DAL.Models
         public string Name { get; set; } = null!;
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
-
-        [ForeignKey(nameof(CountyId))]
-        [InverseProperty("SubCounties")]
         public virtual County County { get; set; } = null!;
-        [InverseProperty(nameof(Patient.SubCounty))]
-        public virtual ICollection<Patient> Patients { get; set; }
+ 
     }
 }

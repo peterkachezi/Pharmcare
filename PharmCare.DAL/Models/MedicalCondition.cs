@@ -9,11 +9,7 @@ using System.Threading.Tasks;
 namespace PharmCare.DAL.Models
 {
     public partial class MedicalCondition
-    {
-        public MedicalCondition()
-        {
-            Medicines = new HashSet<Medicine>();
-        }
+    {       
 
         [Key]
         public Guid Id { get; set; }
@@ -22,8 +18,6 @@ namespace PharmCare.DAL.Models
         public string? UpdatedBy { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
-
-        [InverseProperty(nameof(Medicine.MedicalCondition))]
         public virtual ICollection<Medicine> Medicines { get; set; }
 
     }

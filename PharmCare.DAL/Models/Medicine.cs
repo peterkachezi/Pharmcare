@@ -27,17 +27,19 @@ namespace PharmCare.DAL.Models
         public Guid CategoryId { get; set; }
         public Guid UnitId { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
-        [InverseProperty("Medicines")]
-        public virtual Category Category { get; set; } = null!;
-        [ForeignKey(nameof(MedicalConditionId))]
-        [InverseProperty("Medicines")]
-        public virtual MedicalCondition MedicalCondition { get; set; } = null!;
-        [ForeignKey(nameof(ShelfId))]
-        [InverseProperty("Medicines")]
-        public virtual Shelf Shelf { get; set; } = null!;
-        [ForeignKey(nameof(UnitId))]
-        [InverseProperty("Medicines")]
-        public virtual Unit Unit { get; set; } = null!;
+
+        //[ForeignKey(nameof(CategoryId))]  
+        //public virtual Category Category { get; set; } = null!;
+
+
+        //[ForeignKey(nameof(MedicalConditionId))]
+        //public virtual MedicalCondition MedicalCondition { get; set; } = null!;
+
+
+        //[ForeignKey(nameof(ShelfId))]   
+        //public virtual Shelf Shelf { get; set; } = null!;
+
+        //[ForeignKey(nameof(UnitId))]
+        //public virtual Unit Unit { get; set; } = null!;
     }
 }

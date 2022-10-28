@@ -63,6 +63,13 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
+
+
+
+
+
+
+
                 var firstName = patientDTO.FirstName.Substring(0, 1).ToUpper() + patientDTO.FirstName.Substring(1).ToLower().Trim();
 
                 var lastName = patientDTO.LastName.Substring(0, 1).ToUpper() + patientDTO.LastName.Substring(1).ToLower().Trim();

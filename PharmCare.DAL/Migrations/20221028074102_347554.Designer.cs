@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmCare.DAL.DbContext;
 
@@ -11,9 +12,10 @@ using PharmCare.DAL.DbContext;
 namespace PharmCare.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221028074102_347554")]
+    partial class _347554
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -807,6 +809,10 @@ namespace PharmCare.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CountyId");
+
+                    b.HasIndex("SubCountyId");
+
                     b.ToTable("Patients");
                 });
 
@@ -1297,6 +1303,17 @@ namespace PharmCare.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PharmCare.DAL.Models.Patient", b =>
+                {
+                    b.HasOne("PharmCare.DAL.Models.County", null)
+                        .WithMany("Patients")
+                        .HasForeignKey("CountyId");
+
+                    b.HasOne("PharmCare.DAL.Models.SubCounty", null)
+                        .WithMany("Patients")
+                        .HasForeignKey("SubCountyId");
+                });
+
             modelBuilder.Entity("PharmCare.DAL.Models.PrescriptionDetail", b =>
                 {
                     b.HasOne("PharmCare.DAL.Models.Prescription", "Prescription")
@@ -1350,6 +1367,8 @@ namespace PharmCare.DAL.Migrations
 
             modelBuilder.Entity("PharmCare.DAL.Models.County", b =>
                 {
+                    b.Navigation("Patients");
+
                     b.Navigation("SubCounties");
                 });
 
@@ -1371,6 +1390,11 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Shelf", b =>
                 {
                     b.Navigation("Medicines");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.SubCounty", b =>
+                {
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Unit", b =>

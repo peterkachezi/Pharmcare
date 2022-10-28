@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmCare.DAL.DbContext;
 
@@ -11,9 +12,10 @@ using PharmCare.DAL.DbContext;
 namespace PharmCare.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221028070414_12")]
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -632,7 +634,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Medicine", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CategoryId")
@@ -737,7 +738,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Patient", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CountyId")
@@ -806,6 +806,10 @@ namespace PharmCare.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountyId");
+
+                    b.HasIndex("SubCountyId");
 
                     b.ToTable("Patients");
                 });
@@ -1272,29 +1276,54 @@ namespace PharmCare.DAL.Migrations
 
             modelBuilder.Entity("PharmCare.DAL.Models.Medicine", b =>
                 {
-                    b.HasOne("PharmCare.DAL.Models.Category", null)
+                    b.HasOne("PharmCare.DAL.Models.Category", "Category")
                         .WithMany("Medicines")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Medicines_Categories");
 
-                    b.HasOne("PharmCare.DAL.Models.MedicalCondition", null)
+                    b.HasOne("PharmCare.DAL.Models.MedicalCondition", "MedicalCondition")
                         .WithMany("Medicines")
                         .HasForeignKey("MedicalConditionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Medicines_MedicalConditions");
 
-                    b.HasOne("PharmCare.DAL.Models.Shelf", null)
+                    b.HasOne("PharmCare.DAL.Models.Shelf", "Shelf")
                         .WithMany("Medicines")
                         .HasForeignKey("ShelfId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PharmCare.DAL.Models.Unit", null)
+                    b.HasOne("PharmCare.DAL.Models.Unit", "Unit")
                         .WithMany("Medicines")
                         .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Medicines_Units");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("MedicalCondition");
+
+                    b.Navigation("Shelf");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.Patient", b =>
+                {
+                    b.HasOne("PharmCare.DAL.Models.County", "County")
+                        .WithMany("Patients")
+                        .HasForeignKey("CountyId")
+                        .HasConstraintName("FK_Patients_Counties");
+
+                    b.HasOne("PharmCare.DAL.Models.SubCounty", "SubCounty")
+                        .WithMany("Patients")
+                        .HasForeignKey("SubCountyId")
+                        .HasConstraintName("FK_Patients_SubCounties");
+
+                    b.Navigation("County");
+
+                    b.Navigation("SubCounty");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.PrescriptionDetail", b =>
@@ -1350,6 +1379,8 @@ namespace PharmCare.DAL.Migrations
 
             modelBuilder.Entity("PharmCare.DAL.Models.County", b =>
                 {
+                    b.Navigation("Patients");
+
                     b.Navigation("SubCounties");
                 });
 
@@ -1371,6 +1402,11 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Shelf", b =>
                 {
                     b.Navigation("Medicines");
+                });
+
+            modelBuilder.Entity("PharmCare.DAL.Models.SubCounty", b =>
+                {
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Unit", b =>

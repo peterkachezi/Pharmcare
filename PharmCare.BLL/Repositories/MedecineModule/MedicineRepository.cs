@@ -27,6 +27,8 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                 medicineDTO.CreateDate = DateTime.Now;
 
+                medicineDTO.MedicalConditionId = medicineDTO.MedicalConditionId;
+
                 var medicine = mapper.Map<Medicine>(medicineDTO);
 
                 context.Medicines.Add(medicine);

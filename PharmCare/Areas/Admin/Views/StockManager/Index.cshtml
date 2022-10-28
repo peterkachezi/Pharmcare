@@ -137,7 +137,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="exampleInputEmail1" class=""><strong>Date of Manufacture:</strong></label>
-                        <input type="date" id="txtDateOfManufacture" name="Discount" class="form-control myinputs" />
+                        <input type="date" id="txtDateOfManufacture" value='@DateTime.Now.ToString("yyyy-MM-dd")' name="Discount" class="form-control myinputs" />
                     </div>
                 </div>
 
@@ -154,7 +154,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="inputPassword" class=""><strong>ExpiryDate:</strong></label>
-                        <input type="date" id="txtExpiryDate" name="ExpiryDate" class="form-control myinputs" />
+                        <input type="date" id="txtExpiryDate" value='@DateTime.Now.ToString("yyyy-MM-dd")' name="ExpiryDate" class="form-control myinputs" />
                     </div>
                 </div>
 

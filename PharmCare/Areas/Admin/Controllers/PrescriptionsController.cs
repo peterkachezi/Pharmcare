@@ -294,9 +294,9 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 var result = localReport.Execute(RenderType.Pdf, extension, parameters, mimetype);
 
-                //return File(result.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Receipt.pdf");
+                return File(result.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Receipt.pdf");
 
-                return File(result.MainStream, "application/pdf");
+                //return File(result.MainStream, "application/pdf");
             }
             catch (Exception ex)
             {
