@@ -13,6 +13,7 @@ namespace PharmCare.DAL.DbContext
             : base(options)
         {
         }
+        public virtual DbSet<OnlinePayment> OnlinePayments { get; set; } = null!;
         public virtual DbSet<Bank> Banks { get; set; } = null!;
         public virtual DbSet<Bill> Bills { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
@@ -105,7 +106,7 @@ namespace PharmCare.DAL.DbContext
             //modelBuilder.Entity<Medicine>(entity =>
             //{
             //    entity.Property(e => e.Id).ValueGeneratedNever();
-                            
+
 
             //    entity.HasOne(d => d.Unit)
             //        .WithMany(p => p.Medicines)
@@ -118,7 +119,7 @@ namespace PharmCare.DAL.DbContext
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
-                       
+
 
             modelBuilder.Entity<Prescription>(entity =>
             {

@@ -1,6 +1,4 @@
-﻿
-
-using iText.Kernel.Colors;
+﻿using iText.Kernel.Colors;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;

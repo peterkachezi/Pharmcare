@@ -39,18 +39,14 @@ namespace PharmCare.Areas.Admin.Controllers
 
                     return RedirectToAction("Index", new { area = "Admin" });
                 }
-
-
                 if (reportDTO.Status == 1)
                 {
                     return await DownloadGeneralReport();
                 }
-
                 if (reportDTO.Status == 0)
                 {
                     return await DownloadOutOfstock(reportDTO);
                 }
-
                 else
                 {
                     return RedirectToAction("Index", new { area = "Admin" });
@@ -134,8 +130,6 @@ namespace PharmCare.Areas.Admin.Controllers
 
                     worksheet.Cells["H2"].Value = "Quantity";
 
-
-
                     worksheet.Cells["A2:H2"].Style.Fill.PatternType = ExcelFillStyle.Solid;
 
                     worksheet.Cells["A2:H2"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
@@ -166,9 +160,6 @@ namespace PharmCare.Areas.Admin.Controllers
 
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
-
-
-
 
                         row++;
                     }

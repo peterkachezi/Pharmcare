@@ -3,7 +3,6 @@ $(document).ready(function () {
 
 });
 
-
 function DeleteRecord(e) {
 
     $("#divLoader").show();
@@ -101,7 +100,6 @@ $("#btnSubmit").click(function () {
         return false;
     }
 
-
     if ($('#txtTotalNumberPerBox').val() == '') {
         $('#txtTotalNumberPerBox').focus();
         swal({
@@ -127,7 +125,6 @@ $("#btnSubmit").click(function () {
         dataType: 'json',
         contentType: false,
         processData: false,
-
 
         success: function (response) {
             if (response.success) {
@@ -168,7 +165,6 @@ $("#btnSubmit").click(function () {
 
 $("#btnUpdate").click(function () {
 
-
     if ($('#txtName1').val() == '') {
         $('#txtName1').focus();
         swal({
@@ -180,8 +176,6 @@ $("#btnUpdate").click(function () {
 
         return false;
     }
-
-
 
     $("#ModalUpdateLeafSetting").modal('hide');
 

@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
-using PharmCare.BLL.Repositories.SalesModule;
 using PharmCare.BLL.Repositories.StockModule;
 using System.Drawing;
 using Microsoft.AspNetCore.Identity;
 using PharmCare.DAL.Models;
-
 namespace PharmCare.Areas.Admin.Controllers
 {
     [Area("Admin")]

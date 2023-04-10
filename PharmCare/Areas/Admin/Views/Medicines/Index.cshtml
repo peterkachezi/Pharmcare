@@ -15,12 +15,10 @@
         <p class="text-primary">
             <span>Home</span> <span> <i class="fa fa-angle-double-right"></i> </span>  <span>Medicines</span>
         </p>
-
     </div>
 
 
     <div class="col-md-2 my-auto">
-
         <div class="col-md-12 text-center text-bold">
             <a class="pull-right" href="#" data-toggle="modal" data-target="#ModalCreateMedicine" data-backdrop="static" data-keyboard="false">
                 <span class="m-0 p-0 top-banner-add"><i class="fa fa-2x fa-plus" aria-hidden="true"></i></span>
@@ -47,7 +45,6 @@
             </div>
 
         </div>
-
 
         <div class="clearfix"></div>
     </div>
@@ -150,17 +147,12 @@
             <div class="modal-body">
 
                 <form id="frmCreateMedicine">
-
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Brand Name</label>
                             <input type="text" class="form-control myinputs" id="txtName" name="Name" aria-describedby="emailHelp">
                         </div>
                     </div>
-
-
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="middle-name" class="">Select Treatmen For</label>
@@ -194,8 +186,6 @@
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -231,8 +221,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Cost Price</label>
@@ -257,16 +245,12 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Description</label>
                             <textarea class="form-control myinputs" rows="3" id="txtDescription" name="Description"></textarea>
                         </div>
                     </div>
-
-
                 </form>
             </div>
 
@@ -288,20 +272,14 @@
                 </button>
             </div>
             <div class="modal-body">
-
                 <form id="frmUpdateMedicine">
-
                     <input type="hidden" name="Id" id="txtId1" />
-
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Brand Name</label>
                             <input type="text" class="form-control myinputs" id="txtName1" name="Name" aria-describedby="emailHelp">
                         </div>
                     </div>
-
-
 
                     <div class="col-md-4">
                         <div class="form-group">
@@ -337,8 +315,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="middle-name" class="">Select Shelf</label>
@@ -373,8 +349,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Cost Price</label>
@@ -407,9 +381,7 @@
                     </div>
 
                 </form>
-
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <button type="button" id="btnUpdate" class="btn btn-success">Submit</button>
@@ -426,13 +398,10 @@
 <script src="~/PharmCareJs/medicines.js"></script>
 
 <script>
-
-
     $(document).ready(function () {
         $('#tblMedicine').DataTable();
 
     });
-
 </script>
 
 

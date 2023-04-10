@@ -3,7 +3,6 @@ $(document).ready(function () {
 
 });
 
-
 function DeleteRecord(e) {
 
     $("#divLoader").show();
@@ -168,12 +167,9 @@ $("#btnUpdate").click(function () {
         return false;
     }
 
-
-
     $("#ModalUpdateCategory").modal('hide');
 
     $("#divLoader").show();
-
 
     var formData = new FormData($('#frmUpdateCategory').get(0));
 

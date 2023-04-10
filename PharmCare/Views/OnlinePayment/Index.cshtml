@@ -1,0 +1,61 @@
+﻿
+
+<div class="col-md-4 col-sm-4 ">
+    <div class="x_panel">
+        <div class="">
+            <h5 class="modal-title Header" id="">General Report</h5>
+        </div>
+        <div class="x_content">
+
+            <div id="divErrorGen">
+                @if (TempData["ErrorGeneralReport"] != null)
+                {
+                    <div class="alert alert-danger" role="alert" id="error">
+                        @TempData["ErrorGeneralReport"].ToString()
+                    </div>
+                }
+            </div>
+
+            <div class="card card-body">
+
+                <button  type="submit" id="register" class=" btn btn-primary">Register URL</button>
+
+            </div>
+
+            <div id="feedback" class="card card-body">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    $(
+        () => {
+
+
+
+            $("#register").on('click'), async (e) => {
+
+                debugger
+
+                console.log("Peter")
+
+                const _response = await fetch("/OnlinePayment/register-urls")
+
+                const response = await _response.json();
+
+                console.log(response);
+            }
+        }
+
+
+    )
+
+
+</script>
+

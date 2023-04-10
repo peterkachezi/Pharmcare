@@ -28,6 +28,7 @@ using PharmCare.Services.SMSModule;
 using Rotativa.AspNetCore;
 using Microsoft.Extensions.Caching.Memory;
 using PharmCare.BLL.Repositories.CountyModule;
+using PharmCare.BLL.Repositories.PaymentModule;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +83,10 @@ builder.Services.AddTransient<IMessagingService, MessagingService>();
 
 builder.Services.AddTransient<ICountyRepository, CountyRepository>();
 
+builder.Services.AddTransient<IPaymentRepository, PaymentRepository>();
+
+builder.Services.AddHttpClient("mpesa", c => { c.BaseAddress = new Uri("https://sandbox.safaricom.co.ke"); });
+
 var app = builder.Build();
 
 
@@ -118,8 +123,8 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
     name: "Pharmacist",
-    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");    
-    
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
     endpoints.MapControllerRoute(
     name: "Doctor",
     pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");

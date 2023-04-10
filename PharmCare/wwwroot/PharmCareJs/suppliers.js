@@ -228,11 +228,7 @@ $("#btnUpdate").click(function () {
             showConfirmButton: true,
         });
         return false;
-    }
-
-
-
-  
+    }  
 
     $("#ModalUpdateSupplier").modal('hide');
 
