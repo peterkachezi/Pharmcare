@@ -18,14 +18,14 @@
 
     </div>
 
-    <div class="col-md-2 my-auto">
+   @* <div class="col-md-2 my-auto">
         <div class="col-md-12 text-center text-bold">
             <a class="pull-right" href="#" data-toggle="modal" data-target="#ModalCreatePatient" data-backdrop="static" data-keyboard="false">
                 <span class="m-0 p-0 top-banner-add"><i class="fa fa-2x fa-plus-circle" aria-hidden="true"></i></span>
                 <h6 class="top-banner-add">Add Patient</h6>
             </a>
         </div>
-    </div>
+    </div>*@
 
 </div>
 
@@ -53,9 +53,7 @@
                                 <th scope="col">Full Name</th>
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">D.O.B</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Height</th>
-                                <th scope="col">Weight</th>
+                                <th scope="col">Age</th>                    
                                 <th scope="col">Residence</th>
                                 <th scope="col">Entry Date</th>
                                 <th scope="col">Options</th>
@@ -80,10 +78,6 @@
                                         <td>@item.DateOfBirth.ToShortDateString()</td>
 
                                         <td>@item.Age</td>
-
-                                        <td>@item.Height</td>
-
-                                        <td>@item.Weight</td>
 
                                         <td>@item.Residence</td>
 

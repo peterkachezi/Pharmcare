@@ -44,6 +44,8 @@ namespace PharmCare.BLL.Repositories.StockModule
                 {
                     var data = new GoodsReceivedHistoryDTO
                     {
+                        Id=Guid.NewGuid(),
+
                         GRNo = goodsReceivedNoteDTO.GRNo,
 
                         CreateDate = DateTime.Now,
@@ -93,6 +95,9 @@ namespace PharmCare.BLL.Repositories.StockModule
         {
             try
             {
+
+
+
                 var data = mapper.Map<List<GoodsReceivedHistory>>(listOfItems);
 
                 context.GoodsReceivedHistories.AddRange(data);

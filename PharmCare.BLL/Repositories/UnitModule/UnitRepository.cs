@@ -6,6 +6,7 @@ using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
 
 using PharmCare.DTO.UnitModule;
+using System.Collections.Generic;
 
 namespace PharmCare.BLL.Repositories.UnitModule
 {
@@ -54,6 +55,33 @@ namespace PharmCare.BLL.Repositories.UnitModule
 
                 if (unit != null)
                 {
+                    unit.Status = 2;
+
+                    await context.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+
+        public async Task<bool> PermanentDelete(Guid Id)
+        {
+            try
+            {
+                bool result = false;
+
+                var unit = await context.Units.FindAsync(Id);
+
+                if (unit != null)
+                {
                     context.Units.Remove(unit);
 
                     await context.SaveChangesAsync();
@@ -70,31 +98,17 @@ namespace PharmCare.BLL.Repositories.UnitModule
                 return false;
             }
         }
+
+
         public async Task<List<UnitDTO>> GetAll()
         {
             try
             {
-                var shelves = (from s in context.Units
+                var data = await context.Units.Where(x => x.Status != 2).ToListAsync();
 
-                               join u in context.AppUsers on s.CreatedBy equals u.Id
+                var unit = mapper.Map<List<UnitDTO>>(data);
 
-                               select new UnitDTO
-                               {
-                                   Id = s.Id,
-
-                                   Name = s.Name,
-
-                                   UnitValue = s.UnitValue,
-
-                                   CreateDate = s.CreateDate,
-
-                                   CreatedBy = s.CreatedBy,
-
-                                   CreatedByName = u.FirstName + " " + u.LastName,
-
-                               }).ToListAsync();
-
-                return await shelves;
+                return unit;
             }
             catch (Exception ex)
             {
@@ -107,29 +121,11 @@ namespace PharmCare.BLL.Repositories.UnitModule
         {
             try
             {
-                var shelf = (from s in context.Units
+                var data = await context.Units.FindAsync(Id);
 
-                             join u in context.AppUsers on s.CreatedBy equals u.Id
+                var unit = mapper.Map<UnitDTO>(data);
 
-                             where s.Id == Id
-
-                             select new UnitDTO
-                             {
-                                 Id = s.Id,
-
-                                 Name = s.Name,
-
-                                 UnitValue = s.UnitValue,
-
-                                 CreateDate = s.CreateDate,
-
-                                 CreatedBy = s.CreatedBy,
-
-                                 CreatedByName = u.FirstName + " " + u.LastName,
-
-                             }).FirstOrDefaultAsync();
-
-                return await shelf;
+                return unit;
             }
             catch (Exception ex)
             {
@@ -150,7 +146,7 @@ namespace PharmCare.BLL.Repositories.UnitModule
                     {
                         unit.Name = unitDTO.Name;
 
-                        unit.UnitValue = unitDTO.UnitValue;              
+                        unit.UnitValue = unitDTO.UnitValue;
 
                         unit.UpdatedBy = unitDTO.UpdatedBy;
 
@@ -163,7 +159,7 @@ namespace PharmCare.BLL.Repositories.UnitModule
                     return unitDTO;
                 }
 
-                return null;              
+                return null;
             }
             catch (Exception ex)
             {
@@ -176,7 +172,7 @@ namespace PharmCare.BLL.Repositories.UnitModule
         {
             try
             {
-                bool result = await context.Units.AnyAsync(p => p.Name == unitDTO.Name & p.UnitValue==unitDTO.UnitValue);
+                bool result = await context.Units.AnyAsync(p => p.Name == unitDTO.Name & p.UnitValue == unitDTO.UnitValue);
 
                 return result;
             }

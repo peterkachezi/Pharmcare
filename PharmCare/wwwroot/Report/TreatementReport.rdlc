@@ -18,10 +18,14 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>MUMIAS WEST HEALTH CARE</Value>
+                  <Value>Malela Pharmacy</Value>
                   <Style>
-                    <FontSize>16pt</FontSize>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
                     <FontWeight>Bold</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -32,9 +36,14 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>P.O BOX 322-50102, MUMIAS</Value>
+                  <Value>P.O BOX 342-01100</Value>
                   <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
                     <FontSize>12pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -45,9 +54,14 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>0727587284 / 0729421514</Value>
+                  <Value>Kajiado Kenya</Value>
                   <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
                     <FontSize>12pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -58,9 +72,32 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>muwesthealthcare@gmail.com</Value>
+                  <Value>0799945373/0771024679</Value>
                   <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
                     <FontSize>12pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>malelapharm@gmail.com</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontSize>12pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
                   </Style>
                 </TextRun>
               </TextRuns>

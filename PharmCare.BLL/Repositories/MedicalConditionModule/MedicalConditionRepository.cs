@@ -2,13 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
-using PharmCare.DTO.CategoryModule;
 using PharmCare.DTO.MedicalConditionModule;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PharmCare.BLL.Repositories.MedicalConditionModule
 {
@@ -22,7 +16,6 @@ namespace PharmCare.BLL.Repositories.MedicalConditionModule
             this.context = context;
 
             this.mapper = mapper;
-
         }
         public async Task<MedicalConditionDTO> Create(MedicalConditionDTO medicalConditionDTO)
         {
@@ -57,6 +50,33 @@ namespace PharmCare.BLL.Repositories.MedicalConditionModule
 
                 if (medicalCondition != null)
                 {
+                    medicalCondition.Status = 2;
+
+                    await context.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+
+        public async Task<bool> PermamnetDelete(Guid Id)
+        {
+            try
+            {
+                bool result = false;
+
+                var medicalCondition = await context.MedicalConditions.FindAsync(Id);
+
+                if (medicalCondition != null)
+                {
                     context.MedicalConditions.Remove(medicalCondition);
 
                     await context.SaveChangesAsync();
@@ -77,25 +97,11 @@ namespace PharmCare.BLL.Repositories.MedicalConditionModule
         {
             try
             {
-                var categories = (from mc in context.MedicalConditions
+                var data = await context.MedicalConditions.Where(x => x.Status != 3).ToListAsync();
 
-                                  join u in context.AppUsers on mc.CreatedBy equals u.Id
+                var medical_Condition = mapper.Map<List<MedicalConditionDTO>>(data);
 
-                                  select new MedicalConditionDTO
-                                  {
-                                      Id = mc.Id,
-
-                                      Name = mc.Name,                                   
-
-                                      CreateDate = mc.CreateDate,
-
-                                      CreatedBy = mc.CreatedBy,
-
-                                      CreatedByName = u.FirstName + " " + u.LastName,
-
-                                  }).ToListAsync();
-
-                return await categories;
+                return medical_Condition;
             }
             catch (Exception ex)
             {
@@ -108,27 +114,11 @@ namespace PharmCare.BLL.Repositories.MedicalConditionModule
         {
             try
             {
-                var medicalCondition = (from mc in context.MedicalConditions
+                var data = await context.MedicalConditions.FindAsync(Id);
 
-                                join u in context.AppUsers on mc.CreatedBy equals u.Id
+                var medical_Condition = mapper.Map<MedicalConditionDTO>(data);
 
-                                where mc.Id == Id
-
-                                select new MedicalConditionDTO
-                                {
-                                    Id = mc.Id,
-
-                                    Name = mc.Name,
-
-                                    CreateDate = mc.CreateDate,
-
-                                    CreatedBy = mc.CreatedBy,
-
-                                    CreatedByName = u.FirstName + " " + u.LastName,
-
-                                }).FirstOrDefaultAsync();
-
-                return await medicalCondition;
+                return medical_Condition;
             }
             catch (Exception ex)
             {

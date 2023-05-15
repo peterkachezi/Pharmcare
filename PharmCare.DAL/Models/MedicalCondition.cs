@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PharmCare.DAL.Models
 {
@@ -16,6 +10,7 @@ namespace PharmCare.DAL.Models
         public string Name { get; set; } = null!;
         public string CreatedBy { get; set; } = null!;
         public string? UpdatedBy { get; set; }
+        public byte? Status { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<Medicine> Medicines { get; set; }

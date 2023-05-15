@@ -98,7 +98,7 @@ namespace PharmCare.Areas.Admin.Controllers
                     var row = startRow;
 
                     //Create Headers and format them
-                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "MUMIAS WEST HEALTH CARE STOCK REPORT  - " + DateTime.Now + "";
+                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "Malela Pharmacy  Stock Report  - " + DateTime.Now + "";
 
                     using (var r = worksheet.Cells["A1:H1"])
                     {
@@ -248,7 +248,7 @@ namespace PharmCare.Areas.Admin.Controllers
                     var row = startRow;
 
                     //Create Headers and format them
-                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "MUMIAS WEST HEALTH CARE STOCK REPORT  - " + DateTime.Now + "";
+                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "Malela Pharmacy  Stock Report  - " + DateTime.Now + "";
 
                     using (var r = worksheet.Cells["A1:H1"])
                     {
@@ -403,7 +403,7 @@ namespace PharmCare.Areas.Admin.Controllers
                     var row = startRow;
 
                     //Create Headers and format them
-                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "MUMIAS WEST HEALTH CARE STOCK REPORT  - " + DateTime.Now + "";
+                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "Malela Pharmacy  Stock Report  - " + DateTime.Now + "";
 
                     using (var r = worksheet.Cells["A1:H1"])
                     {
@@ -576,7 +576,7 @@ namespace PharmCare.Areas.Admin.Controllers
                     var row = startRow;
 
                     //Create Headers and format them
-                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "MUMIAS WEST HEALTH CARE STOCK REPORT  - " + DateTime.Now + "";
+                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1,H1"].Value = "Malela Pharmacy  Stock Report   - " + DateTime.Now + "";
 
                     using (var r = worksheet.Cells["A1:H1"])
                     {

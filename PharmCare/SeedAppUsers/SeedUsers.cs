@@ -27,26 +27,14 @@ namespace PharmCare.SeedAppUsers
                 }
 
 
+                //if (!roleManager.RoleExistsAsync("Pharmacist").Result)
+                //{
+                //    var role = new IdentityRole();
 
-                if (!roleManager.RoleExistsAsync("Doctor").Result)
-                {
-                    var role = new IdentityRole();
+                //    role.Name = "Pharmacist";
 
-                    role.Name = "Doctor";
-
-                    roleManager.CreateAsync(role).Wait();
-                }
-
-
-
-                if (!roleManager.RoleExistsAsync("Pharmacist").Result)
-                {
-                    var role = new IdentityRole();
-
-                    role.Name = "Pharmacist";
-
-                    roleManager.CreateAsync(role).Wait();
-                }
+                //    roleManager.CreateAsync(role).Wait();
+                //}
             }
             catch (Exception ex)
             {
@@ -93,78 +81,7 @@ namespace PharmCare.SeedAppUsers
                     }
                 }
                 #endregion
-                #region Doctor
-
-                var doctor = userManager.FindByEmailAsync("doctor@gmail.com");
-
-                if (doctor.Result == null)
-                {
-                    var user = new AppUser();
-
-                    user.UserName = "doctor@gmail.com";
-
-                    user.Email = "doctor@gmail.com";
-
-                    user.PhoneNumber = "0704509484";
-
-                    user.FirstName = "Steve";
-
-                    user.LastName = "Jobs";
-
-                    user.EmailConfirmed = true;
-
-                    user.isActive = true;
-
-                    user.CreateDate = DateTime.Now;
-
-                    string userPWD = "Doctor@2022";
-
-                    var chkUser = userManager.CreateAsync(user, userPWD);
-
-                    //Add default User to Role Admin    
-                    if (chkUser.Result.Succeeded)
-                    {
-                        userManager.AddToRoleAsync(user, "Doctor").Wait();
-
-                    }
-                }
-                #endregion        
-
-                #region Pharmacist
-                var pharmacist = userManager.FindByEmailAsync("pharmacist@gmail.com");
-
-                if (pharmacist.Result == null)
-                {
-                    var user = new AppUser();
-
-                    user.UserName = "pharmacist@gmail.com";
-
-                    user.Email = "pharmacist@gmail.com";
-
-                    user.PhoneNumber = "0704509484";
-
-                    user.FirstName = "Brian";
-
-                    user.LastName = "Jordan";
-
-                    user.EmailConfirmed = true;
-
-                    user.isActive = true;
-
-                    user.CreateDate = DateTime.Now;
-
-                    string userPWD = "Pharmacist@2022";
-
-                    var chkUser = userManager.CreateAsync(user, userPWD);
-
-                    //Add default User to Role Admin    
-                    if (chkUser.Result.Succeeded)
-                    {
-                        userManager.AddToRoleAsync(user, "Pharmacist").Wait();
-
-                    }
-                }
-                #endregion
+               
             }
             catch (Exception ex)
             {

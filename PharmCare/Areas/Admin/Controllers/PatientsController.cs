@@ -23,7 +23,7 @@ namespace PharmCare.Areas.Admin.Controllers
         private readonly IMedicalConditionRepository medicalConditionRepository;
 
         private readonly ICountyRepository countyRepository;
-        public PatientsController(ICountyRepository countyRepository,IMedicalConditionRepository medicalConditionRepository,IMedicineRepository medicineRepository,IPatientRepository patientRepository, UserManager<AppUser> userManager)
+        public PatientsController(ICountyRepository countyRepository, IMedicalConditionRepository medicalConditionRepository, IMedicineRepository medicineRepository, IPatientRepository patientRepository, UserManager<AppUser> userManager)
         {
             this.patientRepository = patientRepository;
 
@@ -31,9 +31,9 @@ namespace PharmCare.Areas.Admin.Controllers
 
             this.medicineRepository = medicineRepository;
 
-            this.medicalConditionRepository = medicalConditionRepository;   
+            this.medicalConditionRepository = medicalConditionRepository;
 
-            this.countyRepository = countyRepository;   
+            this.countyRepository = countyRepository;
 
         }
         public async Task<IActionResult> Index()
@@ -44,9 +44,9 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 ViewBag.Medicines = await medicineRepository.GetAll();
 
-                ViewBag.Counties = (await countyRepository.GetAllCounties()).OrderByDescending(x=>x.Name);
+                ViewBag.Counties = (await countyRepository.GetAllCounties()).OrderByDescending(x => x.Name);
 
-                var patients =await patientRepository.GetAll();  
+                var patients = await patientRepository.GetAll();
 
                 return View(patients);
             }
@@ -121,7 +121,7 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var user = await userManager.FindByEmailAsync(User.Identity.Name);              
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
                 var firstName = patientDTO.FirstName.Substring(0, 1).ToUpper() + patientDTO.FirstName.Substring(1).ToLower().Trim();
 
@@ -192,36 +192,11 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var expenseType = await patientRepository.GetById(Id);
+                var patient = await patientRepository.GetById(Id);
 
-                if (expenseType != null)
+                if (patient != null)
                 {
-                    PatientDTO file = new PatientDTO()
-                    {
-                        Id = expenseType.Id,
-
-                        FirstName = expenseType.FirstName,
-
-                        LastName = expenseType.LastName,
-     
-                        PhoneNumber = expenseType.PhoneNumber,
-
-                        DateOfBirth = expenseType.DateOfBirth,             
-
-                        PatientNumber = expenseType.PatientNumber,
-
-                        CreateDate = expenseType.CreateDate,
-
-                        Height = expenseType.Height,
-
-                        Weight = expenseType.Weight,
-
-                        Gender = expenseType.Gender,
-
-                        Residence = expenseType.Residence,
-                    };
-
-                    return Json(new { data = file });
+                    return Json(new { data = patient });
                 }
 
                 return Json(new { data = false });
@@ -236,7 +211,7 @@ namespace PharmCare.Areas.Admin.Controllers
         }
         public async Task<IActionResult> GetByPhoneNumber(string PhoneNumber)
         {
-            var getPatient=(await patientRepository.GetAll()).Where(x=>x.PhoneNumber==PhoneNumber);
+            var getPatient = (await patientRepository.GetAll()).Where(x => x.PhoneNumber == PhoneNumber);
 
             return Json(getPatient);
         }

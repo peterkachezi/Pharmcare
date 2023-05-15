@@ -384,11 +384,9 @@ function GetRecord(e) {
             $("#txtLastName1").val(data.data.lastName);
             $("#txtEmail1").val(data.data.email);
             $("#txtPhoneNumber1").val(data.data.phoneNumber);
-            $("#txtDateOfBirth1").val(data.data.dateOfBirth);
+            $("#txtDateOfBirth1").val(data.data.newDateOfBith);
             $("#txtGender1").val(data.data.gender);
-            $("#txtHeight1").val(data.data.height);
             $("#txtResidence1").val(data.data.residence);
-            $("#txtWeight1").val(data.data.weight);
 
 
             $('#ModalUpdatePatient').modal({ backdrop: 'static', keyboard: false })

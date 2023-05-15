@@ -9,7 +9,7 @@ namespace PharmCare.DAL.Models
         [Key]
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
-        public byte Status { get; set; }
+        public byte? Status { get; set; }
         public string CreatedBy { get; set; } = null!;
         public string? UpdatedBy { get; set; }
         public DateTime CreateDate { get; set; }

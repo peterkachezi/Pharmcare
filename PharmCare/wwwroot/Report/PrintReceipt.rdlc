@@ -431,7 +431,7 @@
             <Top>0.11333in</Top>
             <Left>1.27167in</Left>
             <Height>0.5in</Height>
-            <Width>4in</Width>
+            <Width>3.99999in</Width>
             <Style>
               <Border>
                 <Style>Dotted</Style>
@@ -781,7 +781,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Software by Skisoft Systems</Value>
+                    <Value>Software by Malela Systems</Value>
                     <Style />
                   </TextRun>
                 </TextRuns>
@@ -792,8 +792,15 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>+2547 0450 9484</Value>
-                    <Style />
+                    <Value>0799945373</Value>
+                    <Style>
+                      <FontStyle>Normal</FontStyle>
+                      <FontFamily>Times New Roman</FontFamily>
+                      <FontSize>12pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                      <TextDecoration>None</TextDecoration>
+                      <Color>#000000</Color>
+                    </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
@@ -865,7 +872,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>MUMIAS WEST HEALTH CARE</Value>
+                      <Value>MALELA PHARMACY</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -878,7 +885,44 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>P.O BOX 322-50102</Value>
+                      <Value>P.O BOX </Value>
+                      <Style />
+                    </TextRun>
+                    <TextRun>
+                      <Value>342</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>-</Value>
+                      <Style />
+                    </TextRun>
+                    <TextRun>
+                      <Value>01100</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>KAJIADO</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -889,8 +933,15 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>MUMIAS</Value>
-                      <Style />
+                      <Value>0799945373/0771024679</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -900,19 +951,15 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>0727587284 / 0729421514</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>muwesthealthcare@gmail.com</Value>
-                      <Style />
+                      <Value>malelapharm@gmail.com</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -964,9 +1011,9 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox7</rd:DefaultName>
-              <Top>0.13in</Top>
+              <Top>0.005in</Top>
               <Left>1.22167in</Left>
-              <Height>1.33334in</Height>
+              <Height>1.4389in</Height>
               <Width>3.975in</Width>
               <Style>
                 <Border>

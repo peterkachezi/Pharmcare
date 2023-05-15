@@ -155,20 +155,12 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var expenseType = await unitRepository.GetById(Id);
+                var unit = await unitRepository.GetById(Id);
 
-                if (expenseType != null)
+                if (unit != null)
                 {
-                    UnitDTO file = new UnitDTO()
-                    {
-                        Id = expenseType.Id,
 
-                        Name = expenseType.Name,
-
-                        CreateDate = expenseType.CreateDate,
-                    };
-
-                    return Json(new { data = file });
+                    return Json(new { data = unit });
                 }
 
                 return Json(new { data = false });

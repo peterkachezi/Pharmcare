@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PharmCare.BLL.Repositories.CategoryModule;
 using PharmCare.BLL.Repositories.MedicalConditionModule;
 using PharmCare.DAL.Models;
-using PharmCare.DTO.CategoryModule;
 using PharmCare.DTO.MedicalConditionModule;
 
 namespace PharmCare.Areas.Admin.Controllers
@@ -140,20 +138,12 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var expenseType = await medicalConditionRepository.GetById(Id);
+                var medicalCondition = await medicalConditionRepository.GetById(Id);
 
-                if (expenseType != null)
+                if (medicalCondition != null)
                 {
-                    MedicalConditionDTO file = new MedicalConditionDTO()
-                    {
-                        Id = expenseType.Id,
 
-                        Name = expenseType.Name,
-
-                        CreateDate = expenseType.CreateDate,
-                    };
-
-                    return Json(new { data = file });
+                    return Json(new { data = medicalCondition });
                 }
 
                 return Json(new { data = false });

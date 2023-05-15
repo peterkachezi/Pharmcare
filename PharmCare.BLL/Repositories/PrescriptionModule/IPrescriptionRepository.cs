@@ -6,6 +6,8 @@ namespace PharmCare.BLL.Repositories.PrescriptionModule
     public interface IPrescriptionRepository
     {
         Task<PrescriptionDTO> Create(PrescriptionDTO prescriptionDTO);
+        Task<bool> Delete(Guid Id);
+        Task<bool> DeleteDetails(Guid Id);
         Task<bool> UnDoIssueMedicine(Guid Id);
         Task<SalesDetailsDTO> IssueMedicine(SalesDetailsDTO salesDetailsDTO);
         Task<List<PrescriptionDTO>> GetAll();

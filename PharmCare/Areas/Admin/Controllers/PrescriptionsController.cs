@@ -56,7 +56,9 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
-        }                   
+        }     
+        
+                   
         public async Task<IActionResult> AddPrescription()
         {
             try
@@ -371,6 +373,52 @@ namespace PharmCare.Areas.Admin.Controllers
                 return null;
             }
 
-        }      
-    }
+        }
+		public async Task<ActionResult> Delete(Guid Id)
+		{
+			try
+			{
+				var results = await prescriptionRepository.Delete(Id);
+
+				if (results == true)
+				{
+					return Json(new { success = true, responseText = "Record  has been successfully deleted " });
+				}
+				else
+				{
+					return Json(new { success = false, responseText = "Record has not been deleted ,it could be in use by other files" });
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+
+				return Json(new { success = false, responseText = "Something went wrong" });
+			}
+		}		
+        
+        public async Task<ActionResult> DeleteDetails(Guid Id)
+		{
+			try
+			{
+				var results = await prescriptionRepository.Delete(Id);
+
+				if (results == true)
+				{
+					return Json(new { success = true, responseText = "Record  has been successfully deleted " });
+				}
+				else
+				{
+					return Json(new { success = false, responseText = "Record has not been deleted ,it could be in use by other files" });
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+
+				return Json(new { success = false, responseText = "Something went wrong" });
+			}
+		}
+
+	}
 }

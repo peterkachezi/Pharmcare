@@ -72,25 +72,11 @@ namespace PharmCare.BLL.Repositories.ShelfModule
         {
             try
             {
-                var shelves = (from s in context.Shelves
+                var data = await context.Shelves.Where(x => x.Status != 2).ToListAsync();
 
-                               join u in context.AppUsers on s.CreatedBy equals u.Id
+                var shelves = mapper.Map<List<ShelfDTO>>(data);
 
-                               select new ShelfDTO
-                               {
-                                   Id = s.Id,
-
-                                   Name = s.Name,
-
-                                   CreateDate = s.CreateDate,
-
-                                   CreatedBy = s.CreatedBy,
-
-                                   CreatedByName = u.FirstName + " " + u.LastName,
-
-                               }).ToListAsync();
-
-                return await shelves;
+                return shelves;
             }
             catch (Exception ex)
             {
@@ -103,27 +89,11 @@ namespace PharmCare.BLL.Repositories.ShelfModule
         {
             try
             {
-                var shelf = (from s in context.Shelves
+                var data = await context.Shelves.FindAsync(Id);
 
-                             join u in context.AppUsers on s.CreatedBy equals u.Id
+                var shelf = mapper.Map<ShelfDTO>(data);
 
-                             where s.Id == Id
-
-                             select new ShelfDTO
-                             {
-                                 Id = s.Id,
-
-                                 Name = s.Name,
-
-                                 CreateDate = s.CreateDate,
-
-                                 CreatedBy = s.CreatedBy,
-
-                                 CreatedByName = u.FirstName + " " + u.LastName,
-
-                             }).FirstOrDefaultAsync();
-
-                return await shelf;
+                return shelf;
             }
             catch (Exception ex)
             {

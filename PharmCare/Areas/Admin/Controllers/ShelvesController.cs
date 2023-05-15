@@ -156,20 +156,12 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var expenseType = await shelfRepository.GetById(Id);
+                var shelves = await shelfRepository.GetById(Id);
 
-                if (expenseType != null)
+                if (shelves != null)
                 {
-                    ShelfDTO file = new ShelfDTO()
-                    {
-                        Id = expenseType.Id,
-
-                        Name = expenseType.Name,
-
-                        CreateDate = expenseType.CreateDate,
-                    };
-
-                    return Json(new { data = file });
+                  
+                    return Json(new { data = shelves });
                 }
 
                 return Json(new { data = false });

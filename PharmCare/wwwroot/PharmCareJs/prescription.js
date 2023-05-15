@@ -238,7 +238,8 @@ $("#saveOrder").click(function (e) {
 
                         showConfirmButton: false,
 
-                    }), setTimeout(function () { location.reload(); }, 3000);
+                    }), setTimeout(function () { window.location = "/Admin/Prescriptions/"; }, 2000);
+
 
 
                 } else {
@@ -302,6 +303,7 @@ function Details(id, patientId) {
 function DowloadPrescripton(id, patientId) {
 
     window.location.href = "/Admin/Prescriptions/DowloadPrescripton/?Id=" + id + "&PatientId=" + patientId;
+
 
 }
 function IssueMedicine(e) {
@@ -577,7 +579,209 @@ function UnDoIssueMedicine(e) {
 function GenerateInvoice(id, patientId) {
     window.location.href = "/Admin/Invoices/GenerateInvoice/?Id=" + id + "&PatientId=" + patientId;
 }
-
 function DowloadInvoice(id, patientId) {
     window.location.href = "/Admin/Invoices/DowloadInvoice/?Id=" + id + "&PatientId=" + patientId;
+}
+function DeleteRecord(e) {
+
+    $("#divLoader").show();
+    var id = e;
+
+    console.log(id);
+
+    swal(
+
+        {
+            title: "Are you sure?",
+
+            text: "Once deleted, you will not be able to recover this  file!",
+
+            type: "success",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "##62b76e",
+
+            confirmButtonText: "Yes, Procceed!",
+
+            closeOnConfirm: false
+        },
+
+        function () {
+
+            $.ajax({
+
+                type: "GET",
+
+                url: "/Admin/Prescriptions/Delete/" + id,
+
+                success: function (response) {
+
+                    if (response.success) {
+
+                        swal({
+
+                            position: 'top-end',
+
+                            type: "success",
+
+                            title: response.responseText,
+
+                            showConfirmButton: false,
+
+                            // timer: 2000,
+
+                        });
+                        setTimeout(function () { location.reload(); }, 3000);
+
+                    }
+
+                    else {
+                        swal({
+                            position: 'top-end',
+                            type: "error",
+                            title: response.responseText,
+                            showConfirmButton: true,
+                            timer: 5000,
+                        });
+                        $("#divLoader").hide();
+                    }
+
+                },
+                error: function (response) {
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: "Server error ,kindly contact the admin for assistance",
+                        showConfirmButton: false,
+                        timer: 5000,
+                    });
+                    $("#divLoader").hide();
+                }
+
+            })
+
+        }
+    );
+}
+
+function DeleteDetails(e) {
+
+    $("#divLoader").show();
+    var id = e;
+
+    console.log(id);
+
+    swal(
+
+        {
+            title: "Are you sure?",
+
+            text: "Once deleted, you will not be able to recover this  file!",
+
+            type: "success",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "##62b76e",
+
+            confirmButtonText: "Yes, Procceed!",
+
+            closeOnConfirm: false
+        },
+
+        function () {
+
+            $.ajax({
+
+                type: "GET",
+
+                url: "/Admin/Prescriptions/DeleteDetails/" + id,
+
+                success: function (response) {
+
+                    if (response.success) {
+
+                        swal({
+
+                            position: 'top-end',
+
+                            type: "success",
+
+                            title: response.responseText,
+
+                            showConfirmButton: false,
+
+                            // timer: 2000,
+
+                        });
+                        setTimeout(function () { location.reload(); }, 3000);
+
+                    }
+
+                    else {
+                        swal({
+                            position: 'top-end',
+                            type: "error",
+                            title: response.responseText,
+                            showConfirmButton: true,
+                            timer: 5000,
+                        });
+                        $("#divLoader").hide();
+                    }
+
+                },
+                error: function (response) {
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: "Server error ,kindly contact the admin for assistance",
+                        showConfirmButton: false,
+                        timer: 5000,
+                    });
+                    $("#divLoader").hide();
+                }
+
+            })
+
+        }
+    );
+}
+function SearchMember(e,p) {
+
+    $("#divLoader").show();
+
+    debugger
+
+    console.log(dateFrom);
+
+    window.location.href = "/Admin/Prescriptions/Details?Id=" + e + "&PatientId=" + p;
+
+}
+
+function CalculateBalance() {
+
+
+
+    var FinalAmount = $("#txtTotalAmountPayment").val();
+
+    var PaymentAmount = $("#txtPaymentAmount").val();
+
+    var BalanceAmount = parseFloat(PaymentAmount) - parseFloat(FinalAmount);
+
+    $("#txtBalance").val(parseFloat(BalanceAmount).toFixed(2));
+
+    if (PaymentAmount == '' || PaymentAmount == "") {
+
+        $("#txtBalance").val("0.00");
+    }
+
+    if (parseFloat(BalanceAmount) == 0) {
+
+        $("#btnPayment").removeAttr("disabled");
+
+    } else {
+
+        $("#btnPayment").attr("disabled", "disabled");
+    }
 }

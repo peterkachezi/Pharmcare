@@ -130,18 +130,43 @@ $("#btnPrint").click(function () {
 
     var receiptNo = $('#txtReceiptNo').val();
 
-    console.log(receiptNo);
-
-    ResetItem();
+    console.log(receiptNo); 
 
     var url = "/Admin/PointOfSale/GetReceipt?ReceiptNo=" + receiptNo;
-
+    ResetItem();
+    RemoveEverything();
     //window.open(window.location.href = url, '_blank');
 
     window.location.href = url;
 
     $("#divLoader").hide();
 })
+
+
+function RemoveEverything() {
+
+    debugger
+
+    var table = $('#tblProducts').DataTable();
+
+    //clear datatable
+    table.clear().draw();
+
+    //destroy datatable
+    table.destroy();
+
+    CalculateSubTotal();
+
+    FinaItemTotal();
+
+    hidshowbtncheckout();
+
+    RemoveCount();
+}
+
+
+
+
 
 $("#btnPrint1").click(function () {
 

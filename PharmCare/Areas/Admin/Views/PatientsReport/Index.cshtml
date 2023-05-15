@@ -9,10 +9,10 @@
 <div class="x_panel shadow p-3  rounded" style="height: 5rem; background-color: #2a3f54;">
     <div class="col-md-10 my-auto">
         <h4 class="top-banner-header">
-            Sales Report
+            Patient  Report
         </h4>
         <p class="text-primary">
-            <span>Home</span> <span> <i class="fa fa-angle-double-right"></i> </span>  <span> Sales Report</span>
+            <span>Home</span> <span> <i class="fa fa-angle-double-right"></i> </span>  <span> Patient  Report</span>
         </p>
 
     </div>
@@ -33,43 +33,43 @@
 
 <div class="row">
 
-    <div class="col-md-4 col-sm-4 ">
-        <div class="x_panel">
-            <div class="">
-                <h5 class="modal-title Header" id="">General Report</h5>
-            </div>
-            <div class="x_content">
+    @*    <div class="col-md-4 col-sm-4 ">
+    <div class="x_panel">
+    <div class="">
+    <h5 class="modal-title Header" id="">General Report</h5>
+    </div>
+    <div class="x_content">
 
 
-                <div id="divErrorGen">
-                    @if (TempData["ErrorGeneralReport"] != null)
-                    {
-                        <div class="alert alert-danger" role="alert" id="error">
-                            @TempData["ErrorGeneralReport"].ToString()
-                        </div>
-                    }
-                </div>
+    <div id="divErrorGen">
+    @if (TempData["ErrorGeneralReport"] != null)
+    {
+    <div class="alert alert-danger" role="alert" id="error">
+    @TempData["ErrorGeneralReport"].ToString()
+    </div>
+    }
+    </div>
 
-                <form action="~/Admin/PatientsReport/PrintPDF/" method="post">
+    <form action="~/Admin/PatientsReport/PrintPDF/" method="post">
 
-                    <div class=" form-group">
-                        <div class="">
-                            <input type="submit" class=" btn btn-primary col-md-12 myinputs" value="Download ">
-                        </div>
-                    </div>
-
-
-                </form>
-            </div>
-        </div>
+    <div class=" form-group">
+    <div class="">
+    <input type="submit" class=" btn btn-primary col-md-12 myinputs" value="Download ">
+    </div>
     </div>
 
 
+    </form>
+    </div>
+    </div>
+    </div>*@
+
+
 
     <div class="col-md-4 col-sm-4 ">
         <div class="x_panel">
             <div class="">
-                <h5 class="modal-title Header" id="">Filter by stock in date</h5>
+                <h5 class="modal-title Header" id="">Filter by entry date</h5>
             </div>
             <div class="x_content">
 
@@ -81,8 +81,7 @@
                         </div>
                     }
                 </div>
-                <form action="~/Admin/SalesReport/DownloadReportByDateRange/" method="post">
-
+                <form action="~/Admin/PatientsReport/DownloadReportByDateRange/" method="post">
 
                     <div class=" form-group">
                         <label class="  label-align" for="first-name">
@@ -104,24 +103,16 @@
                         </div>
                     </div>
 
-
                     <div class=" form-group">
                         <div class="">
                             <input type="submit" class=" btn btn-primary col-md-12 myinputs" value="Download ">
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
-
-
-
 </div>
-
-
-
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 

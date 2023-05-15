@@ -18,15 +18,12 @@
         <header>
             <h1>Invoice</h1>
             <address contenteditable="">
-                <div class="">
-                    <div class="">
-                        <p>Mumas West Health Care,</p>
-                        <p>P.O BOX 322-50102, <br>Mumias - Kenya,</p>
-                        <p>0727587284 / 0729421514</p>
-                        <p>muwesthealthcare@gmail.com</p>
-                    </div>
-
-               
+                <div class="">                 
+                    <p>Malela Pharmacy,</p>
+                    <p>P.O BOX 342-01100,</p>
+                    <p> Kajiado Kenya,</p>
+                    <p>0799945373/0771024679</p>
+                    <p>malelapharm@gmail.com,</p>
                 </div>
             </address>
         </header>
@@ -113,13 +110,74 @@
         </article>
 
         <div class="col-md-4 pull-right">
-            <button type="button" onclick="DowloadInvoice('@Model.prescription.Id','@Model.patientDTO.Id')" class="btn btn-success"><i class="fa fa-print"></i> Generate Invoice</button>
+            <button type="button" onclick="DowloadInvoice('@Model.prescription.Id','@Model.patientDTO.Id')" class="btn btn-success"><i class="fa fa-download"></i> Download Invoice</button>
+            <button type="button" data-toggle="modal" data-target="#PaymentModal" data-backdrop="static" data-keyboard="false" class="btn btn-info"><i class="fa fa-cc-visa"></i> Make Payment</button>
         </div>
 
         <!-- partial -->
 
     </div>
 </div>
+
+<div class="modal fade" id="PaymentModal" tabindex="-1" role="dialog" aria-labelledby="PaymenModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="PaymenModalLabel">Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-sm-3 ">Total Amount </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" id="txtTotalAmountPayment" value="@Model.prescription.TotalAmount" class="form-control myinputs" disabled="disabled">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-sm-3 ">Payment Mode </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <select class="form-control myinputs" id="txtUnitId" name="UnitId">
+
+                            <option value="Cash">Cash</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-sm-3 ">Amount Paid </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" id="txtPaymentAmount" onkeypress="CalculateBalance()" class="form-control myinputs numericOnly">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-md-3 col-sm-3 ">Balance </label>
+                    <div class="col-md-9 col-sm-9 ">
+                        <input type="text" id="txtBalance" class="form-control myinputs" disabled="disabled">
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="SaveTransaction()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/PharmCareJs/prescription.js"></script>

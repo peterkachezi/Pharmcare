@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PharmCare.DTO.PatientModule
+﻿namespace PharmCare.DTO.PatientModule
 {
     public class PatientDTO
     {
         public System.Guid Id { get; set; }
-        public string FirstName { get; set; }        
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string CreatedBy { get; set; }
@@ -19,17 +15,17 @@ namespace PharmCare.DTO.PatientModule
         public string FullName => FirstName + "  " + LastName;
         public string CreatedByName { get; set; }
         public string Residence { get; set; }
-        public string Height { get; set; }
-        public string Weight { get; set; }
         public string Gender { get; set; }
-        public string NHIFNo { get; set; }
-        public string IDNumber { get; set; }
-        public Guid CountyId { get; set; }
-        public string CountyName { get; set; }
-        public Guid SubCountyId { get; set; }
-        public string SubCountyName { get; set; }
         public string NewCreateDate { get { return CreateDate.ToShortDateString(); } }
+        public string NewDateOfBith
+        {
+            get
+            {
+                return DateOfBirth.ToString("yyyy-MM-dd");
 
+
+            }
+        }
         public int Age
         {
             get

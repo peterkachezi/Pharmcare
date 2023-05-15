@@ -4,9 +4,6 @@ using PharmCare.DAL.DbContext;
 using PharmCare.DTO.CategoryModule;
 using PharmCare.DAL.Models;
 using AutoMapper;
-
-
-
 namespace PharmCare.BLL.Repositories.CategoryModule
 {
     public class CategoryRepository : ICategoryRepository
@@ -54,6 +51,33 @@ namespace PharmCare.BLL.Repositories.CategoryModule
 
                 if (category != null)
                 {
+                    category.Status = 2;
+
+                    await context.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+
+        public async Task<bool> PermanentDelete(Guid Id)
+        {
+            try
+            {
+                bool result = false;
+
+                var category = await context.Categories.FindAsync(Id);
+
+                if (category != null)
+                {
                     context.Categories.Remove(category);
 
                     await context.SaveChangesAsync();
@@ -70,31 +94,17 @@ namespace PharmCare.BLL.Repositories.CategoryModule
                 return false;
             }
         }
+
+
         public async Task<List<CategoryDTO>> GetAll()
         {
             try
             {
-                var categories = (from mc in context.Categories
+                var data = await context.Categories.Where(x => x.Status != 2).ToListAsync();
 
-                                  join u in context.AppUsers on mc.CreatedBy equals u.Id
+                var categories = mapper.Map<List<CategoryDTO>>(data);
 
-                                  select new CategoryDTO
-                                  {
-                                      Id = mc.Id,
-
-                                      Name = mc.Name,
-
-                                      Status = mc.Status,
-
-                                      CreateDate = mc.CreateDate,
-
-                                      CreatedBy = mc.CreatedBy,
-
-                                      CreatedByName = u.FirstName + " " + u.LastName,
-
-                                  }).ToListAsync();
-
-                return await categories;
+                return categories;
             }
             catch (Exception ex)
             {
@@ -107,29 +117,11 @@ namespace PharmCare.BLL.Repositories.CategoryModule
         {
             try
             {
-                var category = (from mc in context.Categories
+                var data = await context.Categories.FindAsync(Id);
 
-                                join u in context.AppUsers on mc.CreatedBy equals u.Id
+                var categories = mapper.Map<CategoryDTO>(data);
 
-                                where mc.Id == Id
-
-                                select new CategoryDTO
-                                {
-                                    Id = mc.Id,
-
-                                    Name = mc.Name,
-
-                                    Status = mc.Status,
-
-                                    CreateDate = mc.CreateDate,
-
-                                    CreatedBy = mc.CreatedBy,
-
-                                    CreatedByName = u.FirstName + " " + u.LastName,
-
-                                }).FirstOrDefaultAsync();
-
-                return await category;
+                return categories;
             }
             catch (Exception ex)
             {

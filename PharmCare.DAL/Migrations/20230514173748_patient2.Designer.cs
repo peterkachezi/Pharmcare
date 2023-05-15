@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmCare.DAL.DbContext;
 
@@ -11,9 +12,10 @@ using PharmCare.DAL.DbContext;
 namespace PharmCare.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230514173748_patient2")]
+    partial class patient2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,7 +316,7 @@ namespace PharmCare.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Status")
+                    b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("UpdatedBy")
@@ -617,9 +619,6 @@ namespace PharmCare.DAL.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte?>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -1071,9 +1070,6 @@ namespace PharmCare.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Status")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -1212,7 +1208,7 @@ namespace PharmCare.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Status")
+                    b.Property<byte>("Status")
                         .HasColumnType("tinyint");
 
                     b.Property<int>("UnitValue")

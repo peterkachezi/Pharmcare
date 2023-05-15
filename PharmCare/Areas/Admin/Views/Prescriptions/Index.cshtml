@@ -59,7 +59,6 @@
                                     <th scope="col">Patient Name</th>
                                     <th scope="col">Phone Number</th>
                                     <th scope="col">Prescription Date</th>
-                                    <th scope="col">Requested By</th>
                                     <th scope="col">Payment </th>
                                     <th scope="col">Options</th>
                                 </tr>
@@ -76,7 +75,7 @@
                                             <td>@item.PatientName</td>
                                             <td>@item.PatientPhoneNumber</td>
                                             <td>@item.CreateDate.ToShortDateString()</td>
-                                            <td>@item.CreatedByName</td>
+                                         
 
                                             <td>
 
@@ -95,6 +94,7 @@
 
                                             </td>
 
+
                                             <td>
                                                 @{
                                                     var PaymentStatus = item.PaymentStatus;
@@ -102,13 +102,17 @@
                                                     if (PaymentStatus == 0)
                                                     {
                                                         <a class="btn-info  btn-sm" href="#" onclick="GenerateInvoice('@item.Id','@item.PatientId')" value=""><i class="fa fa-list"></i> Generate Invoice</a>
+                                                        <a class="btn-success  btn-sm" href="#" onclick="Details('@item.Id','@item.PatientId')" value=""><i class="fa fa-eye"></i> View Details</a>
+
+                                                        <a class="btn-danger  btn-sm" href="#" onclick="DeleteRecord('@item.Id')" value=""><i class="fa fa-trash"></i> Delete</a>
+
 
                                                     }
                                                     if (PaymentStatus == 1)
                                                     {
                                                         <a class="btn-info  btn-sm" href="#" onclick="Details('@item.Id','@item.PatientId')" value=""><i class="fa fa-eye"></i> View Details</a>
 
-                                                        <a class="btn-success  btn-sm" href="#" onclick="DowloadPrescripton('@item.Id','@item.PatientId')" value=""><i class="fa fa-download"></i> Dowload</a>
+                                                        <a class="btn-success  btn-sm" href="#" onclick="DowloadPrescripton('@item.Id','@item.PatientId')" value=""><i class="fa fa-trash"></i> Dowload</a>
                                                     }
                                                 }
                                                

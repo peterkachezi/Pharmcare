@@ -16,6 +16,7 @@ namespace PharmCare.DAL.Models
         public int UnitValue { get; set; }
         public string CreatedBy { get; set; } = null!;
         public string? UpdatedBy { get; set; }
+        public byte? Status { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<Medicine> Medicines { get; set; }
