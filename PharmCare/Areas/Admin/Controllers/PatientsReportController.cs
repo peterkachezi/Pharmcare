@@ -2,6 +2,7 @@
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using PharmCare.BLL.Repositories.PatientModule;
+using PharmCare.DTO.ReportModule;
 using System.Drawing;
 
 namespace PharmCare.Areas.Admin.Controllers
@@ -25,6 +26,20 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
+
+                if (DateFrom == default)
+                {
+                    TempData["ErrorDateReport"] = "Please select date from";
+
+                    return RedirectToAction("Index", new { area = "Claims" });
+                }
+
+                if (DateTo == default)
+                {
+                    TempData["ErrorDateReport"] = "Please select date to";
+
+                    return RedirectToAction("Index", new { area = "Claims" });
+                }
 
                 var data = await patientRepository.GetAll();
 
@@ -58,7 +73,7 @@ namespace PharmCare.Areas.Admin.Controllers
                     var row = startRow;
 
                     //Create Headers and format them
-                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1"].Value = "List of Patients";
+                    worksheet.Cells["A1,B1,C1,D1,E1,F1,G1"].Value = "MALELA PHARMACY - PATIENTS REPORT";
 
                     using (var r = worksheet.Cells["A1:G1"])
                     {
@@ -87,7 +102,6 @@ namespace PharmCare.Areas.Admin.Controllers
 
                     worksheet.Cells["G2"].Value = "EntryDate";
 
-
                     worksheet.Cells["A2:G2"].Style.Fill.PatternType = ExcelFillStyle.Solid;
 
                     worksheet.Cells["A2:G2"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
@@ -112,7 +126,6 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 6].Value = user.Age;
 
                         worksheet.Cells[row, 7].Value = user.CreateDate.ToShortDateString();
-
 
                         row++;
                     }

@@ -130,6 +130,8 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,
 
+                                     StockDate = newStock.CreateDate == null ? DateTime.Now : newStock.CreateDate,
+
                                  }).OrderByDescending(x => x.CreateDate).ToListAsync();
 
                 return await medicines;

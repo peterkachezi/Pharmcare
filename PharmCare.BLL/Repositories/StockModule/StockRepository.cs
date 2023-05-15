@@ -221,7 +221,7 @@ namespace PharmCare.BLL.Repositories.StockModule
             {
                 var endDate = DateTime.Now.AddHours(23).AddMinutes(59).AddSeconds(59);
 
-                var data = context.GoodsReceivedHistories.Where(x => x.ExpiryDate <= endDate).ToList();
+                var data = context.GoodsReceivedHistories.Where(x => x.ExpiryDate < endDate).ToList();
 
                 var expiries = (from exp in data
 

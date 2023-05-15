@@ -2,11 +2,9 @@
 using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using PharmCare.BLL.Repositories.MedecineModule;
-using PharmCare.BLL.Repositories.SalesModule;
 using System.Drawing;
 using PharmCare.BLL.Repositories.CategoryModule;
 using PharmCare.DTO.ReportModule;
-using PharmCare.DAL.Models;
 
 namespace PharmCare.Areas.Admin.Controllers
 {
@@ -59,7 +57,6 @@ namespace PharmCare.Areas.Admin.Controllers
                 return null;
             }
         }
-
         private async Task<IActionResult> DownloadOutOfstock(ReportDTO reportDTO)
         {
             try
@@ -209,7 +206,6 @@ namespace PharmCare.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
         }
-
         public async Task<IActionResult> DownloadGeneralReport()
         {
             try
@@ -310,7 +306,7 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 7].Value = user.SellingPrice;
 
-                     
+
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
 
@@ -455,7 +451,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                         worksheet.Cells[row, 4].Value = user.ShelfName;
 
-                        worksheet.Cells[row, 5].Value = user.CreateDate.ToShortDateString();
+                        worksheet.Cells[row, 5].Value = user.StockDate.ToShortDateString();
 
                         worksheet.Cells[row, 6].Style.Numberformat.Format = "#,##0.00";
                         worksheet.Cells[row, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
@@ -465,7 +461,7 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 7].Value = user.SellingPrice;
 
-            
+
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
 
@@ -520,20 +516,19 @@ namespace PharmCare.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
         }
-
         public async Task<IActionResult> DownloadReportByDateRange(ReportDTO reportDTO)
         {
 
             try
             {
-                if (reportDTO.DateFrom == DateTime.MinValue)
+                if (reportDTO.DateFrom == default)
                 {
                     TempData["ErrorDateReport"] = "Please select date from ";
 
                     return RedirectToAction("Index", new { area = "Admin" });
                 }
 
-                if (reportDTO.DateTo == DateTime.MinValue)
+                if (reportDTO.DateTo == default)
                 {
                     TempData["ErrorDateReport"] = "Please select date to ";
 
@@ -542,7 +537,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 var endDate = reportDTO.DateTo.AddHours(23).AddMinutes(59).AddSeconds(59);
 
-                var stock = (await medicineRepository.GetAll()).Where(x => x.CreateDate >= reportDTO.DateFrom && x.CreateDate <= endDate).ToList();
+                var stock = (await medicineRepository.GetAll()).Where(x => x.StockDate >= reportDTO.DateFrom && x.StockDate <= endDate).ToList();
 
                 if (stock.Count() == 0)
                 {
@@ -609,7 +604,6 @@ namespace PharmCare.Areas.Admin.Controllers
                     worksheet.Cells["H2"].Value = "Quantity";
 
 
-
                     worksheet.Cells["A2:H2"].Style.Fill.PatternType = ExcelFillStyle.Solid;
 
                     worksheet.Cells["A2:H2"].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
@@ -638,12 +632,9 @@ namespace PharmCare.Areas.Admin.Controllers
                         worksheet.Cells[row, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 7].Value = user.SellingPrice;
 
-                   
+
                         worksheet.Cells[row, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 8].Value = user.Quantity;
-
-
-
 
                         row++;
                     }

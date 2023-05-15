@@ -21,6 +21,7 @@ namespace PharmCare.DTO.MedicineModule
         public decimal SellingPrice { get; set; }
         public byte Status { get; set; }
         public DateTime CreateDate { get; set; }
+        public DateTime StockDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string CreatedBy { get; set; }

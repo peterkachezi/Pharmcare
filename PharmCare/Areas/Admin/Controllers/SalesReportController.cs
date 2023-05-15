@@ -89,7 +89,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                     //Create Headers and format them
 
-                    worksheet.Cells["A1,B1,C1,D1,E1,F1"].Value = "MUMIAS WEST HEALTH CARE SALES REPORT  - " + DateTime.Now + "";
+                    worksheet.Cells["A1,B1,C1,D1,E1,F1"].Value = "MALELA PHARMACY SALES REPORT  - " + DateTime.Now + "";
 
                     using (var r = worksheet.Cells["A1:f1"])
                     {
@@ -137,7 +137,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                         worksheet.Cells[row, 3].Value = salesData.CreateDate.ToShortDateString();
 
-                   
+
                         worksheet.Cells[row, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
                         worksheet.Cells[row, 4].Value = salesData.Quantity;
 
@@ -255,7 +255,7 @@ namespace PharmCare.Areas.Admin.Controllers
                     var row = startRow;
 
                     //Create Headers and format them
-                    worksheet.Cells["A1,B1,C1,D1,E1,F1"].Value = "MUMIAS WEST HEALTH CARE SALES REPORT  - " + DateTime.Now + "";
+                    worksheet.Cells["A1,B1,C1,D1,E1,F1"].Value = "MALELA PHARMACY SALES REPORT  - " + DateTime.Now + "";
 
                     using (var r = worksheet.Cells["A1:f1"])
                     {
