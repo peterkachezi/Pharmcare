@@ -60,7 +60,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 using (var xlPackage = new ExcelPackage(stream))
                 {
-                    var worksheet = xlPackage.Workbook.Worksheets.Add("Users");
+                    var worksheet = xlPackage.Workbook.Worksheets.Add("Patients");
 
                     var namedStyle = xlPackage.Workbook.Styles.CreateNamedStyle("HyperLink");
 

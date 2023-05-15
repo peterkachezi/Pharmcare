@@ -132,6 +132,8 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      StockDate = newStock.CreateDate == null ? DateTime.Now : newStock.CreateDate,
 
+                                     StockId = newStock.Id == null ? Guid.NewGuid(): newStock.Id,
+
                                  }).OrderByDescending(x => x.CreateDate).ToListAsync();
 
                 return await medicines;
@@ -166,12 +168,12 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      Name = m.Name,
 
-                                     ShelfId = m.ShelfId,                                    
+                                     ShelfId = m.ShelfId,
 
                                      Description = m.Description,
 
                                      CategoryId = m.CategoryId,
-                          
+
                                      ManufacturerPrice = m.ManufacturerPrice,
 
                                      SellingPrice = m.SellingPrice,
@@ -183,7 +185,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                                      CreatedBy = m.CreatedBy,
 
                                      UnitId = m.UnitId,
-                          
+
                                      Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,
 
                                  }).ToListAsync();
@@ -260,7 +262,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      UnitName = unit.UnitValue + " " + unit.Name,
 
-                                     Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,
+                                     Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,                                     
 
                                  }).FirstOrDefaultAsync();
 
@@ -275,6 +277,37 @@ namespace PharmCare.BLL.Repositories.MedecineModule
             }
         }
 
+        public async Task<MedicineDTO> GetByStockId(Guid Id)
+        {
+            try
+            {
+
+                var medicines = (from s in context.Stocks.Where(x => x.Id == Id)
+
+                                 join m in context.Medicines on s.MedicineId equals m.Id                                                          
+
+                                 select new MedicineDTO
+                                 {
+                                     Id = m.Id,
+
+                                     Name = m.Name,
+
+                                     StockId = s.Id,
+
+                                     Quantity = s.Quantity,
+
+                                 }).FirstOrDefaultAsync();
+
+                return await medicines;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
         public async Task<MedicineDTO> GetStockDetailsById(Guid Id)
         {
             try

@@ -44,7 +44,7 @@ namespace PharmCare.BLL.Repositories.StockModule
                 {
                     var data = new GoodsReceivedHistoryDTO
                     {
-                        Id=Guid.NewGuid(),
+                        Id = Guid.NewGuid(),
 
                         GRNo = goodsReceivedNoteDTO.GRNo,
 
@@ -231,9 +231,9 @@ namespace PharmCare.BLL.Repositories.StockModule
 
                                 join shelf in context.Shelves on med.ShelfId equals shelf.Id
 
-                                join category in context.Categories on med.CategoryId equals category.Id                                                      
+                                join category in context.Categories on med.CategoryId equals category.Id
 
-                                join sup in context.Suppliers  on exp.SupplierId equals sup.Id
+                                join sup in context.Suppliers on exp.SupplierId equals sup.Id
 
                                 select new GoodsReceivedHistoryDTO
                                 {
@@ -286,6 +286,62 @@ namespace PharmCare.BLL.Repositories.StockModule
                 Console.WriteLine(ex.Message);
 
                 return null;
+            }
+
+        }
+        public async Task<GoodsReceivedHistoryDTO> UpdateStock(GoodsReceivedHistoryDTO stockDetailDTO)
+        {
+            try
+            {
+                var getStock = await context.Stocks.FindAsync(stockDetailDTO.Id);
+
+                if (getStock != null)
+                {
+                    getStock.Quantity = stockDetailDTO.Quantity;
+
+                    getStock.UpdatedBy = stockDetailDTO.UpdatedBy;
+
+                    getStock.UpdatedDate = DateTime.Now;
+
+                    context.SaveChanges();
+
+                    return stockDetailDTO;
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteFromStock(Guid Id)
+        {
+            try
+            {
+                bool result = false;
+
+                var stock = await context.Stocks.FindAsync(Id);
+
+                if (stock != null)
+                {
+                    context.Stocks.Remove(stock);
+
+                    await context.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
             }
 
         }

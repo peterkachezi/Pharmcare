@@ -488,6 +488,8 @@ function GetMedForStock(e) {
 
             $("#txtId1").val(data.data.id);
 
+            $("#txtstockId").val(data.data.stockId);
+
             $("#txtName1").val(data.data.name);
 
             $("#txtGenericName1").val(data.data.genericName);
@@ -632,7 +634,75 @@ $("#btnCreateSingleStock").click(function () {
 
 });
 
+$("#btnUpdateStock").click(function () {
 
+
+
+    if ($('#txtNewStock').val() == '') {
+        $('#txtNewStock').focus();
+        swal({
+            position: 'top-end',
+            type: "error",
+            title: "Please enter quantity ",
+            showConfirmButton: true,
+        });
+        $("#divLoader").hide();
+
+        return false;
+    }
+
+
+    $("#ModalCreateSingleStock").modal('hide');
+
+    $("#divLoader").show();
+
+    var formData = new FormData($('#frmCreateSingleStock').get(0));
+
+    $.ajax({
+        type: "POST",
+        url: "/Admin/StockManager/UpdateStock", // NB: Use the correct action name
+        data: formData,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+
+
+        success: function (response) {
+            if (response.success) {
+
+                swal({
+                    position: 'top-end',
+
+                    type: "success",
+
+                    title: response.responseText,
+
+                    showConfirmButton: false,
+
+                }), setTimeout(function () { location.reload(); }, 3000);
+
+            } else {
+
+                swal({
+                    position: 'top-end',
+                    type: "error",
+                    title: response.responseText,
+                    showConfirmButton: true,
+                    timer: 5000,
+                });
+
+            }
+
+            $("#divLoader").hide();
+        },
+
+
+        error: function (error) {
+            alert("errror");
+        }
+    });
+
+});
 //Allow users to enter numbers only
 $(".numericOnly").bind('keypress', function (e) {
     if (e.keyCode == '9' || e.keyCode == '16') {
@@ -649,3 +719,85 @@ $(".numericOnly").bind('keypress', function (e) {
         return false;
 });
 
+function DeleteStockEntry(e) {
+
+    $("#divLoader").show();
+    var id = e;
+
+    console.log(id);
+
+    swal(
+
+        {
+            title: "Are you sure?",
+
+            text: "Once deleted, you will not be able to recover this  file!",
+
+            type: "success",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "##62b76e",
+
+            confirmButtonText: "Yes, Procceed!",
+
+            closeOnConfirm: false
+        },
+
+        function () {
+
+            $.ajax({
+
+                type: "GET",
+
+                url: "/Admin/StockManager/DeleteFromStock/" + id,
+
+                success: function (response) {
+
+                    if (response.success) {
+
+                        swal({
+
+                            position: 'top-end',
+
+                            type: "success",
+
+                            title: response.responseText,
+
+                            showConfirmButton: false,
+
+                            // timer: 2000,
+
+                        });
+                        setTimeout(function () { location.reload(); }, 3000);
+
+                    }
+
+                    else {
+                        swal({
+                            position: 'top-end',
+                            type: "error",
+                            title: response.responseText,
+                            showConfirmButton: true,
+                            timer: 5000,
+                        });
+                        $("#divLoader").hide();
+                    }
+
+                },
+                error: function (response) {
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: "Server error ,kindly contact the admin for assistance",
+                        showConfirmButton: false,
+                        timer: 5000,
+                    });
+                    $("#divLoader").hide();
+                }
+
+            })
+
+        }
+    );
+}

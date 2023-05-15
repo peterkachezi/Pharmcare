@@ -5,6 +5,7 @@ namespace PharmCare.DTO.MedicineModule
     public class MedicineDTO
     {
         public Guid Id { get; set; }
+        public Guid StockId { get; set; }
         public string Name { get; set; }
         public Guid MedicalConditionId { get; set; } 
         public string MedicalConditionName { get; set; } 

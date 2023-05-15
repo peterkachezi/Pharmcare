@@ -97,6 +97,61 @@ namespace PharmCare.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
         }
+        public async Task<IActionResult> UpdateStock(GoodsReceivedHistoryDTO stockDetailDTO)
+        {
+            try
+            {
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+
+                stockDetailDTO.UpdatedBy = user.Id;
+
+                var result = await stockRepository.UpdateStock(stockDetailDTO);
+
+                if (result != null)
+                {
+                    return Json(new { success = true, responseText = "Stock has been successfully updated" });
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "Failed to update stock" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                TempData["Error"] = "Something went wrong";
+
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+        }
+
+        public async Task<IActionResult> DeleteFromStock(Guid Id)
+        {
+            try
+            {
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+
+                var result = await stockRepository.DeleteFromStock(Id);
+
+                if (result != null)
+                {
+                    return Json(new { success = true, responseText = "Stock has been successfully deleted" });
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "Failed to update stock" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                TempData["Error"] = "Something went wrong";
+
+                return RedirectToAction("Login", "Account", new { area = "" });
+            }
+        }
         public async Task<IActionResult> ViewStock()
         {
             try
@@ -119,47 +174,13 @@ namespace PharmCare.Areas.Admin.Controllers
             try
             {
 
-                var medicine = await medicineRepository.GetById(Id);
+                var stock = await medicineRepository.GetByStockId(Id);
 
                 var prescriptionId = Id;
 
-                if (medicine != null)
+                if (stock != null)
                 {
-                    MedicineDTO file = new MedicineDTO()
-                    {
-                        Id = medicine.Id,
-
-                        MedicalConditionId = medicine.MedicalConditionId,
-
-                        Name = medicine.Name,
-
-                        ShelfId = medicine.ShelfId,
-
-                        ShelfName = medicine.ShelfName,
-
-                        Description = medicine.Description,
-
-                        CategoryId = medicine.CategoryId,
-
-                        ManufacturerPrice = medicine.ManufacturerPrice,
-
-                        SellingPrice = medicine.SellingPrice,
-
-                        Status = medicine.Status,
-
-                        CreateDate = medicine.CreateDate,
-
-                        CreatedBy = medicine.CreatedBy,
-
-                        UnitId = medicine.UnitId,
-
-                        UnitName = medicine.UnitName,
-
-                        Quantity = medicine.Quantity,
-
-                    };
-
-                    return Json(new { data = file });
+                    return Json(new { data = stock });
                 }
 
                 return Json(new { data = false });
@@ -172,7 +193,6 @@ namespace PharmCare.Areas.Admin.Controllers
                 return Json(new { success = false, responseText = "Something went wrong" });
             }
         }
-
         [HttpPost]
         public async Task<ActionResult> SaveTransaction(GoodsReceivedNoteDTO goodsReceivedNoteDTO)
         {
@@ -209,7 +229,6 @@ namespace PharmCare.Areas.Admin.Controllers
                 return null;
             }
         }
-
         public IActionResult ExpiredProducts()
         {
             try

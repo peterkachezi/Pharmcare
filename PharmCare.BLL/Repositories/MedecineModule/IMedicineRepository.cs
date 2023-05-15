@@ -13,5 +13,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
         Task<bool> CheckIfRecordExist(MedicineDTO medicineDTO);
         Task<MedicineDTO> GetStockDetailsById(Guid Id);
         Task<List<MedicineDTO>> GetAllOutOfStockProducts();
+        Task<MedicineDTO> GetByStockId(Guid Id);
     }
 }
