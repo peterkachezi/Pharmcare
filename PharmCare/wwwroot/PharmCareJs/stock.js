@@ -69,7 +69,7 @@ function GetMedicineDetailsData() {
 
     console.log(medicineId);
 
-    $("#divLoader").show();
+/*    $("#divLoader").show();*/
 
     $.get("/Admin/StockManager/GetByMedicineId/?Id=" + medicineId,
 
@@ -319,17 +319,7 @@ function AddToTheList() {
         return false;
     }
 
-    if ($('#txtSellingPrice').val() < 1) {
-        $('#txtSellingPrice').focus();
-        swal({
-            position: 'top-end',
-            type: "error",
-            title: "Please search medicine before adding to list",
-            showConfirmButton: true,
-        });
 
-        return false;
-    }
 
     if ($('#txtExpiryDate').val() < 1) {
         $('#txtExpiryDate').focus();

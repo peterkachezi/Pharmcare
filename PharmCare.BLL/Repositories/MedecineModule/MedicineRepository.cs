@@ -132,7 +132,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      StockDate = newStock.CreateDate == null ? DateTime.Now : newStock.CreateDate,
 
-                                     StockId = newStock.Id == null ? Guid.NewGuid(): newStock.Id,
+                                     StockId = newStock.Id == null ? Guid.NewGuid() : newStock.Id,
 
                                  }).OrderByDescending(x => x.CreateDate).ToListAsync();
 
@@ -262,7 +262,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      UnitName = unit.UnitValue + " " + unit.Name,
 
-                                     Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,                                     
+                                     Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,
 
                                  }).FirstOrDefaultAsync();
 
@@ -282,9 +282,9 @@ namespace PharmCare.BLL.Repositories.MedecineModule
             try
             {
 
-                var medicines = (from s in context.Stocks.Where(x => x.Id == Id)
+                var medicines = (from s in context.Stocks.Where(x => x.MedicineId == Id)
 
-                                 join m in context.Medicines on s.MedicineId equals m.Id                                                          
+                                 join m in context.Medicines on s.MedicineId equals m.Id
 
                                  select new MedicineDTO
                                  {
@@ -295,6 +295,8 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                                      StockId = s.Id,
 
                                      Quantity = s.Quantity,
+
+                                     SellingPrice = m.SellingPrice,
 
                                  }).FirstOrDefaultAsync();
 
