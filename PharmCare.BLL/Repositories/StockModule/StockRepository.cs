@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmCare.BLL.Utils;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
-using PharmCare.DTO.ReportModule;
 using PharmCare.DTO.StockModule;
-using System.Security.Cryptography;
 
 namespace PharmCare.BLL.Repositories.StockModule
 {
@@ -72,6 +70,8 @@ namespace PharmCare.BLL.Repositories.StockModule
 
                         SellingPrice = item.SellingPrice,
 
+                        CostPrice = item.CostPrice,
+
                         GoodsReceivedNoteId = goodsReceivedNoteDTO.Id,
                     };
 
@@ -95,9 +95,6 @@ namespace PharmCare.BLL.Repositories.StockModule
         {
             try
             {
-
-
-
                 var data = mapper.Map<List<GoodsReceivedHistory>>(listOfItems);
 
                 context.GoodsReceivedHistories.AddRange(data);
@@ -265,7 +262,7 @@ namespace PharmCare.BLL.Repositories.StockModule
 
                                     SellingPrice = exp.SellingPrice.Value,
 
-                                    ManufacturerPrice = med.ManufacturerPrice,
+                                    //ManufacturerPrice = med.ManufacturerPrice,
 
                                     GoodsReceivedNoteId = exp.Id,
 
@@ -328,7 +325,7 @@ namespace PharmCare.BLL.Repositories.StockModule
 
                 if (stock != null)
                 {
-                    context.Stocks.Remove(stock);
+                    stock.Status = 2;
 
                     await context.SaveChangesAsync();
 

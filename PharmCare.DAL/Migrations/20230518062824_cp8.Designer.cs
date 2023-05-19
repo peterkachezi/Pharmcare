@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmCare.DAL.DbContext;
 
@@ -11,9 +12,10 @@ using PharmCare.DAL.DbContext;
 namespace PharmCare.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230518062824_cp8")]
+    partial class cp8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -819,14 +821,8 @@ namespace PharmCare.DAL.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PrescriptionDetailId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Residence")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte?>("Status")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -835,8 +831,6 @@ namespace PharmCare.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PrescriptionDetailId");
 
                     b.ToTable("Patients");
                 });
@@ -1340,13 +1334,6 @@ namespace PharmCare.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PharmCare.DAL.Models.Patient", b =>
-                {
-                    b.HasOne("PharmCare.DAL.Models.PrescriptionDetail", null)
-                        .WithMany("Patients")
-                        .HasForeignKey("PrescriptionDetailId");
-                });
-
             modelBuilder.Entity("PharmCare.DAL.Models.PrescriptionDetail", b =>
                 {
                     b.HasOne("PharmCare.DAL.Models.Prescription", "Prescription")
@@ -1411,11 +1398,6 @@ namespace PharmCare.DAL.Migrations
             modelBuilder.Entity("PharmCare.DAL.Models.Prescription", b =>
                 {
                     b.Navigation("PrescriptionDetail");
-                });
-
-            modelBuilder.Entity("PharmCare.DAL.Models.PrescriptionDetail", b =>
-                {
-                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.ProductType", b =>

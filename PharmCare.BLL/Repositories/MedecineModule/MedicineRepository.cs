@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
 using PharmCare.DTO.MedicineModule;
+using PharmCare.DTO.ProductModule;
 
 
 namespace PharmCare.BLL.Repositories.MedecineModule
@@ -32,6 +33,23 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                 var medicine = mapper.Map<Medicine>(medicineDTO);
 
                 context.Medicines.Add(medicine);
+
+                var stock = new Stock
+                {
+                    Id = Guid.NewGuid(),
+
+                    MedicineId = medicineDTO.Id,
+
+                    CostPrice = 0,
+
+                    SellingPrice = 0,
+                    Quantity = 0,
+
+                    CreatedBy = medicineDTO.CreatedBy,
+
+                    CreateDate = DateTime.Now,
+                };
+                context.Stocks.Add(stock);
 
                 await context.SaveChangesAsync();
 
@@ -114,9 +132,9 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      CategoryName = newCat.Name == null ? "" : newCat.Name,
 
-                                     ManufacturerPrice = m.ManufacturerPrice,
+                                     //ManufacturerPrice = m.ManufacturerPrice,
 
-                                     SellingPrice = m.SellingPrice,
+                                     //SellingPrice = m.SellingPrice,
 
                                      Status = m.Status,
 
@@ -174,9 +192,9 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      CategoryId = m.CategoryId,
 
-                                     ManufacturerPrice = m.ManufacturerPrice,
+                                     //ManufacturerPrice = m.ManufacturerPrice,
 
-                                     SellingPrice = m.SellingPrice,
+                                     //SellingPrice = m.SellingPrice,
 
                                      Status = m.Status,
 
@@ -248,9 +266,9 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      CategoryName = newCat.Name == null ? "" : newCat.Name,
 
-                                     ManufacturerPrice = m.ManufacturerPrice,
+                                     //ManufacturerPrice = m.ManufacturerPrice,
 
-                                     SellingPrice = m.SellingPrice,
+                                     //SellingPrice = m.SellingPrice,
 
                                      Status = m.Status,
 
@@ -281,26 +299,25 @@ namespace PharmCare.BLL.Repositories.MedecineModule
         {
             try
             {
-
                 var medicines = (from s in context.Stocks.Where(x => x.MedicineId == Id)
 
-                                 join m in context.Medicines on s.MedicineId equals m.Id
+                                 join m in context.Medicines on s.MedicineId equals m.Id 
 
                                  select new MedicineDTO
                                  {
                                      Id = m.Id,
 
-                                     Name = m.Name,
+                                     Name = m.Name,                               
 
                                      StockId = s.Id,
 
                                      Quantity = s.Quantity,
 
-                                     SellingPrice = m.SellingPrice,
+                                     SellingPrice = s.SellingPrice,
 
                                  }).FirstOrDefaultAsync();
 
-                return await medicines;
+                return  await medicines;
 
             }
             catch (Exception ex)
@@ -336,9 +353,9 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      CategoryId = m.CategoryId,
 
-                                     ManufacturerPrice = m.ManufacturerPrice,
+                                     //ManufacturerPrice = m.ManufacturerPrice,
 
-                                     SellingPrice = m.SellingPrice,
+                                     //SellingPrice = m.SellingPrice,
 
                                      Status = m.Status,
 
@@ -385,9 +402,9 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                         medicine.CategoryId = medicineDTO.CategoryId;
 
-                        medicine.ManufacturerPrice = medicineDTO.ManufacturerPrice;
+                        //medicine.ManufacturerPrice = medicineDTO.ManufacturerPrice;
 
-                        medicine.SellingPrice = medicineDTO.SellingPrice;
+                        //medicine.SellingPrice = medicineDTO.SellingPrice;
 
                         medicine.Status = medicineDTO.Status;
 

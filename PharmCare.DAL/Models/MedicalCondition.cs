@@ -3,8 +3,7 @@
 namespace PharmCare.DAL.Models
 {
     public partial class MedicalCondition
-    {       
-
+    {    
         [Key]
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;

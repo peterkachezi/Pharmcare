@@ -7,7 +7,7 @@ using PharmCare.DTO.ProductModule;
 
 namespace PharmCare.BLL.Repositories.ProductModule
 {
-    public  class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext context;
 
@@ -30,6 +30,24 @@ namespace PharmCare.BLL.Repositories.ProductModule
                 var product = mapper.Map<Product>(productDTO);
 
                 context.Products.Add(product);
+
+                var stock = new Stock
+                {
+                    Id = Guid.NewGuid(),
+
+                    MedicineId = productDTO.Id,
+
+                    CostPrice = 0,
+
+                    SellingPrice = 0,
+
+                    Quantity = 0,
+
+                    CreatedBy = productDTO.CreatedBy,
+
+                    CreateDate = DateTime.Now,
+                };
+                context.Stocks.Add(stock);
 
                 await context.SaveChangesAsync();
 
@@ -74,21 +92,21 @@ namespace PharmCare.BLL.Repositories.ProductModule
             {
                 var products = (from mc in context.Products
 
-                                  join u in context.AppUsers on mc.CreatedBy equals u.Id
+                                join u in context.AppUsers on mc.CreatedBy equals u.Id
 
-                                  select new ProductDTO
-                                  {
-                                      Id = mc.Id,
+                                select new ProductDTO
+                                {
+                                    Id = mc.Id,
 
-                                      Name = mc.Name,                                   
+                                    Name = mc.Name,
 
-                                      CreateDate = mc.CreateDate,
+                                    CreateDate = mc.CreateDate,
 
-                                      CreatedBy = mc.CreatedBy,
+                                    CreatedBy = mc.CreatedBy,
 
-                                      CreatedByName = u.FirstName + " " + u.LastName,
+                                    CreatedByName = u.FirstName + " " + u.LastName,
 
-                                  }).ToListAsync();
+                                }).ToListAsync();
 
                 return await products;
             }
@@ -105,23 +123,23 @@ namespace PharmCare.BLL.Repositories.ProductModule
             {
                 var product = (from mc in context.Products
 
-                                join u in context.AppUsers on mc.CreatedBy equals u.Id
+                               join u in context.AppUsers on mc.CreatedBy equals u.Id
 
-                                where mc.Id == Id
+                               where mc.Id == Id
 
-                                select new ProductDTO
-                                {
-                                    Id = mc.Id,
+                               select new ProductDTO
+                               {
+                                   Id = mc.Id,
 
-                                    Name = mc.Name,                                   
+                                   Name = mc.Name,
 
-                                    CreateDate = mc.CreateDate,
+                                   CreateDate = mc.CreateDate,
 
-                                    CreatedBy = mc.CreatedBy,
+                                   CreatedBy = mc.CreatedBy,
 
-                                    CreatedByName = u.FirstName + " " + u.LastName,
+                                   CreatedByName = u.FirstName + " " + u.LastName,
 
-                                }).FirstOrDefaultAsync();
+                               }).FirstOrDefaultAsync();
 
                 return await product;
             }

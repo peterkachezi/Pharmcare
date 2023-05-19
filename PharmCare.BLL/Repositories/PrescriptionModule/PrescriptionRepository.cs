@@ -222,7 +222,7 @@ namespace PharmCare.BLL.Repositories.PrescriptionModule
 
 										MedicineName = med.Name + " " + unit.Name + " " + unit.UnitValue,
 
-										SellingPrice = med.SellingPrice,
+										//SellingPrice = med.SellingPrice,
 
 										MedicineDispatchStatus = pres.MedicineDispatchStatus,
 

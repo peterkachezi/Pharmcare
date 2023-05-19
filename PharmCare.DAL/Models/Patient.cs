@@ -17,6 +17,7 @@ namespace PharmCare.DAL.Models
         public DateTime UpdatedDate { get; set; }
         public string? Residence { get; set; }
         public string? Gender { get; set; }
+        public byte? Status { get; set; }
     
 
     }

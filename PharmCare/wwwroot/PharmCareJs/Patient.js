@@ -99,7 +99,7 @@ function GetAllData() {
     }).draw();
 }
 
-function DeleteRecord(e) {
+function DeletePatient(e) {
 
     $("#divLoader").show();
     var id = e;

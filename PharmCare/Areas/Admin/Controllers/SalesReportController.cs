@@ -176,11 +176,11 @@ namespace PharmCare.Areas.Admin.Controllers
                     worksheet.Cells[getLastRow, 6].Value = sumTotal;
 
 
-                    xlPackage.Workbook.Properties.Title = "FP";
+                    xlPackage.Workbook.Properties.Title = "Pharm";
 
-                    xlPackage.Workbook.Properties.Author = "FP";
+                    xlPackage.Workbook.Properties.Author = "Pharm";
 
-                    xlPackage.Workbook.Properties.Subject = "FP";
+                    xlPackage.Workbook.Properties.Subject = "Pharm";
 
                     // save the new spreadsheet
                     xlPackage.Save();
@@ -340,11 +340,11 @@ namespace PharmCare.Areas.Admin.Controllers
                     worksheet.Cells[getLastRow, 6].Value = sumTotal;
 
 
-                    xlPackage.Workbook.Properties.Title = "FP";
+                    xlPackage.Workbook.Properties.Title = "Pharm";
 
-                    xlPackage.Workbook.Properties.Author = "FP";
+                    xlPackage.Workbook.Properties.Author = "Pharm";
 
-                    xlPackage.Workbook.Properties.Subject = "FP";
+                    xlPackage.Workbook.Properties.Subject = "Pharm";
 
                     // save the new spreadsheet
                     xlPackage.Save();

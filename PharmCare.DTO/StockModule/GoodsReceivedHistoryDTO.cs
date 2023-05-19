@@ -23,6 +23,7 @@ namespace PharmCare.DTO.StockModule
         public string GenericName { get; set; }
         public decimal ManufacturerPrice { get; set; }
         public decimal SellingPrice { get; set; }
+        public decimal CostPrice { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal Total { get; set; }
         public string CategoryName { get; set; }

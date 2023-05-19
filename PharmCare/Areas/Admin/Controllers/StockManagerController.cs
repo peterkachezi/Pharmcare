@@ -21,7 +21,15 @@ namespace PharmCare.Areas.Admin.Controllers
         private readonly IStockRepository stockRepository;
 
         private readonly UserManager<AppUser> userManager;
-        public StockManagerController(IStockRepository stockRepository, UserManager<AppUser> userManager, ISupplierRepository supplierRepository, IMedicineRepository medicineRepository)
+        public StockManagerController(
+
+            IStockRepository stockRepository,
+
+            UserManager<AppUser> userManager,
+
+            ISupplierRepository supplierRepository,
+
+            IMedicineRepository medicineRepository)
         {
             this.supplierRepository = supplierRepository;
 
@@ -125,7 +133,6 @@ namespace PharmCare.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
         }
-
         public async Task<IActionResult> DeleteFromStock(Guid Id)
         {
             try
@@ -156,9 +163,9 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var medecine = await medicineRepository.GetAll();
+                var stock = (await medicineRepository.GetAll()).Where(x => x.Status != 2).ToList();
 
-                return View(medecine);
+                return View(stock);
             }
             catch (Exception ex)
             {

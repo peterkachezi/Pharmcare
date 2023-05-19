@@ -46,7 +46,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 ViewBag.Counties = (await countyRepository.GetAllCounties()).OrderByDescending(x => x.Name);
 
-                var patients = await patientRepository.GetAll();
+                var patients = (await patientRepository.GetAll()).Where(c => c.Status != 2).ToList(); ;
 
                 return View(patients);
             }

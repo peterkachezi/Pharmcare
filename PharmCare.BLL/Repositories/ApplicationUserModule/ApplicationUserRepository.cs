@@ -26,7 +26,7 @@ namespace PharmCare.BLL.Repositories.ApplicationUserModule
         {
             try
             {
-                var getRolse = await context.Roles.Where(x=>x.Name=="Admin").ToListAsync();
+                var getRolse = await context.Roles.ToListAsync();
 
                 var roles = new List<RoleDTO>();
 

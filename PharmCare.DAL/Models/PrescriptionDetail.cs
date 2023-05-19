@@ -27,5 +27,7 @@ namespace PharmCare.DAL.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Total { get; set; }
         public virtual Prescription Prescription { get; set; }
+        public ICollection<Patient> Patients { get; set; }
+
     }
 }

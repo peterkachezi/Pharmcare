@@ -38,6 +38,8 @@ namespace PharmCare.BLL.Repositories.PatientModule
 
                 patientDTO.CreateDate = DateTime.Now;
 
+                patientDTO.Status = 0;
+
                 var patient = mapper.Map<Patient>(patientDTO);
 
                 context.Patients.Add(patient);
@@ -54,6 +56,32 @@ namespace PharmCare.BLL.Repositories.PatientModule
             }
         }
         public async Task<bool> Delete(Guid Id)
+        {
+            try
+            {
+                bool result = false;
+
+                var patient = await context.Patients.FindAsync(Id);
+
+                if (patient != null)
+                {
+                    patient.Status = 2;
+
+                    await context.SaveChangesAsync();
+
+                    return true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+
+        public async Task<bool> PermanentDelete(Guid Id)
         {
             try
             {

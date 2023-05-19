@@ -12,11 +12,8 @@ namespace PharmCare.DAL.Models
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public Guid MedicalConditionId { get; set; }
-        public string? Description { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal ManufacturerPrice { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal SellingPrice { get; set; }
+        public string? Description { get; set; }    
+
         public byte Status { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime ExpiryDate { get; set; }
