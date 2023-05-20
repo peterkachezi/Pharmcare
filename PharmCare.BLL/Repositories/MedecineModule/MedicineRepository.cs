@@ -102,9 +102,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                  from newCat in tblcat.DefaultIfEmpty()
 
-                                 join stocks in context.Stocks on m.Id equals stocks.MedicineId into tblStock
-
-                                 from newStock in tblStock.DefaultIfEmpty()
+                                 join stocks in context.Stocks on m.Id equals stocks.MedicineId
 
                                  join medCond in context.MedicalConditions on m.MedicalConditionId equals medCond.Id into tblmedCond
 
@@ -134,8 +132,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      //ManufacturerPrice = m.ManufacturerPrice,
 
-                                     //SellingPrice = m.SellingPrice,
-
                                      Status = m.Status,
 
                                      CreateDate = m.CreateDate,
@@ -146,11 +142,13 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      UnitName = unit.UnitValue + " " + unit.Name,
 
-                                     Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,
+                                     Quantity = stocks.Quantity,
 
-                                     StockDate = newStock.CreateDate == null ? DateTime.Now : newStock.CreateDate,
+                                     StockDate = stocks.CreateDate,
 
-                                     StockId = newStock.Id == null ? Guid.NewGuid() : newStock.Id,
+                                     StockId = stocks.Id,
+
+                                     SellingPrice = stocks.SellingPrice,
 
                                  }).OrderByDescending(x => x.CreateDate).ToListAsync();
 
@@ -301,13 +299,13 @@ namespace PharmCare.BLL.Repositories.MedecineModule
             {
                 var medicines = (from s in context.Stocks.Where(x => x.MedicineId == Id)
 
-                                 join m in context.Medicines on s.MedicineId equals m.Id 
+                                 join m in context.Medicines on s.MedicineId equals m.Id
 
                                  select new MedicineDTO
                                  {
                                      Id = m.Id,
 
-                                     Name = m.Name,                               
+                                     Name = m.Name,
 
                                      StockId = s.Id,
 
@@ -315,9 +313,11 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      SellingPrice = s.SellingPrice,
 
+                                     CostPrice = s.CostPrice,
+
                                  }).FirstOrDefaultAsync();
 
-                return  await medicines;
+                return await medicines;
 
             }
             catch (Exception ex)
@@ -327,6 +327,43 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                 return null;
             }
         }
+
+
+        public async Task<List<MedicineDTO>> GetAllStock()
+        {
+            try
+            {
+                var medicines = (from s in context.Stocks
+
+                                 join m in context.Medicines on s.MedicineId equals m.Id
+
+                                 select new MedicineDTO
+                                 {
+                                     Id = m.Id,
+
+                                     Name = m.Name,
+
+                                     StockId = s.Id,
+
+                                     Quantity = s.Quantity,
+
+                                     SellingPrice = s.SellingPrice,
+
+                                 }).ToListAsync();
+
+                return await medicines;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
+
+
+
         public async Task<MedicineDTO> GetStockDetailsById(Guid Id)
         {
             try

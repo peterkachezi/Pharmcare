@@ -23,7 +23,7 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var categories = await categoryRepository.GetAll();
+                var categories = (await categoryRepository.GetAll()).OrderByDescending(x=>x.CreateDate).ToList();
 
                 return View(categories);
             }

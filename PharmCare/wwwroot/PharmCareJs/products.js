@@ -53,7 +53,7 @@ function DeleteRecord(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
@@ -127,7 +127,7 @@ $("#btnSubmit").click(function () {
 
                     showConfirmButton: false,
 
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
 
@@ -194,7 +194,7 @@ $("#btnUpdate").click(function () {
 
                     showConfirmButton: false,
 
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
 

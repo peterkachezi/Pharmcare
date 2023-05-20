@@ -61,7 +61,7 @@ namespace PharmCare.BLL.Repositories.SupplierModule
 
                 context.Suppliers.Add(manufacturer);
 
-                await context.SaveChangesAsync();              
+                await context.SaveChangesAsync();
 
                 return supplierDTO;
             }
@@ -124,6 +124,31 @@ namespace PharmCare.BLL.Repositories.SupplierModule
 
                 if (man != null)
                 {
+                    man.Status = 2;
+
+                    await context.SaveChangesAsync();
+
+                    return true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+        public async Task<bool> PermanentDelete(Guid Id)
+        {
+            try
+            {
+                bool result = false;
+
+                var man = await context.Suppliers.FindAsync(Id);
+
+                if (man != null)
+                {
                     context.Suppliers.Remove(man);
 
                     await context.SaveChangesAsync();
@@ -144,49 +169,49 @@ namespace PharmCare.BLL.Repositories.SupplierModule
         {
             try
             {
-                var manufacturer = (from man in context.Suppliers
+                var supplier = (from man in context.Suppliers.Where(x => x.Status != 2)
 
-                                    join cont in context.ContactPersons on man.Id equals cont.SupplierId into tblCont
+                                join cont in context.ContactPersons on man.Id equals cont.SupplierId into tblCont
 
-                                    from newCont in tblCont.DefaultIfEmpty()
+                                from newCont in tblCont.DefaultIfEmpty()
 
-                                    join country in context.Countries on man.CountryId equals country.Id into tblcountry
+                                join country in context.Countries on man.CountryId equals country.Id into tblcountry
 
-                                    from newcountry in tblcountry.DefaultIfEmpty()
+                                from newcountry in tblcountry.DefaultIfEmpty()
 
-                                    join prodType in context.ProductTypes on man.ProductTypeId equals prodType.Id into tblProdType
+                                join prodType in context.ProductTypes on man.ProductTypeId equals prodType.Id into tblProdType
 
-                                    from newprodType in tblProdType.DefaultIfEmpty()                                  
+                                from newprodType in tblProdType.DefaultIfEmpty()
 
-                                    select new SupplierDTO
-                                    {
-                                        Id = man.Id,
+                                select new SupplierDTO
+                                {
+                                    Id = man.Id,
 
-                                        Name = man.Name,
+                                    Name = man.Name,
 
-                                        CountryId = man.CountryId,
+                                    CountryId = man.CountryId,
 
-                                        ProductTypeId = man.ProductTypeId,
+                                    ProductTypeId = man.ProductTypeId,
 
-                                        ProductTypeName = newprodType.Name == null ? "" : newprodType.Name,
+                                    ProductTypeName = newprodType.Name == null ? "" : newprodType.Name,
 
-                                        Town = newcountry.Name == null ? "" : newcountry.Name,
+                                    Town = newcountry.Name == null ? "" : newcountry.Name,
 
-                                        SupplierNo = man.SupplierNo,
+                                    SupplierNo = man.SupplierNo,
 
-                                        PhoneNumber = man.PhoneNumber,
+                                    PhoneNumber = man.PhoneNumber,
 
-                                        Email = man.Email,
-                                        
-                                        PhysicalAddress = man.PhysicalAddress,
+                                    Email = man.Email,
 
-                                        CreateDate = man.CreateDate,
+                                    PhysicalAddress = man.PhysicalAddress,
 
-                                        CreatedBy = man.CreatedBy,
+                                    CreateDate = man.CreateDate,
 
-                                    }).ToListAsync();
+                                    CreatedBy = man.CreatedBy,
 
-                return await manufacturer;
+                                }).ToListAsync();
+
+                return await supplier;
             }
             catch (Exception ex)
             {
@@ -231,7 +256,7 @@ namespace PharmCare.BLL.Repositories.SupplierModule
 
                                         PhoneNumber = man.PhoneNumber,
 
-                                        Email = man.Email,                                  
+                                        Email = man.Email,
 
                                         PhysicalAddress = man.PhysicalAddress,
 
@@ -286,7 +311,7 @@ namespace PharmCare.BLL.Repositories.SupplierModule
                         manufacturer.ProductTypeId = supplierDTO.ProductTypeId;
 
                         transaction.Commit();
-                    }                                      
+                    }
 
                     await context.SaveChangesAsync();
 

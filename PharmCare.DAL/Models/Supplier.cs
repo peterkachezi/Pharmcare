@@ -22,6 +22,7 @@ namespace PharmCare.DAL.Models
         public DateTime? UpdatedDate { get; set; }
         public string? Town { get; set; }
         public string? SupplierNo { get; set; }
+        public byte? Status { get; set; }
         public Guid CountryId { get; set; }
         public Guid ProductTypeId { get; set; }
 

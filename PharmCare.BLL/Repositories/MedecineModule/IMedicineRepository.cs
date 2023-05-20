@@ -14,5 +14,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
         Task<MedicineDTO> GetStockDetailsById(Guid Id);
         Task<List<MedicineDTO>> GetAllOutOfStockProducts();
         Task<MedicineDTO> GetByStockId(Guid Id);
+        Task<List<MedicineDTO>> GetAllStock();
     }
 }

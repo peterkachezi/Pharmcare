@@ -1,4 +1,5 @@
-﻿using PharmCare.DTO.PrescriptionModule;
+﻿using PharmCare.DTO.InvoiceModule;
+using PharmCare.DTO.PrescriptionModule;
 using PharmCare.DTO.SalesModule;
 
 namespace PharmCare.BLL.Repositories.PrescriptionModule
@@ -6,6 +7,7 @@ namespace PharmCare.BLL.Repositories.PrescriptionModule
     public interface IPrescriptionRepository
     {
         Task<PrescriptionDTO> Create(PrescriptionDTO prescriptionDTO);
+        Task<InvoicePaymentDTO> CreatePayment(InvoicePaymentDTO invoicePaymentDTO);
         Task<bool> Delete(Guid Id);
         Task<bool> DeleteDetails(Guid Id);
         Task<bool> UnDoIssueMedicine(Guid Id);

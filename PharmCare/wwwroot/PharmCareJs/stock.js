@@ -69,7 +69,7 @@ function GetMedicineDetailsData() {
 
     console.log(medicineId);
 
-/*    $("#divLoader").show();*/
+    /*    $("#divLoader").show();*/
 
     $.get("/Admin/StockManager/GetByMedicineId/?Id=" + medicineId,
 
@@ -96,6 +96,8 @@ function GetMedicineDetailsData() {
                 $("#txtMedicineName").val(data.data.name);
 
                 $("#txtSellingPrice").val(data.data.sellingPrice);
+
+                $("#txtCostPrice").val(data.data.costPrice);
 
                 $("#txtCurrentQuantity").val(data.data.quantity);
 
@@ -224,21 +226,24 @@ function SaveTransaction() {
 
     $("#tblProducts").find("tr:gt(0)").each(function () {
 
+        debugger
         var GoodsReceivedHistoryDTO = {};
 
         GoodsReceivedHistoryDTO.MedicineId = $(this).find("td:eq(0)").text();
 
-        GoodsReceivedHistoryDTO.SellingPrice = parseFloat($(this).find("td:eq(2)").text());
+        GoodsReceivedHistoryDTO.CostPrice = parseFloat($(this).find("td:eq(2)").text());
 
-        GoodsReceivedHistoryDTO.Quantity = parseFloat($(this).find("td:eq(3)").text());
+        GoodsReceivedHistoryDTO.SellingPrice = parseFloat($(this).find("td:eq(3)").text());
 
-        GoodsReceivedHistoryDTO.ExpiryDate = $(this).find("td:eq(4)").text();
+        GoodsReceivedHistoryDTO.Quantity = parseFloat($(this).find("td:eq(4)").text());
 
-        GoodsReceivedHistoryDTO.DateOfManufacture = $(this).find("td:eq(5)").text();
+        GoodsReceivedHistoryDTO.ExpiryDate = $(this).find("td:eq(5)").text();
 
-        GoodsReceivedHistoryDTO.BatchNo = parseFloat($(this).find("td:eq(6)").text());
+        GoodsReceivedHistoryDTO.DateOfManufacture = $(this).find("td:eq(6)").text();
 
-        GoodsReceivedHistoryDTO.Total = parseFloat($(this).find("td:eq(7)").text());               
+        GoodsReceivedHistoryDTO.BatchNo = $(this).find("td:eq(7)").text();
+
+        GoodsReceivedHistoryDTO.Total = parseFloat($(this).find("td:eq(8)").text());
 
         ListOfStockDetails.push(GoodsReceivedHistoryDTO);
 
@@ -312,13 +317,24 @@ function AddToTheList() {
         swal({
             position: 'top-end',
             type: "error",
-            title: "Please search medicine before adding to list",
+            title: "Please enter a valid selling price",
             showConfirmButton: true,
         });
 
         return false;
     }
 
+    if ($('#txtCostPrice').val() == '' || $('#txtCostPrice').val() == '0.00' || $('#txtCostPrice').val() == '0') {
+        $('#txtCostPrice').focus();
+        swal({
+            position: 'top-end',
+            type: "error",
+            title: "Please enter a valid cost price",
+            showConfirmButton: true,
+        });
+
+        return false;
+    }
 
 
     if ($('#txtExpiryDate').val() < 1) {
@@ -345,9 +361,25 @@ function AddToTheList() {
         return false;
     }
 
+
+    if ($('#txtMedicineName').val() == '') {
+        $('#txtMedicineName').focus();
+        swal({
+            position: 'top-end',
+            type: "error",
+            title: "Please search medicine before adding to list",
+            showConfirmButton: true,
+        });
+        return false;
+    }
+
+
+
     var tblItemList = $("#tblProducts");
 
     var sellingPrice = parseFloat($("[id*=txtSellingPrice]").val());
+
+    var costPrice = parseFloat($("[id*=txtCostPrice]").val());
 
     var quantity = parseFloat($("[id*=txtQuantity]").val());
 
@@ -368,11 +400,13 @@ function AddToTheList() {
     var ItemList =
 
         "<tr><td hidden>" + medicineId +
-       
+
         "</td><td>" + itemName +
-       
+
+        "</td><td>" + parseFloat(costPrice).toFixed(2) +
+
         "</td><td>" + parseFloat(sellingPrice).toFixed(2) +
-      
+
         "</td><td>" + parseFloat(quantity).toFixed(2) +
 
         "</td><td>" + expiryDate +
@@ -380,8 +414,8 @@ function AddToTheList() {
         "</td><td>" + dateOfManufacture +
 
         "</td><td>" + batchNo +
-        
-        "</td><td>" + parseFloat(total).toFixed(2) +       
+
+        "</td><td>" + parseFloat(total).toFixed(2) +
 
         "</td><td><a href='#' class='btn-danger  btn-sm' name='Remove' onclick=RemoveItem(this) >Remove </a>  </td></tr>";
 
@@ -408,24 +442,34 @@ function ResetItem() {
 
     $("#txtExpiryDate").val('');
 
+    $("#txtDateOfManufacture").val('');
+
     $("#txtBatchNo").val('');
 
     $("#txtTotal").val('0.00');
 
     $("#txtSellingPrice").val('0.00');
+
+    $("#txtCostPrice").val('0.00');
 }
 
 function FinaItemTotal() {
 
+    debugger
+
     $("#txtTotalAmount").text("0.00");
+
     var TotalAmount = 0.00;
+
     $("#tblProducts").find("tr:gt(0)").each(function () {
 
-        var Total = parseFloat($(this).find("td:eq(4)").text());
+        var Total = parseFloat($(this).find("td:eq(8)").text());
 
         TotalAmount += Total;
     });
+
     $("#txtTotalAmount").text(parseFloat(TotalAmount).toFixed(2));
+
     $("#txtPaymentTotal").val(parseFloat(TotalAmount).toFixed(2));
 
 }
@@ -599,7 +643,7 @@ $("#btnCreateSingleStock").click(function () {
 
                     showConfirmButton: false,
 
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
 
@@ -669,7 +713,7 @@ $("#btnUpdateStock").click(function () {
 
                     showConfirmButton: false,
 
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
 
@@ -759,7 +803,7 @@ function DeleteStockEntry(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 

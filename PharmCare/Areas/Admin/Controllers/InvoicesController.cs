@@ -1,9 +1,12 @@
 ﻿using AspNetCore.Reporting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PharmCare.BLL.Repositories.LeafSettingModule;
 using PharmCare.BLL.Repositories.PatientModule;
 using PharmCare.BLL.Repositories.PrescriptionModule;
 using PharmCare.DAL.Models;
+using PharmCare.DTO.InvoiceModule;
+using PharmCare.DTO.LeafSettingModule;
 using PharmCare.DTO.PrescriptionModule;
 using System.Data;
 
@@ -13,10 +16,19 @@ namespace PharmCare.Areas.Admin.Controllers
     public class InvoicesController : Controller
     {
         private readonly UserManager<AppUser> userManager;
+
         private readonly IPrescriptionRepository prescriptionRepository;
+
         private readonly IPatientRepository patientRepository;
+
         private readonly IWebHostEnvironment env;
-        public InvoicesController(IWebHostEnvironment env, UserManager<AppUser> userManager, IPatientRepository patientRepository, IPrescriptionRepository prescriptionRepository)
+        public InvoicesController(IWebHostEnvironment env,
+
+            UserManager<AppUser> userManager,
+
+            IPatientRepository patientRepository,
+
+            IPrescriptionRepository prescriptionRepository)
         {
             this.prescriptionRepository = prescriptionRepository;
 
@@ -41,8 +53,13 @@ namespace PharmCare.Areas.Admin.Controllers
                     {
 
                     };
+                    var prescriptionDetails = prescriptionRepository.GetAllPrescriptionDetailsById(Id.Value);
 
-                    prescriptionProfileDTO.prescriptionDetails = prescriptionRepository.GetAllPrescriptionDetailsById(Id.Value);
+                    decimal sum = prescriptionDetails.Select(t => t.Total).Sum();
+
+                    ViewBag.TotalAmount = sum;
+
+                    prescriptionProfileDTO.prescriptionDetails = prescriptionDetails;
 
                     prescriptionProfileDTO.patientDTO = await patientRepository.GetById(PatientId);
 
@@ -134,27 +151,34 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 var prescription = await prescriptionRepository.GetPrescriptionById(Id.Value);
 
+                var list = prescriptionRepository.GetAllPrescriptionDetailsById(Id.Value);
+
+                decimal sum = list.Select(t => t.Total).Sum();
+
                 string mimetype = "";
 
                 int extension = 1;
 
                 var path = $"{env.WebRootPath}\\Report\\PrescriptionInvoice.rdlc";
 
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
+                Dictionary<string, string> parameters = new Dictionary<string, string>
+                {
+                    { "FullName", getPatient.FullName.ToString() },
 
-                parameters.Add("FullName", getPatient.FullName.ToString());
+                    { "PhoneNumber", getPatient.PhoneNumber.ToString() },
 
-                parameters.Add("PhoneNumber", getPatient.PhoneNumber.ToString());
+                    { "CreatedByName", createdBy.ToString() },
 
-                parameters.Add("CreatedByName", createdBy.ToString());
+                    { "TotalAmount",sum.ToString() },
 
-                parameters.Add("TotalAmount", prescription.TotalAmount.ToString());
+                    { "CreateDate", prescription.CreateDate.ToShortDateString() },
 
-                parameters.Add("CreateDate", prescription.CreateDate.ToShortDateString());
+                    { "BillNo", prescription.BillNo.ToString() },
 
-                parameters.Add("BillNo", prescription.BillNo.ToString());
+                    { "AmountPaid",("0.00").ToString() },
 
-                parameters.Add("SerialNo", prescription.Id.ToString().ToUpper());
+                    { "SerialNo", prescription.Id.ToString().ToUpper() }
+                };
 
                 LocalReport localReport = new LocalReport(path);
 
@@ -175,7 +199,33 @@ namespace PharmCare.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
         }
+        public async Task<IActionResult> CreatePayment(InvoicePaymentDTO invoicePaymentDTO)
+        {
+            try
+            {
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
+                invoicePaymentDTO.CreatedBy = user.Id;
+
+                var result = await prescriptionRepository.CreatePayment(invoicePaymentDTO);
+
+                if (result != null)
+                {
+                    return Json(new { success = true, responseText = "Payment was successful" });
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "Failed to create payment" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return Json(new { success = false, responseText = "Something went wrong" });
+            }
+        }
     }
 }
 

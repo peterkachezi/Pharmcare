@@ -75,8 +75,6 @@
                                             <td>@item.PatientName</td>
                                             <td>@item.PatientPhoneNumber</td>
                                             <td>@item.CreateDate.ToShortDateString()</td>
-                                         
-
                                             <td>
 
                                                 @{
@@ -91,10 +89,7 @@
                                                         <span class="pending">Pending Payment</span>
                                                     }
                                                 }
-
                                             </td>
-
-
                                             <td>
                                                 @{
                                                     var PaymentStatus = item.PaymentStatus;
@@ -103,19 +98,15 @@
                                                     {
                                                         <a class="btn-info  btn-sm" href="#" onclick="GenerateInvoice('@item.Id','@item.PatientId')" value=""><i class="fa fa-list"></i> Generate Invoice</a>
                                                         <a class="btn-success  btn-sm" href="#" onclick="Details('@item.Id','@item.PatientId')" value=""><i class="fa fa-eye"></i> View Details</a>
-
                                                         <a class="btn-danger  btn-sm" href="#" onclick="DeleteRecord('@item.Id')" value=""><i class="fa fa-trash"></i> Delete</a>
-
-
                                                     }
                                                     if (PaymentStatus == 1)
                                                     {
                                                         <a class="btn-info  btn-sm" href="#" onclick="Details('@item.Id','@item.PatientId')" value=""><i class="fa fa-eye"></i> View Details</a>
-
                                                         <a class="btn-success  btn-sm" href="#" onclick="DowloadPrescripton('@item.Id','@item.PatientId')" value=""><i class="fa fa-trash"></i> Dowload</a>
                                                     }
                                                 }
-                                               
+
                                             </td>
                                         </tr>
                                         count++;

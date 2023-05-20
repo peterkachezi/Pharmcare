@@ -37,7 +37,7 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.Medicines = await medicineRepository.GetAll();
+                ViewBag.Medicines = (await medicineRepository.GetAllStock()).Where(x => x.SellingPrice > 0);
 
                 return View();
             }

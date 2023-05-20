@@ -6,6 +6,7 @@ namespace PharmCare.DTO.StockModule
     {
         public Guid Id { get; set; }
         public Guid SupplierId { get; set; }
+        public string SupplierName { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime StockInDate { get; set; }
         public DateTime? UpdatedDate { get; set; }

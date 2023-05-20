@@ -97,11 +97,13 @@ namespace PharmCare.BLL.Repositories.MedicalConditionModule
         {
             try
             {
-                var data = await context.MedicalConditions.Where(x => x.Status != 3).ToListAsync();
+                var data = await context.MedicalConditions.Where(x => x.Status != 2).ToListAsync();
 
                 var medical_Condition = mapper.Map<List<MedicalConditionDTO>>(data);
 
-                return medical_Condition;
+                var list = medical_Condition.OrderByDescending(x => x.CreateDate).ToList();
+
+                return list;
             }
             catch (Exception ex)
             {

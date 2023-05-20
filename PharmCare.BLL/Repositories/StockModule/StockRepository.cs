@@ -4,6 +4,7 @@ using PharmCare.BLL.Utils;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
 using PharmCare.DTO.StockModule;
+using System.Net;
 
 namespace PharmCare.BLL.Repositories.StockModule
 {
@@ -72,6 +73,8 @@ namespace PharmCare.BLL.Repositories.StockModule
 
                         CostPrice = item.CostPrice,
 
+                        TotalCostPrice = (item.Quantity) * (item.CostPrice),
+
                         GoodsReceivedNoteId = goodsReceivedNoteDTO.Id,
                     };
 
@@ -115,38 +118,24 @@ namespace PharmCare.BLL.Repositories.StockModule
                 {
                     var isMedicineInStock = context.Stocks.FirstOrDefault(x => x.MedicineId == item.MedicineId);
 
-                    if (isMedicineInStock == null)
+                    using (var transaction = context.Database.BeginTransaction())
                     {
 
-                        item.Id = Guid.NewGuid();
+                        isMedicineInStock.Quantity = (item.Quantity) + (isMedicineInStock.Quantity);
 
-                        item.CreateDate = DateTime.Now;
+                        isMedicineInStock.SellingPrice = item.SellingPrice;
 
-                        item.CreatedBy = goodsReceivedNoteDTO.CreatedBy;
+                        isMedicineInStock.CostPrice = item.CostPrice;
 
-                        var create = mapper.Map<Stock>(item);
+                        isMedicineInStock.UpdatedBy = goodsReceivedNoteDTO.CreatedBy;
 
-                        context.Stocks.Add(create);
+                        isMedicineInStock.UpdatedDate = DateTime.Now;
+
+                        transaction.Commit();
 
                         context.SaveChanges();
                     }
 
-                    if (isMedicineInStock != null)
-                    {
-                        using (var transaction = context.Database.BeginTransaction())
-                        {
-
-                            isMedicineInStock.Quantity = (item.Quantity) + (isMedicineInStock.Quantity);
-
-                            isMedicineInStock.UpdatedBy = goodsReceivedNoteDTO.CreatedBy;
-
-                            isMedicineInStock.UpdatedDate = DateTime.Now;
-
-                            transaction.Commit();
-
-                            context.SaveChanges();
-                        }
-                    }
                 }
             }
             catch (Exception ex)
@@ -314,7 +303,6 @@ namespace PharmCare.BLL.Repositories.StockModule
                 return null;
             }
         }
-
         public async Task<bool> DeleteFromStock(Guid Id)
         {
             try
@@ -341,6 +329,64 @@ namespace PharmCare.BLL.Repositories.StockModule
                 return false;
             }
 
+        }
+        public List<GoodsReceivedNoteDTO> GetStockEntryHistory()
+        {
+            try
+            {
+                var data = (from g in context.GoodsReceivedNotes
+
+                            join s in context.Suppliers on g.SupplierId equals s.Id
+
+                            select new GoodsReceivedNoteDTO
+                            {
+                                Id = g.Id,
+
+                                SupplierId = g.SupplierId,
+
+                                SupplierName = s.Name,
+
+                                GRNo = g.GRNo,
+
+                                InvoiceNo = g.InvoiceNo,
+
+                                TotalAmount = g.TotalAmount,
+
+                                CreateDate = g.CreateDate,
+
+                            }).OrderByDescending(x => x.CreateDate).ToList();
+                return data;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
+        public bool DeleteExpiredDrugs(string BatchNo)
+        {
+
+            try
+            {
+                var getBatch = context.GoodsReceivedHistories.FirstOrDefault(x => x.BatchNo == BatchNo);
+
+                if (getBatch != null)
+                {
+                    context.GoodsReceivedHistories.Where(x => x.BatchNo == BatchNo).ToList().ForEach(x => { x.Status = 2; });
+
+                    context.SaveChanges();
+
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
         }
     }
 }

@@ -8,6 +8,8 @@ namespace PharmCare.BLL.Repositories.StockModule
         Task<GoodsReceivedHistoryDTO> CreateSingleEntry(GoodsReceivedHistoryDTO stockDetailDTO);
         Task<GoodsReceivedHistoryDTO> UpdateStock(GoodsReceivedHistoryDTO stockDetailDTO);
         Task<bool> DeleteFromStock(Guid Id);
+        bool DeleteExpiredDrugs(string BatchNo);
         List<GoodsReceivedHistoryDTO> GetExpiredProducts();
+        List<GoodsReceivedNoteDTO> GetStockEntryHistory();
     }
 }

@@ -9,13 +9,13 @@ using PharmCare.DAL.Models;
 namespace PharmCare.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ExpiredProductsReportController : Controller
+    public class ExpiredDrugsReportController : Controller
     {
         private readonly IStockRepository stockRepository;
 
         private readonly UserManager<AppUser> userManager;
 
-        public ExpiredProductsReportController(UserManager<AppUser> userManager,IStockRepository stockRepository)
+        public ExpiredDrugsReportController(UserManager<AppUser> userManager,IStockRepository stockRepository)
         {
             this.stockRepository = stockRepository;
 

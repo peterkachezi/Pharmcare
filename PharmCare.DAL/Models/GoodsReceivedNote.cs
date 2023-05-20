@@ -16,8 +16,7 @@ namespace PharmCare.DAL.Models
         public DateTime? UpdatedDate { get; set; }
         public string CreatedBy { get; set; } = null!;
         public string? UpdatedBy { get; set; }
-        [Column("GRNo")]
-        public string Grno { get; set; } = null!;
+        public string GRNo { get; set; } = null!;
         public string? InvoiceNo { get; set; }
         [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalAmount { get; set; }

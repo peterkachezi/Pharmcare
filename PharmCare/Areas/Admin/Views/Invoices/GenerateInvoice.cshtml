@@ -18,19 +18,15 @@
         <header>
             <h1>Invoice</h1>
             <address contenteditable="">
-                <div class="">                 
+                <div class="">
                     <p>Malela Pharmacy,</p>
                     <p>P.O BOX 342-01100,</p>
-                    <p> Kajiado Kenya,</p>
+                    <p>Kajiado Kenya,</p>
                     <p>0799945373/0771024679</p>
                     <p>malelapharm@gmail.com,</p>
                 </div>
             </address>
         </header>
-
-
-
-
         <article style="margin-top: -2rem;">
             <h1>Recipient</h1>
             <address contenteditable="">
@@ -38,6 +34,7 @@
             </address>
             <table class="meta">
                 <tbody>
+
                     <tr>
                         <th><span contenteditable="">Invoice #</span></th>
                         <td><span contenteditable="">@Model.prescription.BillNo</span></td>
@@ -48,7 +45,27 @@
                     </tr>
                     <tr>
                         <th><span contenteditable="">Amount Due</span></th>
-                        <td><span id="prefix" contenteditable="">Ksh</span><span> @Model.prescription.TotalAmount</span></td>
+                        <td><span id="prefix" contenteditable="">Ksh</span><span> @ViewBag.TotalAmount </span></td>
+                    </tr>
+                    <tr>
+                        <th><span contenteditable="">Payment Status</span></th>
+                        <td>
+                            <span contenteditable="">
+                                @{
+                                    var status = Model.prescription.PaymentStatus;
+
+                                    if (status == 1)
+                                    {
+                                        <span class="paid">Paid</span>
+                                    }
+                                    if (status == 0)
+                                    {
+                                        <span class="unpaid">Pending Payment</span>
+                                    }
+                                }
+
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -84,18 +101,14 @@
                             count++;
                         }
                     }
-
-
-
                 </tbody>
-
             </table>
 
             <table class="balance">
                 <tbody>
                     <tr>
                         <th><span contenteditable="">Total</span></th>
-                        <td><span data-prefix="">Ksh</span><span> @Model.prescription.TotalAmount</span></td>
+                        <td><span data-prefix="">Ksh</span><span> @ViewBag.TotalAmount </span></td>
                     </tr>
                     <tr>
                         <th><span contenteditable="">Amount Paid</span></th>
@@ -103,7 +116,7 @@
                     </tr>
                     <tr>
                         <th><span contenteditable="">Balance Due</span></th>
-                        <td><span data-prefix="">Ksh</span><span> @Model.prescription.TotalAmount</span></td>
+                        <td><span data-prefix="">Ksh</span><span> @ViewBag.TotalAmount </span></td>
                     </tr>
                 </tbody>
             </table>
@@ -111,11 +124,9 @@
 
         <div class="col-md-4 pull-right">
             <button type="button" onclick="DowloadInvoice('@Model.prescription.Id','@Model.patientDTO.Id')" class="btn btn-success"><i class="fa fa-download"></i> Download Invoice</button>
-            <button type="button" data-toggle="modal" data-target="#PaymentModal" data-backdrop="static" data-keyboard="false" class="btn btn-info"><i class="fa fa-cc-visa"></i> Make Payment</button>
+            <button type="button" data-toggle="modal" data-target="#PaymentModal" data-backdrop="static" data-keyboard="false" class="btn btn-info"><i class="fa fa-money"></i> Make Payment</button>
         </div>
-
         <!-- partial -->
-
     </div>
 </div>
 
@@ -128,56 +139,62 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <form id="frmPayInvoice">
+                <div class="modal-body">
+                    <input type="hidden" id="txtId" name="Id" value="@Model.prescription.Id" />
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 col-sm-3 ">Total Amount </label>
+                        <div class="col-md-9 col-sm-9 ">
+                            @{
+                                decimal amount = @ViewBag.TotalAmount;
 
-                <div class="form-group row">
-                    <label class="col-form-label col-md-3 col-sm-3 ">Total Amount </label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input type="text" id="txtTotalAmountPayment" value="@Model.prescription.TotalAmount" class="form-control myinputs" disabled="disabled">
+                                decimal val2 = decimal.Truncate(amount);
+                            }
+                            <input type="text" name="AmountPayable" value="@val2" class="form-control myinputs" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 col-sm-3 ">Payment Mode </label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <select class="form-control myinputs" id="txtPaymentMode" name="PaymentMode">
+
+                                <option value="Cash">Cash</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 col-sm-3 ">Amount Paid </label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <input type="text" id="txtPaymentAmount" name="AmountPaid" onkeyup="CalculateBalance()" class="form-control myinputs numericOnly">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3 col-sm-3 ">Balance </label>
+                        <div class="col-md-9 col-sm-9 ">
+                            <input type="text" id="txtBalance" name="Balance" class="form-control myinputs" disabled="disabled">
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group row">
-                    <label class="col-form-label col-md-3 col-sm-3 ">Payment Mode </label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <select class="form-control myinputs" id="txtUnitId" name="UnitId">
-
-                            <option value="Cash">Cash</option>
-
-                        </select>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnPayInvoice" class="btn btn-primary" >Submit</button>
                 </div>
-
-                <div class="form-group row">
-                    <label class="col-form-label col-md-3 col-sm-3 ">Amount Paid </label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input type="text" id="txtPaymentAmount" onkeypress="CalculateBalance()" class="form-control myinputs numericOnly">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-form-label col-md-3 col-sm-3 ">Balance </label>
-                    <div class="col-md-9 col-sm-9 ">
-                        <input type="text" id="txtBalance" class="form-control myinputs" disabled="disabled">
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="SaveTransaction()">Submit</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
-
-
-
-
-
-
-
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/PharmCareJs/prescription.js"></script>
+<style>
+    .unpaid {
+        color: red;
+        font-weight: 600;
+    }
+
+    .paid {
+        color: green;
+        font-weight: 600;
+    }
+</style>

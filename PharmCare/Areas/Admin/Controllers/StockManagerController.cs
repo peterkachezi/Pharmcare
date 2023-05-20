@@ -8,250 +8,294 @@ using PharmCare.DTO.LeafSettingModule;
 using PharmCare.DTO.MedicineModule;
 using PharmCare.DTO.StockModule;
 using PharmCare.DTO.SupplierModule;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace PharmCare.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class StockManagerController : Controller
-    {
-        private readonly ISupplierRepository supplierRepository;
+	[Area("Admin")]
+	public class StockManagerController : Controller
+	{
+		private readonly ISupplierRepository supplierRepository;
 
-        private readonly IMedicineRepository medicineRepository;
+		private readonly IMedicineRepository medicineRepository;
 
-        private readonly IStockRepository stockRepository;
+		private readonly IStockRepository stockRepository;
 
-        private readonly UserManager<AppUser> userManager;
-        public StockManagerController(
+		private readonly UserManager<AppUser> userManager;
+		public StockManagerController(
 
-            IStockRepository stockRepository,
+			IStockRepository stockRepository,
 
-            UserManager<AppUser> userManager,
+			UserManager<AppUser> userManager,
 
-            ISupplierRepository supplierRepository,
+			ISupplierRepository supplierRepository,
 
-            IMedicineRepository medicineRepository)
-        {
-            this.supplierRepository = supplierRepository;
+			IMedicineRepository medicineRepository)
+		{
+			this.supplierRepository = supplierRepository;
 
-            this.medicineRepository = medicineRepository;
+			this.medicineRepository = medicineRepository;
 
-            this.userManager = userManager;
+			this.userManager = userManager;
 
-            this.stockRepository = stockRepository;
+			this.stockRepository = stockRepository;
 
-        }
-        public async Task<IActionResult> Index()
-        {
-            try
-            {
+		}
+		public async Task<IActionResult> Index()
+		{
+			try
+			{
 
-                ViewBag.Manufacturers = await supplierRepository.GetAll();
+				ViewBag.Manufacturers = await supplierRepository.GetAll();
 
-                ViewBag.Medicines = await medicineRepository.GetAll();
+				ViewBag.Medicines = await medicineRepository.GetAll();
 
-                return View();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				return View();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                TempData["Error"] = "Something went wrong";
+				TempData["Error"] = "Something went wrong";
 
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
-        }
-        public async Task<IActionResult> OutOfStockProducts()
-        {
-            try
-            {
-                var outOfStockProducts = (await medicineRepository.GetAll()).Where(x => x.Quantity == 0);
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+		public async Task<IActionResult> OutOfStockProducts()
+		{
+			try
+			{
+				var outOfStockProducts = (await medicineRepository.GetAll()).Where(x => x.Quantity == 0);
 
-                return View(outOfStockProducts);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				return View(outOfStockProducts);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                TempData["Error"] = "Something went wrong";
+				TempData["Error"] = "Something went wrong";
 
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
-        }
-        public async Task<IActionResult> CreateStock(GoodsReceivedHistoryDTO stockDetailDTO)
-        {
-            try
-            {
-                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+		public async Task<IActionResult> CreateStock(GoodsReceivedHistoryDTO stockDetailDTO)
+		{
+			try
+			{
+				var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
-                stockDetailDTO.CreatedBy = user.Id;
+				stockDetailDTO.CreatedBy = user.Id;
 
-                var result = await stockRepository.CreateSingleEntry(stockDetailDTO);
+				var result = await stockRepository.CreateSingleEntry(stockDetailDTO);
 
-                if (result != null)
-                {
-                    return Json(new { success = true, responseText = "Stock has been successfully updated" });
-                }
-                else
-                {
-                    return Json(new { success = false, responseText = "Failed to update stock" });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				if (result != null)
+				{
+					return Json(new { success = true, responseText = "Stock has been successfully updated" });
+				}
+				else
+				{
+					return Json(new { success = false, responseText = "Failed to update stock" });
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                TempData["Error"] = "Something went wrong";
+				TempData["Error"] = "Something went wrong";
 
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
-        }
-        public async Task<IActionResult> UpdateStock(GoodsReceivedHistoryDTO stockDetailDTO)
-        {
-            try
-            {
-                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+		public async Task<IActionResult> UpdateStock(GoodsReceivedHistoryDTO stockDetailDTO)
+		{
+			try
+			{
+				var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
-                stockDetailDTO.UpdatedBy = user.Id;
+				stockDetailDTO.UpdatedBy = user.Id;
 
-                var result = await stockRepository.UpdateStock(stockDetailDTO);
+				var result = await stockRepository.UpdateStock(stockDetailDTO);
 
-                if (result != null)
-                {
-                    return Json(new { success = true, responseText = "Stock has been successfully updated" });
-                }
-                else
-                {
-                    return Json(new { success = false, responseText = "Failed to update stock" });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				if (result != null)
+				{
+					return Json(new { success = true, responseText = "Stock has been successfully updated" });
+				}
+				else
+				{
+					return Json(new { success = false, responseText = "Failed to update stock" });
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                TempData["Error"] = "Something went wrong";
+				TempData["Error"] = "Something went wrong";
 
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
-        }
-        public async Task<IActionResult> DeleteFromStock(Guid Id)
-        {
-            try
-            {
-                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+		public async Task<IActionResult> DeleteFromStock(Guid Id)
+		{
+			try
+			{
+				var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
-                var result = await stockRepository.DeleteFromStock(Id);
+				var result = await stockRepository.DeleteFromStock(Id);
 
-                if (result != null)
-                {
-                    return Json(new { success = true, responseText = "Stock has been successfully deleted" });
-                }
-                else
-                {
-                    return Json(new { success = false, responseText = "Failed to update stock" });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				if (result != null)
+				{
+					return Json(new { success = true, responseText = "Stock has been successfully deleted" });
+				}
+				else
+				{
+					return Json(new { success = false, responseText = "Failed to update stock" });
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                TempData["Error"] = "Something went wrong";
+				TempData["Error"] = "Something went wrong";
 
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
-        }
-        public async Task<IActionResult> ViewStock()
-        {
-            try
-            {
-                var stock = (await medicineRepository.GetAll()).Where(x => x.Status != 2).ToList();
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+		public async Task<IActionResult> ViewStock()
+		{
+			try
+			{
+				var stock = (await medicineRepository.GetAll()).Where(x => x.Status != 2).ToList();
 
-                return View(stock);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				return View(stock);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                TempData["Error"] = "Something went wrong";
+				TempData["Error"] = "Something went wrong";
 
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
-        }
-        public async Task<IActionResult> GetByMedicineId(Guid Id)
-        {
-            try
-            {
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
 
-                var stock = await medicineRepository.GetByStockId(Id);
+		public IActionResult StockEntryHistory()
+		{
+			try
+			{
+				var history = stockRepository.GetStockEntryHistory();
 
-                var prescriptionId = Id;
+				return View(history);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                if (stock != null)
-                {
-                    return Json(new { data = stock });
-                }
+				TempData["Error"] = "Something went wrong";
 
-                return Json(new { data = false });
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+		public async Task<IActionResult> GetByMedicineId(Guid Id)
+		{
+			try
+			{
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				var stock = await medicineRepository.GetByStockId(Id);
 
-                return Json(new { success = false, responseText = "Something went wrong" });
-            }
-        }
-        [HttpPost]
-        public async Task<ActionResult> SaveTransaction(GoodsReceivedNoteDTO goodsReceivedNoteDTO)
-        {
-            try
-            {
+				var prescriptionId = Id;
 
-                if (goodsReceivedNoteDTO.SupplierId == null || goodsReceivedNoteDTO.SupplierId == Guid.Empty)
-                {
-                    return Json(new { success = false, responseText = "Please select supplier" });
-                }
+				if (stock != null)
+				{
+					return Json(new { data = stock });
+				}
 
-                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+				return Json(new { data = false });
 
-                goodsReceivedNoteDTO.CreatedBy = user.Id;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
 
-                goodsReceivedNoteDTO.Id = Guid.NewGuid();
+				return Json(new { success = false, responseText = "Something went wrong" });
+			}
+		}
+		[HttpPost]
+		public async Task<ActionResult> SaveTransaction(GoodsReceivedNoteDTO goodsReceivedNoteDTO)
+		{
+			try
+			{
 
-                var result = await stockRepository.SaveStock(goodsReceivedNoteDTO);
+				if (goodsReceivedNoteDTO.SupplierId == null || goodsReceivedNoteDTO.SupplierId == Guid.Empty)
+				{
+					return Json(new { success = false, responseText = "Please select supplier" });
+				}
 
-                if (result != null)
-                {
-                    return Json(new { success = true, responseText = goodsReceivedNoteDTO.GRNo });
-                }
+				var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
-                else
-                {
-                    return Json(new { success = false, responseText = "Transaction was not successfull" });
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				goodsReceivedNoteDTO.CreatedBy = user.Id;
 
-                return null;
-            }
-        }
-        public IActionResult ExpiredProducts()
-        {
-            try
-            {
-                var medecine = stockRepository.GetExpiredProducts();
+				goodsReceivedNoteDTO.Id = Guid.NewGuid();
 
-                return View(medecine);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+				var result = await stockRepository.SaveStock(goodsReceivedNoteDTO);
 
-                TempData["Error"] = "Something went wrong";
+				if (result != null)
+				{
+					return Json(new { success = true, responseText = goodsReceivedNoteDTO.GRNo });
+				}
 
-                return RedirectToAction("Login", "Account", new { area = "" });
-            }
-        }
-    }
+				else
+				{
+					return Json(new { success = false, responseText = "Transaction was not successfull" });
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+
+				return null;
+			}
+		}
+		public IActionResult ExpiredDrugs()
+		{
+			try
+			{
+				var medecine = stockRepository.GetExpiredProducts().Where(x => x.Status != 2);
+
+				return View(medecine);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+
+				TempData["Error"] = "Something went wrong";
+
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+
+		public IActionResult DeleteExpiredDrugs(string BatchNo)
+		{
+			try
+			{
+				var result = stockRepository.DeleteExpiredDrugs(BatchNo);
+
+				if (result == true)
+				{
+					return Json(new { success = true, responseText = "deletion was successfull" });
+				}
+				else
+				{
+					return Json(new { success = false, responseText = "deletion was not successfull " });
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+
+				TempData["Error"] = "Something went wrong";
+
+				return RedirectToAction("Login", "Account", new { area = "" });
+			}
+		}
+	}
 }

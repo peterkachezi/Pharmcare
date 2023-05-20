@@ -3,6 +3,93 @@ $(document).ready(function () {
 
 });
 
+
+function DeleteExpiredDrugs(e) {
+
+    $("#divLoader").show();
+    var id = e;
+
+    console.log(id);
+
+
+    swal(
+
+        {
+            title: "Are you sure?",
+
+            text: "Once deleted, you will not be able to recover this  file!",
+
+            type: "success",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "##62b76e",
+
+            confirmButtonText: "Yes, Procceed!",
+
+            closeOnConfirm: false
+        },
+
+        function () {
+
+            $.ajax({
+
+                type: "GET",
+
+                url: "/Admin/StockManager/DeleteExpiredDrugs/?BatchNo=" + id,
+
+                success: function (response) {
+
+                    if (response.success) {
+
+                        swal({
+
+                            position: 'top-end',
+
+                            type: "success",
+
+                            title: response.responseText,
+
+                            showConfirmButton: false,
+
+                            // timer: 2000,
+
+                        });
+                        setTimeout(function () { location.reload(); }, 3000);
+
+                    }
+
+                    else {
+                        swal({
+                            position: 'top-end',
+                            type: "error",
+                            title: response.responseText,
+                            showConfirmButton: true,
+                            timer: 5000,
+                        });
+                        $("#divLoader").hide();
+                    }
+
+                },
+                error: function (response) {
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: "Server error ,kindly contact the admin for assistance",
+                        showConfirmButton: false,
+                        timer: 5000,
+                    });
+                    $("#divLoader").hide();
+                }
+
+            })
+
+        }
+    );
+}
+
+
+
 function DeleteRecord(e) {
 
     $("#divLoader").show();

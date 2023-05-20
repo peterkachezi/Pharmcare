@@ -37,7 +37,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 ViewBag.ProductTypes = await productTypeRepository.GetAll();
 
-                var suppliers = await supplierRepository.GetAll();
+                var suppliers = (await supplierRepository.GetAll()).OrderByDescending(x => x.CreateDate).ToList(); ;
 
                 return View(suppliers);
             }

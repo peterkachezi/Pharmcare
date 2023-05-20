@@ -386,7 +386,7 @@ $("#btnSubmit").click(function () {
 
                     showConfirmButton: false,
 
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
 
@@ -461,7 +461,7 @@ function IssueMedicine1(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
@@ -543,7 +543,7 @@ function UnDoIssueMedicine(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
@@ -632,7 +632,7 @@ function DeleteRecord(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
@@ -664,7 +664,6 @@ function DeleteRecord(e) {
         }
     );
 }
-
 function DeleteDetails(e) {
 
     $("#divLoader").show();
@@ -715,7 +714,7 @@ function DeleteDetails(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
@@ -747,7 +746,7 @@ function DeleteDetails(e) {
         }
     );
 }
-function SearchMember(e,p) {
+function SearchMember(e, p) {
 
     $("#divLoader").show();
 
@@ -758,30 +757,81 @@ function SearchMember(e,p) {
     window.location.href = "/Admin/Prescriptions/Details?Id=" + e + "&PatientId=" + p;
 
 }
-
 function CalculateBalance() {
 
+    //var FinalAmount = $("#txtTotalAmountPayment").val();
+    //var PaymentAmount = $("#txtPaymentAmount").val();
+    //var BalanceAmount = PaymentAmount - FinalAmount;
 
+    var sum1 = parseFloat($('input[name=AmountPayable]').val());
 
-    var FinalAmount = $("#txtTotalAmountPayment").val();
+    var sum2 = parseFloat($('input[name=AmountPaid]').val());
 
-    var PaymentAmount = $("#txtPaymentAmount").val();
+    $('#txtBalance').val(sum2 - sum1);
 
-    var BalanceAmount = parseFloat(PaymentAmount) - parseFloat(FinalAmount);
-
-    $("#txtBalance").val(parseFloat(BalanceAmount).toFixed(2));
-
-    if (PaymentAmount == '' || PaymentAmount == "") {
-
-        $("#txtBalance").val("0.00");
-    }
-
-    if (parseFloat(BalanceAmount) == 0) {
-
-        $("#btnPayment").removeAttr("disabled");
-
-    } else {
-
-        $("#btnPayment").attr("disabled", "disabled");
-    }
 }
+$("#btnPayInvoice").click(function () {
+
+    if ($('#txtPaymentAmount').val() == '') {
+        $('#txtPaymentAmount').focus();
+        swal({
+            position: 'top-end',
+            type: "error",
+            title: "Please enter Payment amount",
+            showConfirmButton: true,
+        });
+
+        return false;
+    }
+    $("#PaymentModal").modal('hide');
+
+    $("#divLoader").show();
+
+
+    var formData = new FormData($('#frmPayInvoice').get(0));
+
+    $.ajax({
+        type: "POST",
+        url: "/Admin/Invoices/CreatePayment", // NB: Use the correct action name
+        data: formData,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+
+
+        success: function (response) {
+            if (response.success) {
+
+                swal({
+                    position: 'top-end',
+
+                    type: "success",
+
+                    title: response.responseText,
+
+                    showConfirmButton: false,
+
+                }), setTimeout(function () { location.reload(); }, 1500);
+
+            } else {
+
+                swal({
+                    position: 'top-end',
+                    type: "error",
+                    title: response.responseText,
+                    showConfirmButton: true,
+                    timer: 5000,
+                });
+
+            }
+
+            $("#divLoader").hide();
+        },
+
+
+        error: function (error) {
+            alert("errror");
+        }
+    });
+
+});

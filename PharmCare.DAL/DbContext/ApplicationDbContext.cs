@@ -8,11 +8,14 @@ namespace PharmCare.DAL.DbContext
     {
         public ApplicationDbContext()
         {
+
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+
             : base(options)
         {
         }
+        public virtual DbSet<InvoicePayment> InvoicePayments { get; set; } = null!;
         public virtual DbSet<OnlinePayment> OnlinePayments { get; set; } = null!;
         public virtual DbSet<Bank> Banks { get; set; } = null!;
         public virtual DbSet<Bill> Bills { get; set; } = null!;

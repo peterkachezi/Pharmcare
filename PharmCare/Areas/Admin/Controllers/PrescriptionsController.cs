@@ -44,7 +44,7 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var data = await prescriptionRepository.GetAll();
+                var data = (await prescriptionRepository.GetAll()).OrderByDescending(x=>x.CreateDate).ToList();
 
                 return View(data);
             }

@@ -20,6 +20,7 @@ namespace PharmCare.DTO.MedicineModule
         public string ManufacturerName { get; set; }
         public decimal ManufacturerPrice { get; set; }
         public decimal SellingPrice { get; set; }
+        public decimal CostPrice { get; set; }
         public byte Status { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime StockDate { get; set; }

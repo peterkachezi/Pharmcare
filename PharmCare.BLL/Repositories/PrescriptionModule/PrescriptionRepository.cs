@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PharmCare.BLL.Utils;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
+using PharmCare.DTO.InvoiceModule;
 using PharmCare.DTO.PrescriptionModule;
 using PharmCare.DTO.SalesModule;
 using System.ComponentModel;
@@ -11,539 +12,567 @@ using static PharmCare.BLL.Utils.Enumerations;
 
 namespace PharmCare.BLL.Repositories.PrescriptionModule
 {
-	public class PrescriptionRepository : IPrescriptionRepository
-	{
-		private readonly ApplicationDbContext context;
+    public class PrescriptionRepository : IPrescriptionRepository
+    {
+        private readonly ApplicationDbContext context;
 
-		private readonly IMapper mapper;
-		public PrescriptionRepository(ApplicationDbContext context, IMapper mapper)
-		{
-			this.context = context;
+        private readonly IMapper mapper;
+        public PrescriptionRepository(ApplicationDbContext context, IMapper mapper)
+        {
+            this.context = context;
 
-			this.mapper = mapper;
-		}
-		public async Task<PrescriptionDTO> Create(PrescriptionDTO prescriptionDTO)
-		{
-			try
-			{
-				var prescriptionId = Guid.NewGuid();
+            this.mapper = mapper;
+        }
+        public async Task<PrescriptionDTO> Create(PrescriptionDTO prescriptionDTO)
+        {
+            try
+            {
+                var prescriptionId = Guid.NewGuid();
 
-				prescriptionDTO.Id = prescriptionId;
+                prescriptionDTO.Id = prescriptionId;
 
-				prescriptionDTO.CreateDate = DateTime.Now;
+                prescriptionDTO.CreateDate = DateTime.Now;
 
-				prescriptionDTO.MedicineDispatchStatus = 0;
+                prescriptionDTO.MedicineDispatchStatus = 0;
 
-				string billNo = TransactionNumber.GetNumber();
+                string billNo = TransactionNumber.GetNumber();
 
-				prescriptionDTO.BillNo = billNo;
+                prescriptionDTO.BillNo = billNo;
 
-				prescriptionDTO.PaymentStatus = 0;
+                prescriptionDTO.PaymentStatus = 0;
 
-				var totalAmount = prescriptionDTO.PrescriptionDetailDTO.Sum(x => x.SellingPrice * x.Quantity);
+                var totalAmount = prescriptionDTO.PrescriptionDetailDTO.Sum(x => x.SellingPrice * x.Quantity);
 
-				prescriptionDTO.TotalAmount = totalAmount;
+                prescriptionDTO.TotalAmount = totalAmount;
 
-				var prescription = mapper.Map<Prescription>(prescriptionDTO);
+                var prescription = mapper.Map<Prescription>(prescriptionDTO);
 
-				context.Prescriptions.Add(prescription);
+                context.Prescriptions.Add(prescription);
 
-				var createBill = PrescriptionBill(prescriptionDTO);
+                var createBill = PrescriptionBill(prescriptionDTO);
 
-				foreach (var item in prescriptionDTO.PrescriptionDetailDTO)
-				{
-					var pd = new PrescriptionDetail
-					{
-						Id = Guid.NewGuid(),
+                foreach (var item in prescriptionDTO.PrescriptionDetailDTO)
+                {
+                    var pd = new PrescriptionDetail
+                    {
+                        Id = Guid.NewGuid(),
 
-						MedicineId = item.MedicineId,
+                        MedicineId = item.MedicineId,
 
-						PrescriptionId = prescriptionDTO.Id,
+                        PrescriptionId = prescriptionDTO.Id,
 
-						Frequency = item.Frequency,
+                        Frequency = item.Frequency,
 
-						PatientId = prescriptionDTO.PatientId,
+                        PatientId = prescriptionDTO.PatientId,
 
-						WhenToTake = item.WhenToTake,
+                        WhenToTake = item.WhenToTake,
 
-						NoOfDays = item.NoOfDays,
+                        NoOfDays = item.NoOfDays,
 
-						CreateDate = DateTime.Now,
+                        CreateDate = DateTime.Now,
 
-						CreatedBy = prescriptionDTO.CreatedBy,
+                        CreatedBy = prescriptionDTO.CreatedBy,
 
-						MedicineDispatchStatus = 0,
+                        MedicineDispatchStatus = 0,
 
-						PaymentStatus = 0,
+                        PaymentStatus = 0,
 
-						Quantity = item.Quantity,
+                        Quantity = item.Quantity,
 
-						BillNo = prescriptionDTO.BillNo,
+                        BillNo = prescriptionDTO.BillNo,
 
-						Total = item.SellingPrice * item.Quantity,
-					};
+                        Total = item.SellingPrice * item.Quantity,
+                    };
 
-					context.PrescriptionDetails.Add(pd);
-				}
+                    context.PrescriptionDetails.Add(pd);
+                }
 
-				await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
 
-				return prescriptionDTO;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                return prescriptionDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				return null;
-			}
-		}
-		public PrescriptionDTO PrescriptionBill(PrescriptionDTO prescriptionDTO)
-		{
-			try
-			{
-				var data = new Bill
-				{
-					Id = Guid.NewGuid(),
+                return null;
+            }
+        }
+        public PrescriptionDTO PrescriptionBill(PrescriptionDTO prescriptionDTO)
+        {
+            try
+            {
+                var data = new Bill
+                {
+                    Id = Guid.NewGuid(),
 
-					BillNo = prescriptionDTO.BillNo,
+                    BillNo = prescriptionDTO.BillNo,
 
-					PrescriptionId = prescriptionDTO.Id,
+                    PrescriptionId = prescriptionDTO.Id,
 
-					PatientId = prescriptionDTO.PatientId,
+                    PatientId = prescriptionDTO.PatientId,
 
-					CreateDate = DateTime.Now,
+                    CreateDate = DateTime.Now,
 
-					Status = 0,
+                    Status = 0,
 
-					CreatedBy = prescriptionDTO.CreatedBy,
-				};
+                    CreatedBy = prescriptionDTO.CreatedBy,
+                };
 
-				context.Bills.Add(data);
+                context.Bills.Add(data);
 
-				context.SaveChanges();
+                context.SaveChanges();
 
-				return prescriptionDTO;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                return prescriptionDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				return null;
-			}
-		}
-		public async Task<List<PrescriptionDTO>> GetAll()
-		{
-			try
-			{
-				var prescription = (from pres in context.Prescriptions
+                return null;
+            }
+        }
+        public async Task<List<PrescriptionDTO>> GetAll()
+        {
+            try
+            {
+                var prescription = (from pres in context.Prescriptions
 
-									join patient in context.Patients on pres.PatientId equals patient.Id
+                                    join patient in context.Patients on pres.PatientId equals patient.Id
 
-									join user in context.AppUsers on pres.CreatedBy equals user.Id
+                                    join user in context.AppUsers on pres.CreatedBy equals user.Id
 
-									select new PrescriptionDTO
-									{
-										Id = pres.Id,
+                                    select new PrescriptionDTO
+                                    {
+                                        Id = pres.Id,
 
-										TreatmentFor = pres.TreatmentFor,
+                                        TreatmentFor = pres.TreatmentFor,
 
-										CreateDate = pres.CreateDate,
+                                        CreateDate = pres.CreateDate,
 
-										PatientId = pres.PatientId,
+                                        PatientId = pres.PatientId,
 
-										Note = pres.Note,
+                                        Note = pres.Note,
 
-										BillNo = pres.BillNo,
+                                        BillNo = pres.BillNo,
 
-										PaymentStatus = pres.PaymentStatus,
+                                        PaymentStatus = pres.PaymentStatus,
 
-										MedicineDispatchStatus = pres.MedicineDispatchStatus,
+                                        MedicineDispatchStatus = pres.MedicineDispatchStatus,
 
-										PatientName = patient.FirstName + " " + patient.LastName,
+                                        PatientName = patient.FirstName + " " + patient.LastName,
 
-										PatientPhoneNumber = patient.PhoneNumber,
+                                        PatientPhoneNumber = patient.PhoneNumber,
 
-										PatientRegCode = patient.PatientNumber,
+                                        PatientRegCode = patient.PatientNumber,
 
-										CreatedByName = user.FirstName + " " + user.LastName,
+                                        CreatedByName = user.FirstName + " " + user.LastName,
 
-									}).ToListAsync();
+                                    }).ToListAsync();
 
-				return await prescription;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                return await prescription;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				return null;
-			}
-		}
-		public List<PrescriptionDetailDTO> GetAllPrescriptionDetailsById(Guid Id)
-		{
-			try
-			{
-				var details = context.PrescriptionDetails.Where(x => x.PrescriptionId == Id).ToList();
+                return null;
+            }
+        }
+        public List<PrescriptionDetailDTO> GetAllPrescriptionDetailsById(Guid Id)
+        {
+            try
+            {
+                var details = context.PrescriptionDetails.Where(x => x.PrescriptionId == Id).ToList();
 
-				var prescription = (from pres in details
+                var prescription = (from pres in details
 
-									join med in context.Medicines on pres.MedicineId equals med.Id
+                                    join med in context.Medicines on pres.MedicineId equals med.Id
 
-									join unit in context.Units on med.UnitId equals unit.Id
+                                    join stock in context.Stocks on med.Id equals stock.MedicineId
 
-									join user in context.AppUsers on pres.CreatedBy equals user.Id
+                                    join unit in context.Units on med.UnitId equals unit.Id
 
-									select new PrescriptionDetailDTO
-									{
-										Id = pres.Id,
+                                    join user in context.AppUsers on pres.CreatedBy equals user.Id
 
-										MedicineId = pres.MedicineId,
+                                    select new PrescriptionDetailDTO
+                                    {
+                                        Id = pres.Id,
 
-										BillNo = pres.BillNo,
+                                        MedicineId = pres.MedicineId,
 
-										Quantity = pres.Quantity,
+                                        BillNo = pres.BillNo,
 
-										Total = pres.Total,
+                                        Quantity = pres.Quantity,
 
-										PaymentStatus = pres.PaymentStatus,
+                                        //Total = pres.Total,
 
-										PaymentStatusDescription = GetDescription((PaymentStatus)pres.PaymentStatus),
+                                        PaymentStatus = pres.PaymentStatus,
 
-										PrescriptionId = pres.PrescriptionId,
+                                        PaymentStatusDescription = GetDescription((PaymentStatus)pres.PaymentStatus),
 
-										Frequency = pres.Frequency + " " + "X 1",
+                                        PrescriptionId = pres.PrescriptionId,
 
-										PatientId = pres.PatientId,
+                                        Frequency = pres.Frequency + " " + "X 1",
 
-										WhenToTake = pres.WhenToTake,
+                                        PatientId = pres.PatientId,
 
-										NoOfDays = pres.NoOfDays + " " + "Days",
+                                        WhenToTake = pres.WhenToTake,
 
-										CreateDate = pres.CreateDate,
+                                        NoOfDays = pres.NoOfDays + " " + "Days",
 
-										MedicineName = med.Name + " " + unit.Name + " " + unit.UnitValue,
+                                        CreateDate = pres.CreateDate,
 
-										//SellingPrice = med.SellingPrice,
+                                        MedicineName = med.Name + " " + unit.Name + " " + unit.UnitValue,
 
-										MedicineDispatchStatus = pres.MedicineDispatchStatus,
+                                        SellingPrice = stock.SellingPrice,
 
-										CreatedByName = user.FirstName + " " + user.LastName
+                                        MedicineDispatchStatus = pres.MedicineDispatchStatus,
 
-									}).ToList();
+                                        CreatedByName = user.FirstName + " " + user.LastName,
 
-				return prescription;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                                        Total = (stock.SellingPrice) * pres.Quantity,
 
-				return null;
-			}
-		}
-		public async Task<PrescriptionDTO> GetPrescriptionById(Guid Id)
-		{
-			try
-			{
-				var data = await context.Prescriptions.FindAsync(Id);
+                                    }).ToList();
 
-				var prescription = mapper.Map<PrescriptionDTO>(data);
+                return prescription;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				return prescription;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public async Task<PrescriptionDTO> GetPrescriptionById(Guid Id)
+        {
+            try
+            {
+                var data = await context.Prescriptions.FindAsync(Id);
 
-				return null;
-			}
-		}
-		public static string GeneratePatientNumber()
-		{
-			var random = new Random();
-			var chars = DateTime.Now.Ticks + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789" + DateTime.Now.Ticks;
-			return new string(Enumerable.Repeat(chars, 5)
-				.Select(s => s[random.Next(s.Length)]).ToArray());
-		}
-		public async Task<PrescriptionDetailDTO> GetById(Guid Id)
-		{
-			try
-			{
-				var data = await context.PrescriptionDetails.FindAsync(Id);
+                var prescription = mapper.Map<PrescriptionDTO>(data);
 
-				var prescription = mapper.Map<PrescriptionDetailDTO>(data);
+                return prescription;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				return prescription;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public static string GeneratePatientNumber()
+        {
+            var random = new Random();
+            var chars = DateTime.Now.Ticks + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789" + DateTime.Now.Ticks;
+            return new string(Enumerable.Repeat(chars, 5)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+        public async Task<PrescriptionDetailDTO> GetById(Guid Id)
+        {
+            try
+            {
+                var data = await context.PrescriptionDetails.FindAsync(Id);
 
-				return null;
-			}
-		}
-		public async Task<SalesDetailsDTO> IssueMedicine(SalesDetailsDTO salesDetailsDTO)
-		{
-			try
-			{
-				string receiptNo = TransactionNumber.GetNumber();
+                var prescription = mapper.Map<PrescriptionDetailDTO>(data);
 
-				salesDetailsDTO.ReceiptNo = receiptNo;
+                return prescription;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				salesDetailsDTO.Id = Guid.NewGuid();
+                return null;
+            }
+        }
+        public async Task<SalesDetailsDTO> IssueMedicine(SalesDetailsDTO salesDetailsDTO)
+        {
+            try
+            {
+                string receiptNo = TransactionNumber.GetNumber();
 
-				var createSale = CreateSale(salesDetailsDTO);
+                salesDetailsDTO.ReceiptNo = receiptNo;
 
-				var createSaleDetails = await SaveSalesTransactionDetails(salesDetailsDTO);
+                salesDetailsDTO.Id = Guid.NewGuid();
 
-				var updateStatus = await UpdateMedicineDispatchStatus(salesDetailsDTO);
+                var createSale = CreateSale(salesDetailsDTO);
 
-				var romoveStock = RomoveFromStock(salesDetailsDTO);
+                var createSaleDetails = await SaveSalesTransactionDetails(salesDetailsDTO);
 
-				return salesDetailsDTO;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                var updateStatus = await UpdateMedicineDispatchStatus(salesDetailsDTO);
 
-				return null;
-			}
-		}
-		private object CreateSale(SalesDetailsDTO salesDetailsDTO)
-		{
-			try
-			{
-				var data = new Sale
-				{
-					Id = salesDetailsDTO.Id,
+                var romoveStock = RomoveFromStock(salesDetailsDTO);
 
-					CreateDate = DateTime.Now,
+                return salesDetailsDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-					CreatedBy = salesDetailsDTO.CreatedBy,
+                return null;
+            }
+        }
+        private object CreateSale(SalesDetailsDTO salesDetailsDTO)
+        {
+            try
+            {
+                var data = new Sale
+                {
+                    Id = salesDetailsDTO.Id,
 
-					AmountPaid = salesDetailsDTO.AmountPaid,
+                    CreateDate = DateTime.Now,
 
-					TotalAmount = salesDetailsDTO.Total,
+                    CreatedBy = salesDetailsDTO.CreatedBy,
 
-					ReceiptNo = salesDetailsDTO.ReceiptNo,
+                    AmountPaid = salesDetailsDTO.AmountPaid,
 
-					Balance = salesDetailsDTO.Balance,
-				};
+                    TotalAmount = salesDetailsDTO.Total,
 
-				context.Sales.Add(data);
+                    ReceiptNo = salesDetailsDTO.ReceiptNo,
 
-				context.SaveChanges();
+                    Balance = salesDetailsDTO.Balance,
+                };
 
-				return salesDetailsDTO;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                context.Sales.Add(data);
 
-				return null;
-			}
-		}
-		private object RomoveFromStock(SalesDetailsDTO salesDetailsDTO)
-		{
-			try
-			{
-				var getStock = context.Stocks.FirstOrDefault(x => x.MedicineId == salesDetailsDTO.MedicineId);
+                context.SaveChanges();
 
-				if (getStock != null)
-				{
-					using (var transaction = context.Database.BeginTransaction())
-					{
-						var currentQuantity = getStock.Quantity;
+                return salesDetailsDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-						getStock.Quantity = currentQuantity - salesDetailsDTO.Quantity;
+                return null;
+            }
+        }
+        private object RomoveFromStock(SalesDetailsDTO salesDetailsDTO)
+        {
+            try
+            {
+                var getStock = context.Stocks.FirstOrDefault(x => x.MedicineId == salesDetailsDTO.MedicineId);
 
-						transaction.Commit();
-					}
-					context.SaveChanges();
+                if (getStock != null)
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        var currentQuantity = getStock.Quantity;
 
-					return salesDetailsDTO;
-				}
+                        getStock.Quantity = currentQuantity - salesDetailsDTO.Quantity;
 
-				return null;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                        transaction.Commit();
+                    }
+                    context.SaveChanges();
 
-				return null;
-			}
-		}
-		public async Task<SalesDetailsDTO> UpdateMedicineDispatchStatus(SalesDetailsDTO salesDetailsDTO)
-		{
+                    return salesDetailsDTO;
+                }
 
-			try
-			{
-				var getPrescription = await context.PrescriptionDetails.FindAsync(salesDetailsDTO.PrescriptionId);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				if (getPrescription != null)
-				{
-					using (var transaction = context.Database.BeginTransaction())
-					{
-						getPrescription.MedicineDispatchStatus = 1;
+                return null;
+            }
+        }
+        public async Task<SalesDetailsDTO> UpdateMedicineDispatchStatus(SalesDetailsDTO salesDetailsDTO)
+        {
 
-						transaction.Commit();
+            try
+            {
+                var getPrescription = await context.PrescriptionDetails.FindAsync(salesDetailsDTO.PrescriptionId);
 
-					}
-					await context.SaveChangesAsync();
+                if (getPrescription != null)
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        getPrescription.MedicineDispatchStatus = 1;
 
-					return salesDetailsDTO;
-				}
+                        transaction.Commit();
 
-				return null;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                    }
+                    await context.SaveChangesAsync();
 
-				return null;
-			}
-		}
-		public async Task<SalesDetailsDTO> SaveSalesTransactionDetails(SalesDetailsDTO salesDetailsDTO)
-		{
-			try
-			{
-				var data = new SalesDetail
-				{
-					Id = Guid.NewGuid(),
+                    return salesDetailsDTO;
+                }
 
-					CreateDate = DateTime.Now,
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-					ReceiptNo = salesDetailsDTO.ReceiptNo,
+                return null;
+            }
+        }
+        public async Task<SalesDetailsDTO> SaveSalesTransactionDetails(SalesDetailsDTO salesDetailsDTO)
+        {
+            try
+            {
+                var data = new SalesDetail
+                {
+                    Id = Guid.NewGuid(),
 
-					SaleId = salesDetailsDTO.Id,
+                    CreateDate = DateTime.Now,
 
-					Total = (salesDetailsDTO.Quantity) * (salesDetailsDTO.SellingPrice),
+                    ReceiptNo = salesDetailsDTO.ReceiptNo,
 
-					MedicineId = salesDetailsDTO.MedicineId,
+                    SaleId = salesDetailsDTO.Id,
 
-					Quantity = salesDetailsDTO.Quantity,
+                    Total = (salesDetailsDTO.Quantity) * (salesDetailsDTO.SellingPrice),
 
-					CreatedBy = salesDetailsDTO.CreatedBy,
+                    MedicineId = salesDetailsDTO.MedicineId,
 
-					SellingPrice = salesDetailsDTO.SellingPrice,
-				};
+                    Quantity = salesDetailsDTO.Quantity,
 
-				context.SalesDetails.Add(data);
+                    CreatedBy = salesDetailsDTO.CreatedBy,
 
-				await context.SaveChangesAsync();
+                    SellingPrice = salesDetailsDTO.SellingPrice,
+                };
 
-				return salesDetailsDTO;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                context.SalesDetails.Add(data);
 
-				return null;
-			}
-		}
-		public async Task<bool> UnDoIssueMedicine(Guid Id)
-		{
-			try
-			{
-				bool result = false;
+                await context.SaveChangesAsync();
 
-				var getPrescription = await context.PrescriptionDetails.FindAsync(Id);
+                return salesDetailsDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				if (getPrescription != null)
-				{
-					using (var transaction = context.Database.BeginTransaction())
-					{
-						getPrescription.MedicineDispatchStatus = 0;
+                return null;
+            }
+        }
+        public async Task<bool> UnDoIssueMedicine(Guid Id)
+        {
+            try
+            {
+                bool result = false;
 
-						transaction.Commit();
+                var getPrescription = await context.PrescriptionDetails.FindAsync(Id);
 
-					}
-					await context.SaveChangesAsync();
+                if (getPrescription != null)
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        getPrescription.MedicineDispatchStatus = 0;
 
-					return true;
-				}
+                        transaction.Commit();
 
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                    }
+                    await context.SaveChangesAsync();
 
-				return false;
-			}
-		}
+                    return true;
+                }
 
-		private static object SyncObj = new object();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-		static Dictionary<Enum, string> _enumDescriptionCache = new Dictionary<Enum, string>();
-		public static string GetDescription(Enum value)
-		{
-			if (value == null) return string.Empty;
+                return false;
+            }
+        }
 
-			lock (SyncObj)
-			{
-				if (!_enumDescriptionCache.ContainsKey(value))
-				{
-					var description = (from m in value.GetType().GetMember(value.ToString())
-									   let attr = (DescriptionAttribute)m.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
-									   select attr == null ? value.ToString() : attr.Description).FirstOrDefault();
+        private static object SyncObj = new object();
 
-					_enumDescriptionCache.Add(value, description);
-				}
-			}
+        static Dictionary<Enum, string> _enumDescriptionCache = new Dictionary<Enum, string>();
+        public static string GetDescription(Enum value)
+        {
+            if (value == null) return string.Empty;
 
-			return _enumDescriptionCache[value];
-		}
+            lock (SyncObj)
+            {
+                if (!_enumDescriptionCache.ContainsKey(value))
+                {
+                    var description = (from m in value.GetType().GetMember(value.ToString())
+                                       let attr = (DescriptionAttribute)m.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
+                                       select attr == null ? value.ToString() : attr.Description).FirstOrDefault();
 
-		public async Task<bool> Delete(Guid Id)
-		{
+                    _enumDescriptionCache.Add(value, description);
+                }
+            }
 
-			try
-			{
-				bool result = false;
+            return _enumDescriptionCache[value];
+        }
+        public async Task<bool> Delete(Guid Id)
+        {
 
-				var data = await context.Prescriptions.FindAsync(Id);
+            try
+            {
+                bool result = false;
 
-				if (data != null)
-				{
-					context.Prescriptions.Remove(data);
+                var data = await context.Prescriptions.FindAsync(Id);
 
-					await context.SaveChangesAsync();
+                if (data != null)
+                {
+                    context.Prescriptions.Remove(data);
 
-					return true;
-				}
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                    await context.SaveChangesAsync();
 
-				return false;
-			}
-		}	
-		public async Task<bool> DeleteDetails(Guid Id)
-		{
+                    return true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-			try
-			{
-				bool result = false;
+                return false;
+            }
+        }
+        public async Task<bool> DeleteDetails(Guid Id)
+        {
 
-				var data = await context.PrescriptionDetails.FindAsync(Id);
+            try
+            {
+                bool result = false;
 
-				if (data != null)
-				{
-					context.PrescriptionDetails.Remove(data);
+                var data = await context.PrescriptionDetails.FindAsync(Id);
 
-					await context.SaveChangesAsync();
+                if (data != null)
+                {
+                    context.PrescriptionDetails.Remove(data);
 
-					return true;
-				}
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                    await context.SaveChangesAsync();
 
-				return false;
-			}
-		}
-	}
+                    return true;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+
+        public Task<InvoicePaymentDTO> CreatePayment(InvoicePaymentDTO invoicePaymentDTO)
+        {
+            try
+            {
+                invoicePaymentDTO.Id = Guid.NewGuid();
+
+                invoicePaymentDTO.CreateDate = DateTime.Now;
+
+                var data = mapper.Map<InvoicePayment>(invoicePaymentDTO);
+
+                context.InvoicePayments.Add(data);
+
+                context.SaveChangesAsync();
+
+                return Task.FromResult(invoicePaymentDTO);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+
+        }
+    }
 }

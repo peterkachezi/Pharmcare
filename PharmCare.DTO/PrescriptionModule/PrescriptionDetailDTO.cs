@@ -24,11 +24,9 @@ namespace PharmCare.DTO.PrescriptionModule
         public byte PaymentStatus { get; set; }
         public string PaymentStatusDescription { get; set; }
         public Guid PrescriptionId { get; set; }
-
         public decimal SellingPrice { get; set; }
         public int Quantity { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal Total { get; set; }
-
     }
 }

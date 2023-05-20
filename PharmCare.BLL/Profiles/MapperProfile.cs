@@ -7,6 +7,7 @@ using PharmCare.DTO.ApplicationUsersModule;
 using PharmCare.DTO.CategoryModule;
 using PharmCare.DTO.CountryModule;
 using PharmCare.DTO.CountyModule;
+using PharmCare.DTO.InvoiceModule;
 using PharmCare.DTO.LeafSettingModule;
 using PharmCare.DTO.MedicalConditionModule;
 using PharmCare.DTO.MedicineModule;
@@ -27,6 +28,8 @@ namespace PharmCare.BLL.Profiles
     {
         public MapperProfile()
         {
+            CreateMap<InvoicePayment, InvoicePaymentDTO>().ReverseMap();
+
             CreateMap<Patient, PatientDTO>().ReverseMap();
 
             CreateMap<Country, CountryDTO>().ReverseMap();

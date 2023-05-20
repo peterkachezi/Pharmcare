@@ -197,7 +197,7 @@ $("#btnPrint1").click(function () {
 
                     showConfirmButton: false,
 
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
 

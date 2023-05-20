@@ -25,7 +25,7 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var locations = await shelfRepository.GetAll();
+                var locations = (await shelfRepository.GetAll()).OrderByDescending(x => x.CreateDate).ToList(); ;
 
                 return View(locations);
             }

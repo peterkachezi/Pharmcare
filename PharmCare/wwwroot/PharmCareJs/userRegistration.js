@@ -80,7 +80,7 @@ $("#btnCreateAccount").click(function () {
                     type: "success",
                     title: response.responseText,
                     showConfirmButton: false,
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
                 swal({
@@ -184,7 +184,7 @@ $("#btnUpdateAccount").click(function () {
                     type: "success",
                     title: response.responseText,
                     showConfirmButton: false,
-                }), setTimeout(function () { location.reload(); }, 3000);
+                }), setTimeout(function () { location.reload(); }, 1500);
 
             } else {
                 swal({
@@ -344,7 +344,7 @@ function DeactivateAccount(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
@@ -425,7 +425,7 @@ function EnableAccount(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
@@ -509,7 +509,7 @@ function DeleteUser(e) {
                             // timer: 2000,
 
                         });
-                        setTimeout(function () { location.reload(); }, 3000);
+                        setTimeout(function () { location.reload(); }, 1500);
 
                     }
 
