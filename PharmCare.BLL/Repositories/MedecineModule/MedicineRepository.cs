@@ -402,6 +402,8 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      Quantity = newStock.Quantity == null ? 0 : newStock.Quantity,
 
+                                     SellingPrice = newStock.SellingPrice == null ? 0 : newStock.SellingPrice,
+
                                  }).FirstOrDefaultAsync();
 
                 return await medicines;

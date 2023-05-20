@@ -835,3 +835,59 @@ $("#btnPayInvoice").click(function () {
     });
 
 });
+function SaveStudent() {
+
+    $("#PaymentModal").modal('hide');
+
+    $("#divLoader").show();
+
+    let formData = {
+        AmountPayable: $("#txtAmountPayable").val(),
+        PaymentMode: $("#txtPaymentMode").val(),
+        AmountPaid: $("#txtPaymentAmount").val(),
+        Balance: $("#txtBalance").val(),
+        PrescriptionId: $("#txtPrescriptionId").val(),
+
+    }
+    console.log(formData)
+    $.ajax({
+        url: "/Admin/Invoices/CreatePayment",
+        type: "POST",
+        data: formData,
+
+        success: function (response) {
+
+            if (response.success) {
+
+                swal({
+                    position: 'top-end',
+
+                    type: "success",
+
+                    title: response.responseText,
+
+                    showConfirmButton: false,
+
+                }), setTimeout(function () { window.location = "/Admin/Prescriptions/"; }, 2000);
+
+            } else {
+
+                swal({
+                    position: 'top-end',
+                    type: "error",
+                    title: response.responseText,
+                    showConfirmButton: true,
+                    timer: 5000,
+                });
+
+            }
+
+            $("#divLoader").hide();
+        },
+
+        error: function (request, status, error) {
+
+            alert(request.responseText);
+        }
+    });
+}

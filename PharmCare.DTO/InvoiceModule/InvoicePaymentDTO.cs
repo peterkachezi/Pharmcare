@@ -3,6 +3,8 @@
     public class InvoicePaymentDTO
     {
         public Guid Id { get; set; }
+        public Guid PrescriptionId { get; set; }
+
         public decimal AmountPayable { get; set; }
         public decimal Balance { get; set; }
         public decimal AmountPaid { get; set; }

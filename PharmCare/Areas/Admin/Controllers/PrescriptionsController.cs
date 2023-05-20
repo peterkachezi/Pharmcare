@@ -44,7 +44,7 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var data = (await prescriptionRepository.GetAll()).OrderByDescending(x=>x.CreateDate).ToList();
+                var data = (await prescriptionRepository.GetAll()).OrderByDescending(x => x.CreateDate).ToList();
 
                 return View(data);
             }
@@ -56,9 +56,9 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
-        }     
-        
-                   
+        }
+
+
         public async Task<IActionResult> AddPrescription()
         {
             try
@@ -203,49 +203,12 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                var getPrescription = await prescriptionRepository.GetById(Id);
-
-                var medicine = await medicineRepository.GetById(getPrescription.MedicineId);
-
-                var prescriptionId = Id;
+                var medicine = await medicineRepository.GetStockDetailsById(Id);
 
                 if (medicine != null)
                 {
-                    MedicineDTO file = new MedicineDTO()
-                    {
-                        Id = medicine.Id,
 
-                        Name = medicine.Name,
-
-                        ShelfId = medicine.ShelfId,
-
-                        ShelfName = medicine.ShelfName,
-
-                        Description = medicine.Description,
-
-                        CategoryId = medicine.CategoryId,
-
-                        ManufacturerPrice = medicine.ManufacturerPrice,
-
-                        SellingPrice = medicine.SellingPrice,
-
-                        Status = medicine.Status,
-
-                        CreateDate = medicine.CreateDate,
-
-                        CreatedBy = medicine.CreatedBy,
-
-                        UnitId = medicine.UnitId,
-
-                        UnitName = medicine.UnitName,
-
-                        Quantity = medicine.Quantity,
-
-                        PrescriptionId = prescriptionId,
-
-                    };
-
-                    return Json(new { data = file });
+                    return Json(new { data = medicine });
                 }
 
                 return Json(new { data = false });
@@ -296,7 +259,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 var result = localReport.Execute(RenderType.Pdf, extension, parameters, mimetype);
 
-               // return File(result.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Receipt.pdf");
+                // return File(result.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Receipt.pdf");
 
                 return File(result.MainStream, "application/pdf");
             }
@@ -374,51 +337,51 @@ namespace PharmCare.Areas.Admin.Controllers
             }
 
         }
-		public async Task<ActionResult> Delete(Guid Id)
-		{
-			try
-			{
-				var results = await prescriptionRepository.Delete(Id);
+        public async Task<ActionResult> Delete(Guid Id)
+        {
+            try
+            {
+                var results = await prescriptionRepository.Delete(Id);
 
-				if (results == true)
-				{
-					return Json(new { success = true, responseText = "Record  has been successfully deleted " });
-				}
-				else
-				{
-					return Json(new { success = false, responseText = "Record has not been deleted ,it could be in use by other files" });
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                if (results == true)
+                {
+                    return Json(new { success = true, responseText = "Record  has been successfully deleted " });
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "Record has not been deleted ,it could be in use by other files" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				return Json(new { success = false, responseText = "Something went wrong" });
-			}
-		}		
-        
+                return Json(new { success = false, responseText = "Something went wrong" });
+            }
+        }
+
         public async Task<ActionResult> DeleteDetails(Guid Id)
-		{
-			try
-			{
-				var results = await prescriptionRepository.Delete(Id);
+        {
+            try
+            {
+                var results = await prescriptionRepository.Delete(Id);
 
-				if (results == true)
-				{
-					return Json(new { success = true, responseText = "Record  has been successfully deleted " });
-				}
-				else
-				{
-					return Json(new { success = false, responseText = "Record has not been deleted ,it could be in use by other files" });
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
+                if (results == true)
+                {
+                    return Json(new { success = true, responseText = "Record  has been successfully deleted " });
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = "Record has not been deleted ,it could be in use by other files" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
 
-				return Json(new { success = false, responseText = "Something went wrong" });
-			}
-		}
+                return Json(new { success = false, responseText = "Something went wrong" });
+            }
+        }
 
-	}
+    }
 }

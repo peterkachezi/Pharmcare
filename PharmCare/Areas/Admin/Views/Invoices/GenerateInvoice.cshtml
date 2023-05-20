@@ -56,7 +56,7 @@
 
                                     if (status == 1)
                                     {
-                                        <span class="paid">Paid</span>
+                                        <span class="paid_invoice">Paid</span>
                                     }
                                     if (status == 0)
                                     {
@@ -141,44 +141,44 @@
             </div>
             <form id="frmPayInvoice">
                 <div class="modal-body">
-                    <input type="hidden" id="txtId" name="Id" value="@Model.prescription.Id" />
+                    <input type="hidden" id="txtPrescriptionId" name="Id" value="@Model.prescription.Id" />
                     <div class="form-group row">
                         <label class="col-form-label col-md-3 col-sm-3 ">Total Amount </label>
                         <div class="col-md-9 col-sm-9 ">
                             @{
                                 decimal amount = @ViewBag.TotalAmount;
-
                                 decimal val2 = decimal.Truncate(amount);
                             }
-                            <input type="text" name="AmountPayable" value="@val2" class="form-control myinputs" disabled="disabled">
+                            <input type="text" id="txtAmountPayable" name="AmountPayable" value="@val2" class="form-control myinputs" disabled="disabled">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-md-3 col-sm-3 ">Payment Mode </label>
                         <div class="col-md-9 col-sm-9 ">
                             <select class="form-control myinputs" id="txtPaymentMode" name="PaymentMode">
-
                                 <option value="Cash">Cash</option>
-
                             </select>
                         </div>
                     </div>
+            
                     <div class="form-group row">
                         <label class="col-form-label col-md-3 col-sm-3 ">Amount Paid </label>
                         <div class="col-md-9 col-sm-9 ">
                             <input type="text" id="txtPaymentAmount" name="AmountPaid" onkeyup="CalculateBalance()" class="form-control myinputs numericOnly">
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label class="col-form-label col-md-3 col-sm-3 ">Balance </label>
                         <div class="col-md-9 col-sm-9 ">
                             <input type="text" id="txtBalance" name="Balance" class="form-control myinputs" disabled="disabled">
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="btnPayInvoice" class="btn btn-primary" >Submit</button>
+                    <button type="button" id="" onclick="SaveStudent()" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
@@ -193,7 +193,7 @@
         font-weight: 600;
     }
 
-    .paid {
+    .paid_invoice {
         color: green;
         font-weight: 600;
     }

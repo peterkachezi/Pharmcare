@@ -549,8 +549,7 @@ namespace PharmCare.BLL.Repositories.PrescriptionModule
                 return false;
             }
         }
-
-        public Task<InvoicePaymentDTO> CreatePayment(InvoicePaymentDTO invoicePaymentDTO)
+        public async Task<InvoicePaymentDTO> CreatePayment(InvoicePaymentDTO invoicePaymentDTO)
         {
             try
             {
@@ -562,9 +561,13 @@ namespace PharmCare.BLL.Repositories.PrescriptionModule
 
                 context.InvoicePayments.Add(data);
 
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
 
-                return Task.FromResult(invoicePaymentDTO);
+                updatePayment(invoicePaymentDTO.PrescriptionId);
+
+                updatePrescriptionDetailsPayment(invoicePaymentDTO.PrescriptionId);
+
+                return invoicePaymentDTO;
             }
             catch (Exception ex)
             {
@@ -573,6 +576,50 @@ namespace PharmCare.BLL.Repositories.PrescriptionModule
                 return null;
             }
 
+        }
+        public bool updatePayment(Guid prescriptionId)
+        {
+            try
+            {
+                var getPrescription = context.Prescriptions.Find(prescriptionId);
+
+                if (getPrescription != null)
+                {
+                    getPrescription.PaymentStatus = 1;
+
+                    context.SaveChanges();
+
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
+        }
+        public bool updatePrescriptionDetailsPayment(Guid prescriptionId)
+        {
+            try
+            {
+                context.PrescriptionDetails.Where(x => x.PrescriptionId == prescriptionId).ToList().ForEach(x =>
+                {
+                    x.PaymentStatus = 1;
+                });
+
+                context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
         }
     }
 }

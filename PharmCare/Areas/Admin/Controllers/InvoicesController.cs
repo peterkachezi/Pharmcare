@@ -1,12 +1,10 @@
 ﻿using AspNetCore.Reporting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PharmCare.BLL.Repositories.LeafSettingModule;
 using PharmCare.BLL.Repositories.PatientModule;
 using PharmCare.BLL.Repositories.PrescriptionModule;
 using PharmCare.DAL.Models;
 using PharmCare.DTO.InvoiceModule;
-using PharmCare.DTO.LeafSettingModule;
 using PharmCare.DTO.PrescriptionModule;
 using System.Data;
 
@@ -199,7 +197,7 @@ namespace PharmCare.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Account", new { area = "" });
             }
         }
-        public async Task<IActionResult> CreatePayment(InvoicePaymentDTO invoicePaymentDTO)
+        public async Task<JsonResult> CreatePayment(InvoicePaymentDTO invoicePaymentDTO)
         {
             try
             {
