@@ -33,7 +33,7 @@ namespace PharmCare.Areas.Admin.Controllers
 
             try
             {
-                ViewBag.Users = (await applicationUserRepository.GetAll()).Count;
+                ViewBag.Users = (await applicationUserRepository.GetAllUsers()).Count;
 
                 ViewBag.Prescription = (await prescriptionRepository.GetAll()).Count;
 

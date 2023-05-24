@@ -58,7 +58,6 @@ namespace PharmCare.Areas.Admin.Controllers
             }
         }
 
-
         public async Task<IActionResult> AddPrescription()
         {
             try
@@ -241,25 +240,24 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 var path = $"{env.WebRootPath}\\Report\\Prescription.rdlc";
 
-                Dictionary<string, string> parameters = new Dictionary<string, string>();
+                Dictionary<string, string> parameters = new Dictionary<string, string>
+                {
+                    { "FullName", getPatient.FullName.ToString() },
 
-                parameters.Add("FullName", getPatient.FullName.ToString());
+                    { "PhoneNumber", getPatient.PhoneNumber.ToString() },
 
-                parameters.Add("PhoneNumber", getPatient.PhoneNumber.ToString());
+                    { "Gender", getPatient.Gender.ToString() },
 
-                parameters.Add("Gender", getPatient.Gender.ToString());
+                    { "Age", getPatient.Age.ToString() },
 
-                parameters.Add("Age", getPatient.Age.ToString());
-
-                parameters.Add("CreatedByName", createdBy.ToString());
+                    { "CreatedByName", createdBy.ToString() }
+                };
 
                 LocalReport localReport = new LocalReport(path);
 
                 localReport.AddDataSource("PrintPrescription", dt);
 
                 var result = localReport.Execute(RenderType.Pdf, extension, parameters, mimetype);
-
-                // return File(result.MainStream, System.Net.Mime.MediaTypeNames.Application.Octet, "Receipt.pdf");
 
                 return File(result.MainStream, "application/pdf");
             }

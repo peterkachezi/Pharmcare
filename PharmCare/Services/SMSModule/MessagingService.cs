@@ -28,7 +28,7 @@ namespace PharmCare.Services.SMSModule
 
                 var txtMessage = "Dear  " + applicationUserDTO.FirstName
 
-                    + " Welcome to Mumias West Health Care. Below you will find your login details"
+                    + " Welcome to Malela Pharmacy. Below you will find your login details"
 
                     + ". Your user name is " + applicationUserDTO.Email
                     
@@ -77,9 +77,6 @@ namespace PharmCare.Services.SMSModule
         }
 
 
-
-
-
         public string formatPhoneNumber(string phoneNumber)
         {
             if (string.IsNullOrWhiteSpace(phoneNumber))
@@ -102,5 +99,58 @@ namespace PharmCare.Services.SMSModule
             return formatted;
         }
 
+        public async Task<ResetPasswordDTO> PasswordResetEmailNotification(ResetPasswordDTO resetPasswordDTO)
+        {
+            try
+            {
+                var url = "http://167.172.14.50:4002/v1/send-sms";
+
+                var txtMessage = "Dear  " + resetPasswordDTO.FullName
+
+                    + " Welcome to Malela Pharmacy. Below you will find your login details"
+
+                    + ". Your user name is " + resetPasswordDTO.Password;            
+
+                var key = config.GetValue<string>("SMS_Settings:BongaSMSKey");
+
+                var secrete = config.GetValue<string>("SMS_Settings:BongaSMSSecrete");
+
+                var apiClientID = config.GetValue<string>("SMS_Settings:BongaSMSApiClientID");
+
+                var serviceID = config.GetValue<string>("SMS_Settings:BongaSMSServiceID");
+
+                var msisdn = formatPhoneNumber(resetPasswordDTO.PhoneNumber);
+
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                new KeyValuePair<string, string>("apiClientID", apiClientID),
+                new KeyValuePair<string, string>("secret", secrete),
+                new KeyValuePair<string, string>("key", key),
+                new KeyValuePair<string, string>("txtMessage", txtMessage),
+                new KeyValuePair<string, string>("MSISDN", msisdn),
+                new KeyValuePair<string, string>("serviceID", serviceID),
+                new KeyValuePair<string, string>("enqueue", "yes"),
+            });
+
+                HttpClient client = new HttpClient();
+
+                HttpResponseMessage apiResult = await client.PostAsync(url, formContent);
+
+                apiResult.EnsureSuccessStatusCode();
+
+                var response = await apiResult.Content.ReadAsStringAsync();
+
+
+                //return new Tuple<bool, TextAlertDTO, string>(true, textAlertDTO, "Text Alert sent successfully!");
+
+                return resetPasswordDTO;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace PharmCare.BLL.Repositories.PatientModule
                 return null;
             }
         }
-        public async Task<bool> Delete(Guid Id)
+        public async Task<bool> Delete1(Guid Id)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace PharmCare.BLL.Repositories.PatientModule
             }
         }
 
-        public async Task<bool> PermanentDelete(Guid Id)
+        public async Task<bool> Delete(Guid Id)
         {
             try
             {

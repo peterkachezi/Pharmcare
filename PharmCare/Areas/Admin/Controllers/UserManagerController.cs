@@ -16,7 +16,6 @@ namespace PharmCare.Areas.Admin.Controllers
     public class UserManagerController : Controller
     {
 
-
         private readonly IApplicationUserRepository applicationUserRepository;
 
         private readonly IMailService mailService;
@@ -54,7 +53,7 @@ namespace PharmCare.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.Roles = await applicationUserRepository.GetAll();
+                ViewBag.Roles = (await applicationUserRepository.GetAll()).Where(x => x.Name == "Admin");
 
                 var users = (await applicationUserRepository.GetAllUsers());
 
@@ -181,9 +180,9 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
-                    var sendmail = mailService.AccountEmailNotification(applicationUserDTO);
+                    //var sendmail = mailService.AccountEmailNotification(applicationUserDTO);
 
-                   // var sendSMS = messagingService.usersAccount(applicationUserDTO);
+                    var sendSMS = messagingService.usersAccount(applicationUserDTO);
 
                     var createRole = await userManager.AddToRoleAsync(user, applicationUserDTO.RoleName);
 

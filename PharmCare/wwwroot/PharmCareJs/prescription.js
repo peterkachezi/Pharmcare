@@ -300,16 +300,20 @@ function Details(id, patientId) {
     window.location.href = "/Admin/Prescriptions/Details?Id=" + id + "&PatientId=" + patientId;
 
 }
+
 function DowloadPrescripton(id, patientId) {
 
-    window.location.href = "/Admin/Prescriptions/DowloadPrescripton/?Id=" + id + "&PatientId=" + patientId;
+   var link= "/Admin/Prescriptions/DowloadPrescripton/?Id=" + id + "&PatientId=" + patientId;
+
+    window.open(link, "_blank");
 
 
 }
-function IssueMedicine(e) {
+function IssueMedicine(e,p) {
 
 
     var id = e;
+    var prescriptionId = p;
 
     $.get("/Admin/Prescriptions/GetByPrescriptionDetailId/?Id=" + id, function (data, status) {
 
@@ -323,7 +327,7 @@ function IssueMedicine(e) {
 
             $("#txtMedicineId").val(data.data.id);
 
-            $("#txtPrescriptionId").val(data.data.prescriptionId);
+            $("#txtPrescriptionId").val(prescriptionId);
 
             $("#txtName").val(data.data.medicineFullName);
 
@@ -495,7 +499,7 @@ function IssueMedicine1(e) {
 }
 function UnDoIssueMedicine(e) {
 
-    $("#divLoader").show();
+/*    $("#divLoader").show();*/
     var id = e;
 
     console.log(id);

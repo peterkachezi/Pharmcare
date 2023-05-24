@@ -460,13 +460,24 @@ namespace PharmCare.BLL.Repositories.PrescriptionModule
 
                         transaction.Commit();
 
+                    }                
+
+                    var getStock = await context.Stocks.FirstOrDefaultAsync(x => x.MedicineId == getPrescription.MedicineId);
+
+                    if (getPrescription != null)
+                    {
+                        var qty = (getStock.Quantity) + (getPrescription.Quantity);
+
+                        getStock.Quantity = qty;
                     }
+
                     await context.SaveChangesAsync();
 
                     return true;
                 }
 
                 return result;
+
             }
             catch (Exception ex)
             {

@@ -6,6 +6,7 @@ using PharmCare.DAL.Models;
 using PharmCare.DTO.ApplicationUsersModule;
 using PharmCare.Extensions;
 using PharmCare.Services.EmailModule;
+using PharmCare.Services.SMSModule;
 using System.Net;
 using System.Net.Mail;
 using PasswordOptions = PharmCare.Extensions.PasswordOptions;
@@ -14,6 +15,8 @@ namespace PharmCare.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IMessagingService messagingService;
+
         private readonly SignInManager<AppUser> signInManager;
 
         private readonly RoleManager<IdentityRole> roleManager;
@@ -26,9 +29,11 @@ namespace PharmCare.Controllers
 
         private IWebHostEnvironment _env;
         public AccountController(
-            
-            IMailService mailService,
-            
+
+            IMessagingService messagingService,
+
+        IMailService mailService,
+
             SignInManager<AppUser> signInManager,
 
             RoleManager<IdentityRole> roleManager,
@@ -47,6 +52,8 @@ namespace PharmCare.Controllers
             _config = config;
 
             _env = env;
+
+            this.messagingService = messagingService;
         }
 
         public IActionResult Index()
@@ -110,7 +117,7 @@ namespace PharmCare.Controllers
                             return RedirectToAction("Index", "Dashboard", new { area = "Doctor" });
                         }
 
-                  
+
                         if (getUserRole == "Pharmacist")
                         {
                             return RedirectToAction("Index", "Dashboard", new { area = "Pharmacist" });
@@ -230,14 +237,17 @@ namespace PharmCare.Controllers
 
                     resetPasswordDTO.Password = password;
 
+                    resetPasswordDTO.PhoneNumber = user.PhoneNumber;
+
                     resetPasswordDTO.FullName = user.FirstName + " " + user.LastName;
 
                     //resetPasswordDTO.PhoneNumber = user.PhoneNumber;
 
                     var result = await userManager.ResetPasswordAsync(user, resetPasswordDTO.Token, resetPasswordDTO.Password);
 
+                    var sendSMS = messagingService.PasswordResetEmailNotification(resetPasswordDTO);
 
-                    var sendmail = mailService.PasswordResetEmailNotification(resetPasswordDTO);
+                    //var sendmail = mailService.PasswordResetEmailNotification(resetPasswordDTO);
 
                     TempData["Success"] = "If you have an account with us , we have sent a new  password  to " + resetPasswordDTO.Email + "";
 

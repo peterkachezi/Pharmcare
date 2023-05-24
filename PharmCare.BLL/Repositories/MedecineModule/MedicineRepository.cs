@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
 using PharmCare.DTO.MedicineModule;
-using PharmCare.DTO.ProductModule;
-
 
 namespace PharmCare.BLL.Repositories.MedecineModule
 {
@@ -129,8 +127,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                                      CategoryId = m.CategoryId,
 
                                      CategoryName = newCat.Name == null ? "" : newCat.Name,
-
-                                     //ManufacturerPrice = m.ManufacturerPrice,
+                                                                       
 
                                      Status = m.Status,
 
@@ -150,7 +147,11 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      SellingPrice = stocks.SellingPrice,
 
+                                     CostPrice = stocks.CostPrice,
+
                                  }).OrderByDescending(x => x.CreateDate).ToListAsync();
+
+                var k = medicines;
 
                 return await medicines;
 
@@ -163,7 +164,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
             }
 
         }
-
         public async Task<List<MedicineDTO>> GetAllOutOfStockProducts()
         {
             try
@@ -217,7 +217,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
             }
 
         }
-
         public async Task<MedicineDTO> GetById(Guid Id)
         {
             try
@@ -292,7 +291,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                 return null;
             }
         }
-
         public async Task<MedicineDTO> GetByStockId(Guid Id)
         {
             try
@@ -327,8 +325,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                 return null;
             }
         }
-
-
         public async Task<List<MedicineDTO>> GetAllStock()
         {
             try
@@ -361,9 +357,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                 return null;
             }
         }
-
-
-
         public async Task<MedicineDTO> GetStockDetailsById(Guid Id)
         {
             try
@@ -416,9 +409,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                 return null;
             }
         }
-
-
-
         public async Task<MedicineDTO> Update(MedicineDTO medicineDTO)
         {
             try

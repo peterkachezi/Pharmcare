@@ -466,7 +466,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Patient Name   :</Value>
+                      <Value>Patient Name    :</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -484,7 +484,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Phone No        :</Value>
+                      <Value>Phone No         :</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -502,7 +502,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Ref.Doctor       :</Value>
+                      <Value>Ref.Doctor        :</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -666,9 +666,8 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>MUMIAS WEST HEALTH CARE</Value>
+                      <Value>MALELA PHARMACY</Value>
                       <Style>
-                        <FontSize>12pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
@@ -681,11 +680,36 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>P.O BOX 322-50102 -MUMIAS</Value>
+                      <Value>P.O BOX </Value>
                       <Style />
                     </TextRun>
+                    <TextRun>
+                      <Value>342</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>-</Value>
+                      <Style />
+                    </TextRun>
+                    <TextRun>
+                      <Value>01100</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
                   </TextRuns>
-                  <SpaceAfter>2pt</SpaceAfter>
                   <Style>
                     <TextAlign>Center</TextAlign>
                   </Style>
@@ -693,11 +717,10 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>0727587284 / 0729421514</Value>
+                      <Value>KAJIADO</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
-                  <SpaceAfter>2pt</SpaceAfter>
                   <Style>
                     <TextAlign>Center</TextAlign>
                   </Style>
@@ -705,20 +728,44 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>muwesthealthcare@gmail.com</Value>
-                      <Style />
+                      <Value>0799945373/0771024679</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
                     </TextRun>
                   </TextRuns>
-                  <SpaceAfter>2pt</SpaceAfter>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>malelapharm@gmail.com</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Times New Roman</FontFamily>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>Normal</FontWeight>
+                        <TextDecoration>None</TextDecoration>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
                   <Style>
                     <TextAlign>Center</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox11</rd:DefaultName>
-              <Top>0.28in</Top>
+              <Top>0.03in</Top>
               <Left>1.92167in</Left>
-              <Height>0.87222in</Height>
+              <Height>0.98055in</Height>
               <Width>3.90166in</Width>
               <ZIndex>3</ZIndex>
               <Style>

@@ -60,12 +60,12 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Unit</th>
                                     <th scope="col">Category</th>
-                                    <th scope="col">Quantity</th>
+                  @*                  <th scope="col">Quantity</th>*@
                                     <th scope="col">Shelf  </th>
                                     <th scope="col">Treatment</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Cost Price</th>
-                                    <th scope="col">Selling Price</th>
+             @*                       <th scope="col">Cost Price</th>
+                                    <th scope="col">Selling Price</th>*@
                                     <th scope="col">Options</th>
                                 </tr>
                             </thead>
@@ -85,7 +85,7 @@
 
                                             <td>@item.CategoryName</td>
 
-                                            <td>@item.Quantity</td>
+                                            @*<td>@item.Quantity</td>*@
 
                                             <td>@item.ShelfName</td>
 
@@ -107,10 +107,10 @@
                                                 }
 
                                             </td>
-
+@*
                                             <td>@item.ManufacturerPrice</td>
 
-                                            <td>@item.SellingPrice</td>
+                                            <td>@item.SellingPrice</td>*@
 
                                             <td>
                                                 <a class="btn-success  btn-sm" href="#" onclick="GetRecord('@item.Id')" value="">Edit</a>
@@ -348,7 +348,7 @@
                             </div>
                         </div>
                     </div>
-
+@*
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Cost Price</label>
@@ -361,7 +361,7 @@
                             <label for="exampleInputEmail1">Selling Price</label>
                             <input type="text" class="form-control myinputs numericOnly" id="txtSellingPrice1" name="SellingPrice" aria-describedby="emailHelp">
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-4">
                         <div class="form-group">

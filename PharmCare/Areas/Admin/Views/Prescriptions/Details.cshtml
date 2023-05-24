@@ -41,8 +41,8 @@
                 <h6 class=""><i class="fa fa-building"></i> List of Prescriptions</h6>
             </div>
             <div class="col-md-9">
-                <button type="button" class="btn btn-success btn-sm  pull-right" onclick="DowloadPrescripton('@ViewBag.PrescriptionId','@ViewBag.PatientId')"><i class="fa fa-print"></i> Print</button>
-            </div>
+@*                <button type="button" class="btn btn-success btn-sm  pull-right" onclick="DowloadPrescripton('@ViewBag.PrescriptionId','@ViewBag.PatientId')"><i class="fa fa-print"></i> Print</button>
+*@            </div>
 
         </div>
 
@@ -128,9 +128,22 @@
 
                                                             if (k == 1)
                                                             {
-                                                                <a class="dropdown-item" href="#" onclick="IssueMedicine('@item.MedicineId')">Issue Drug</a>
 
-                                                                <a class="dropdown-item" href="#" onclick="UnDoIssueMedicine('@item.Id')">Undo</a>
+                                                                var isIssued = item.MedicineDispatchStatus;
+
+                                                                if (isIssued == 0)
+                                                                {
+                                                                    <a class="dropdown-item" href="#" onclick="IssueMedicine('@item.MedicineId','@item.Id')">Issue Drug</a>
+
+                                                                    //<a class="dropdown-item" href="#" onclick="UnDoIssueMedicine('@item.Id')">Undo</a>
+                                                                }
+
+                                                                
+                                                                if (isIssued == 1)
+                                                                {
+                                                                    <a class="dropdown-item" href="#" onclick="UnDoIssueMedicine('@item.Id')">Undo</a>
+                                                                }
+
 
                                                             }
                                                             //if (k == 0)
@@ -175,7 +188,6 @@
                 <form id="frmIssuedMedicine">
 
                     <input type="hidden" id="txtPrescriptionId" name="PrescriptionId" class="form-control myinputs" />
-
                     <input type="hidden" id="txtMedicineId" name="MedicineId" class="form-control myinputs" />
 
                     <div class="form-group row">
