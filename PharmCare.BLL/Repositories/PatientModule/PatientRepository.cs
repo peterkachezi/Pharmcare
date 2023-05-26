@@ -149,7 +149,7 @@ namespace PharmCare.BLL.Repositories.PatientModule
         {
             try
             {
-                var data = await context.Patients.OrderByDescending(c => c.CreateDate).ToListAsync();
+                var data = await context.Patients.Where(x => x.Status != 2).OrderByDescending(c => c.CreateDate).ToListAsync();
 
                 var patients = mapper.Map<List<PatientDTO>>(data);
 

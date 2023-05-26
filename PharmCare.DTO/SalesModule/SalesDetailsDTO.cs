@@ -29,6 +29,7 @@ namespace PharmCare.DTO.SalesModule
         }
 
         public string UnitName { get; set; }
+        public int CurrentStock { get; set; }
         public string MedicineFullName => MedicineName + " " + UnitName;
 
     }

@@ -39,6 +39,6 @@ namespace PharmCare.DAL.Models
         public DateTime ExpiryDate { get; set; }
         public DateTime DateOfManufacture { get; set; }
         public string? BatchNo { get; set; }
-        public byte? Status { get; set; }
+        public byte Status { get; set; }
     }
 }

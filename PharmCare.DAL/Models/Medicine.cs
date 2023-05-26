@@ -12,9 +12,7 @@ namespace PharmCare.DAL.Models
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public Guid MedicalConditionId { get; set; }
-        public string? Description { get; set; }    
-
-        public byte Status { get; set; }
+        public string? Description { get; set; } 
         public DateTime CreateDate { get; set; }
         public DateTime ExpiryDate { get; set; }
         public DateTime? UpdatedDate { get; set; }

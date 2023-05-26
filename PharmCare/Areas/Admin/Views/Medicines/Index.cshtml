@@ -60,12 +60,10 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Unit</th>
                                     <th scope="col">Category</th>
-                  @*                  <th scope="col">Quantity</th>*@
+               
                                     <th scope="col">Shelf  </th>
                                     <th scope="col">Treatment</th>
-                                    <th scope="col">Status</th>
-             @*                       <th scope="col">Cost Price</th>
-                                    <th scope="col">Selling Price</th>*@
+     
                                     <th scope="col">Options</th>
                                 </tr>
                             </thead>
@@ -85,32 +83,12 @@
 
                                             <td>@item.CategoryName</td>
 
-                                            @*<td>@item.Quantity</td>*@
 
                                             <td>@item.ShelfName</td>
 
                                             <td>@item.MedicalConditionName</td>
 
-                                            <td>
-
-                                                @{
-                                                    var status = item.Status;
-
-                                                    if (status == 1)
-                                                    {
-                                                        <span class="act">Active</span>
-                                                    }
-                                                    if (status == 0)
-                                                    {
-                                                        <span class="ina">inactive</span>
-                                                    }
-                                                }
-
-                                            </td>
-@*
-                                            <td>@item.ManufacturerPrice</td>
-
-                                            <td>@item.SellingPrice</td>*@
+                                         
 
                                             <td>
                                                 <a class="btn-success  btn-sm" href="#" onclick="GetRecord('@item.Id')" value="">Edit</a>
@@ -234,7 +212,7 @@
                             <input type="text" class="form-control myinputs numericOnly" id="txtSellingPrice" name="SellingPrice" aria-describedby="emailHelp">
                         </div>
                     </div>*@
-
+@*
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Status</label>
@@ -243,7 +221,7 @@
                                 <option value="0">Inactive</option>
                             </select>
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="col-md-12">
                         <div class="form-group">
@@ -362,7 +340,7 @@
                             <input type="text" class="form-control myinputs numericOnly" id="txtSellingPrice1" name="SellingPrice" aria-describedby="emailHelp">
                         </div>
                     </div>*@
-
+@*
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Status</label>
@@ -372,7 +350,7 @@
                             </select>
                         </div>
                     </div>
-
+*@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Description</label>

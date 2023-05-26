@@ -154,20 +154,26 @@ namespace PharmCare.Areas.Admin.Controllers
             try
             {
 
-                var user = await userManager.FindByEmailAsync(User.Identity.Name);
-
-                salesDetailsDTO.CreatedBy = user.Id;
-
-                var results = await prescriptionRepository.IssueMedicine(salesDetailsDTO);
-
-                if (results != null)
+                if (salesDetailsDTO.CurrentStock > 0)
                 {
-                    return Json(new { success = true, responseText = "Success ! " });
+                    var user = await userManager.FindByEmailAsync(User.Identity.Name);
+
+                    salesDetailsDTO.CreatedBy = user.Id;
+
+                    var results = await prescriptionRepository.IssueMedicine(salesDetailsDTO);
+
+                    if (results != null)
+                    {
+                        return Json(new { success = true, responseText = "Success ! " });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, responseText = "Unable to complete the process ,please try again" });
+                    }
                 }
-                else
-                {
-                    return Json(new { success = false, responseText = "Unable to complete the process ,please try again" });
-                }
+
+                return Json(new { success = false, responseText = "Unable to complete the process ,this medicine is out of stock" });
+
             }
             catch (Exception ex)
             {
@@ -240,18 +246,17 @@ namespace PharmCare.Areas.Admin.Controllers
 
                 var path = $"{env.WebRootPath}\\Report\\Prescription.rdlc";
 
-                Dictionary<string, string> parameters = new Dictionary<string, string>
-                {
-                    { "FullName", getPatient.FullName.ToString() },
+                Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-                    { "PhoneNumber", getPatient.PhoneNumber.ToString() },
+                parameters.Add("FullName", getPatient.FullName.ToString());
 
-                    { "Gender", getPatient.Gender.ToString() },
+                parameters.Add("PhoneNumber", getPatient.PhoneNumber.ToString());
 
-                    { "Age", getPatient.Age.ToString() },
+                parameters.Add("Gender", getPatient.Gender.ToString());
 
-                    { "CreatedByName", createdBy.ToString() }
-                };
+                parameters.Add("Age", getPatient.Age.ToString());
+
+                parameters.Add("CreatedByName", createdBy.ToString());
 
                 LocalReport localReport = new LocalReport(path);
 

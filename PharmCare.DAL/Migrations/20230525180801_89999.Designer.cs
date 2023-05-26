@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmCare.DAL.DbContext;
 
@@ -11,9 +12,10 @@ using PharmCare.DAL.DbContext;
 namespace PharmCare.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230525180801_89999")]
+    partial class _89999
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,7 +467,7 @@ namespace PharmCare.DAL.Migrations
                     b.Property<decimal?>("SellingPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<byte>("Status")
+                    b.Property<byte?>("Status")
                         .HasColumnType("tinyint");
 
                     b.Property<Guid>("SupplierId")
@@ -1359,29 +1361,37 @@ namespace PharmCare.DAL.Migrations
 
             modelBuilder.Entity("PharmCare.DAL.Models.Medicine", b =>
                 {
-                    b.HasOne("PharmCare.DAL.Models.Category", null)
+                    b.HasOne("PharmCare.DAL.Models.Category", "Category")
                         .WithMany("Medicines")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PharmCare.DAL.Models.MedicalCondition", null)
+                    b.HasOne("PharmCare.DAL.Models.MedicalCondition", "MedicalCondition")
                         .WithMany("Medicines")
                         .HasForeignKey("MedicalConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PharmCare.DAL.Models.Shelf", null)
+                    b.HasOne("PharmCare.DAL.Models.Shelf", "Shelf")
                         .WithMany("Medicines")
                         .HasForeignKey("ShelfId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PharmCare.DAL.Models.Unit", null)
+                    b.HasOne("PharmCare.DAL.Models.Unit", "Unit")
                         .WithMany("Medicines")
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("MedicalCondition");
+
+                    b.Navigation("Shelf");
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("PharmCare.DAL.Models.Patient", b =>

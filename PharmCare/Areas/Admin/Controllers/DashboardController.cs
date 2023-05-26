@@ -3,6 +3,7 @@ using PharmCare.BLL.Repositories.ApplicationUserModule;
 using PharmCare.BLL.Repositories.MedecineModule;
 using PharmCare.BLL.Repositories.PatientModule;
 using PharmCare.BLL.Repositories.PrescriptionModule;
+using PharmCare.BLL.Repositories.StockModule;
 
 namespace PharmCare.Areas.Admin.Controllers
 {
@@ -17,7 +18,9 @@ namespace PharmCare.Areas.Admin.Controllers
 
         private readonly IApplicationUserRepository applicationUserRepository;
 
-        public DashboardController(IApplicationUserRepository applicationUserRepository,IPrescriptionRepository prescriptionRepository,IMedicineRepository medicineRepository,IPatientRepository patientRepository)
+        private readonly IStockRepository stockRepository;
+
+        public DashboardController(IStockRepository stockRepository, IApplicationUserRepository applicationUserRepository, IPrescriptionRepository prescriptionRepository, IMedicineRepository medicineRepository, IPatientRepository patientRepository)
         {
             this.patientRepository = patientRepository;
 
@@ -26,6 +29,8 @@ namespace PharmCare.Areas.Admin.Controllers
             this.prescriptionRepository = prescriptionRepository;
 
             this.applicationUserRepository = applicationUserRepository;
+
+            this.stockRepository = stockRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -33,15 +38,37 @@ namespace PharmCare.Areas.Admin.Controllers
 
             try
             {
-                ViewBag.Users = (await applicationUserRepository.GetAllUsers()).Count;
+                var endDate = DateTime.Now.AddHours(23).AddMinutes(59).AddSeconds(59);
 
-                ViewBag.Prescription = (await prescriptionRepository.GetAll()).Count;
+               var users = await applicationUserRepository.GetAllUsers();
 
-                ViewBag.Patients = (await patientRepository.GetAll()).Count;
+                var prescription = await prescriptionRepository.GetAll();
 
-                ViewBag.Medicine = (await medicineRepository.GetAll()).Count;
+                var patients = await patientRepository.GetAll();
+
+                var medicine = await medicineRepository.GetAll();
+
+                ViewBag.Prescription = prescription.Count;
+
+                ViewBag.Medicine = medicine.Count;
+
+                ViewBag.Patients = patients.Count();
+
+                ViewBag.Users = users.Count;
+
+                ViewBag.TodaysPrescription = prescription.Where(x => x.CreateDate >= DateTime.Today).ToList().Count();
+
+                ViewBag.TodaysPatients = patients.Where(x => x.CreateDate >= DateTime.Today).ToList().Count();
+
+                ViewBag.TodaysMedicine = medicine.Where(x => x.CreateDate >= DateTime.Today).ToList().Count();
+
+                ViewBag.TodaysUsers = users.Where(x => x.CreateDate >= DateTime.Today).ToList().Count();
+
+         
 
                 ViewBag.OutOfStock = (await medicineRepository.GetAllOutOfStockProducts()).Count();
+
+                ViewBag.ExpiredProducts = stockRepository.GetExpiredProducts().Where(x => x.Status != 2).Count();
 
                 return View();
             }

@@ -109,7 +109,7 @@ namespace PharmCare.Services.SMSModule
 
                     + " Welcome to Malela Pharmacy. Below you will find your login details"
 
-                    + ". Your user name is " + resetPasswordDTO.Password;            
+                    + ". Your new password is " + resetPasswordDTO.Password;            
 
                 var key = config.GetValue<string>("SMS_Settings:BongaSMSKey");
 

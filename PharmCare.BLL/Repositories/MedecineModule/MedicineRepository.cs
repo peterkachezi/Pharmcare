@@ -127,10 +127,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                                      CategoryId = m.CategoryId,
 
                                      CategoryName = newCat.Name == null ? "" : newCat.Name,
-                                                                       
-
-                                     Status = m.Status,
-
+                                    
                                      CreateDate = m.CreateDate,
 
                                      CreatedBy = m.CreatedBy,
@@ -189,13 +186,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                                      Description = m.Description,
 
                                      CategoryId = m.CategoryId,
-
-                                     //ManufacturerPrice = m.ManufacturerPrice,
-
-                                     //SellingPrice = m.SellingPrice,
-
-                                     Status = m.Status,
-
+                                     
                                      CreateDate = m.CreateDate,
 
                                      CreatedBy = m.CreatedBy,
@@ -262,12 +253,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                                      CategoryId = m.CategoryId,
 
                                      CategoryName = newCat.Name == null ? "" : newCat.Name,
-
-                                     //ManufacturerPrice = m.ManufacturerPrice,
-
-                                     //SellingPrice = m.SellingPrice,
-
-                                     Status = m.Status,
 
                                      CreateDate = m.CreateDate,
 
@@ -383,12 +368,6 @@ namespace PharmCare.BLL.Repositories.MedecineModule
 
                                      CategoryId = m.CategoryId,
 
-                                     //ManufacturerPrice = m.ManufacturerPrice,
-
-                                     //SellingPrice = m.SellingPrice,
-
-                                     Status = m.Status,
-
                                      CreateDate = m.CreateDate,
 
                                      CreatedBy = m.CreatedBy,
@@ -430,13 +409,7 @@ namespace PharmCare.BLL.Repositories.MedecineModule
                         medicine.Description = medicineDTO.Description;
 
                         medicine.CategoryId = medicineDTO.CategoryId;
-
-                        //medicine.ManufacturerPrice = medicineDTO.ManufacturerPrice;
-
-                        //medicine.SellingPrice = medicineDTO.SellingPrice;
-
-                        medicine.Status = medicineDTO.Status;
-
+            
                         medicine.UpdatedBy = medicineDTO.UpdatedBy;
 
                         medicine.Description = medicineDTO.Description;

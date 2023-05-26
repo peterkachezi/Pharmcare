@@ -4,7 +4,7 @@ using PharmCare.BLL.Utils;
 using PharmCare.DAL.DbContext;
 using PharmCare.DAL.Models;
 using PharmCare.DTO.StockModule;
-using System.Net;
+
 
 namespace PharmCare.BLL.Repositories.StockModule
 {
@@ -224,6 +224,8 @@ namespace PharmCare.BLL.Repositories.StockModule
                                 select new GoodsReceivedHistoryDTO
                                 {
                                     Id = exp.Id,
+
+                                    Status = exp.Status,
 
                                     GRNo = exp.GRNo,
 
