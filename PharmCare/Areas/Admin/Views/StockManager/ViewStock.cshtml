@@ -92,7 +92,7 @@
                                     <th scope="col">Shelf </th>
                                     <th scope="col">Cost Price </th>
                                     <th scope="col">Selling Price </th>
-                                    <th scope="col">Status</th>
+                     @*               <th scope="col">Status</th>*@
                                     <th scope="col">Options</th>
                                 </tr>
                             </thead>
@@ -111,7 +111,7 @@
                                             <td>@item.ShelfName</td>
                                             <td>@item.CostPrice</td>
                                             <td>@item.SellingPrice</td>
-                                            <td>
+                                         @*   <td>
 
                                                 @{
                                                     var status = item.Status;
@@ -126,13 +126,13 @@
                                                     }
                                                 }
 
-                                            </td>
+                                            </td>*@
 
                                             <td>
                                                 <a class="btn-info  btn-sm" href="#" onclick="GetMedForStock('@item.Id')" value=""><i class="fa fa-edit"> Edit Stock</i></a>
 
-                                                <a class="btn-danger  btn-sm" href="#" onclick="DeleteStockEntry('@item.StockId')" value=""><i class="fa fa-trash"> Delete</i></a>
-                                            </td>
+@*                                                <a class="btn-danger  btn-sm" href="#" onclick="DeleteStockEntry('@item.StockId')" value=""><i class="fa fa-trash"> Delete</i></a>
+*@                                            </td>
                                         </tr>
                                         count++;
                                     }

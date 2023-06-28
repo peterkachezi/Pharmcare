@@ -66,11 +66,9 @@
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Shelf  </th>
                                     <th scope="col">Treatment</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Cost Price</th>
                                     <th scope="col">Selling Price</th>
-@*                                    <th scope="col">Options</th>
-*@                                </tr>
+                               </tr>
                             </thead>
                             <tbody>
                                 @if (Model != null && Model.Count() > 0)
@@ -94,22 +92,7 @@
 
                                             <td>@item.MedicalConditionName</td>
 
-                                            <td>
-
-                                                @{
-                                                    var status = item.Status;
-
-                                                    if (status == 1)
-                                                    {
-                                                        <span class="act">Active</span>
-                                                    }
-                                                    if (status == 0)
-                                                    {
-                                                        <span class="ina">inactive</span>
-                                                    }
-                                                }
-
-                                            </td>
+                                           
 
                                             <td>@item.CostPrice</td>
 

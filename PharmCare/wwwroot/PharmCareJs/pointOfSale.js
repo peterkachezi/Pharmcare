@@ -142,7 +142,6 @@ $("#btnPrint").click(function () {
     $("#divLoader").hide();
 })
 
-
 function RemoveEverything() {
 
     debugger
@@ -163,9 +162,6 @@ function RemoveEverything() {
 
     RemoveCount();
 }
-
-
-
 
 
 $("#btnPrint1").click(function () {
@@ -236,6 +232,7 @@ function hidshowbtncheckout() {
         $("#btnCheckout").show();
 
 }
+
 function PaymentWindow() {
 
     if ($('#txtTotalAmount').text() < 1) {
